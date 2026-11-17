@@ -1,0 +1,41 @@
+\begin{lexlean}{Laws.LogicLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Logic}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: quorumIntersection,
+  parameters: [members : Nat, faults : Nat, quorumA : Nat, quorumB : Nat, joined : Nat],
+  statement: (((members + (faults + 1)) <= (quorumA + quorumB)) -> ((joined <= members) -> ((Braid.Logic::quorumHolds faults quorumA quorumB joined) = true))),
+  proof: linear_arithmetic{definitions: [Braid.Logic::overlap, Braid.Logic::quorumHolds]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: byzantineQuorum,
+  parameters: [faults : Nat, quorumA : Nat, quorumB : Nat, joined : Nat],
+  statement: ((((faults + faults) + 1) <= quorumA) -> ((((faults + faults) + 1) <= quorumB) -> ((joined <= (((faults + faults) + faults) + 1)) -> ((Braid.Logic::quorumHolds faults quorumA quorumB joined) = true)))),
+  proof: linear_arithmetic{definitions: [Braid.Logic::overlap, Braid.Logic::quorumHolds]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: ringStaysOrdered,
+  parameters: [capacity : Nat, read : Nat, write : Nat],
+  statement: ((read <= write) -> (read <= (Braid.Logic::ringWrite capacity read write))),
+  proof: linear_arithmetic{definitions: [Braid.Logic::ringAdmit, Braid.Logic::ringWrite]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: ringNeverOverflows,
+  parameters: [capacity : Nat, read : Nat, write : Nat],
+  statement: ((read <= write) -> (((prim subtract write read : Nat) <= capacity) -> ((prim subtract (Braid.Logic::ringWrite capacity read write) read : Nat) <= capacity))),
+  proof: linear_arithmetic{definitions: [Braid.Logic::ringAdmit, Braid.Logic::ringWrite]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

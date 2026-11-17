@@ -43,10 +43,12 @@ discovers, proves and ships new breathing rhythms one tick at a time.
 ## How it is made
 
 1. **Modelled in LexLean.** `app/src` holds the model: one module per
-   mechanism, an `App` module whose `dispatch` routes a one-byte opcode to
-   them, and 33 theorems about what each may answer.
-2. **Proved in Lean 4.** `lexlean verify` checks every theorem with Lean and
-   leanchecker under an exact axiom policy.
+   mechanism and an `App` module whose `dispatch` routes a one-byte opcode to
+   them. 33 theorems say what each may answer: 5 the kernel decides inside the
+   holo, and 28 arithmetic theorems in `proofs/Laws`, a root LexLean project
+   over the same `app/src` files.
+2. **Proved in Lean 4.** `lexlean verify` (in `app/` and at the root) checks
+   every theorem with Lean and leanchecker under an exact axiom policy.
 3. **Built by PrismPM.** `prismpm --project app verify`, in the SDK image
    `prismpm.lock` pins, compiles the guest, replays every acceptance vector in
    it, checks the proofs again and writes the holo. `pages.yml` signs its
@@ -58,7 +60,7 @@ discovers, proves and ships new breathing rhythms one tick at a time.
 
 ## The model
 
-| Module | Mechanism | Theorems |
+| Module | Mechanism | Theorems (`proofs/Laws/<Module>Laws` unless decided in the holo) |
 | --- | --- | --- |
 | `Braid.Resonance` | Semantic drift, coherence, the pause offer, rest | `driftStepBounded`, `restStepBounded`, `restNeverRaisesDrift`, `pauseOnlyWhenDivergent`, `divergentDecides`, `coherenceMonotone` |
 | `Braid.Breath` | Breathing rhythms, the 4-7-8 cycle, `rhythmSafe` | `countPositive`, `countWithinPhase`, `phaseBounded`, `relaxCycleIsNineteen`, `relaxIsSafe` |
@@ -111,7 +113,8 @@ ring, the weights and every attempt. Set the repository variable
 | Command | What it does |
 | --- | --- |
 | `just vv` | The whole gate, in the SDK image |
-| `cd app && lexlean verify` | Every theorem through Lean, under a minute |
+| `cd app && lexlean verify` | The holo's model and its kernel-decided theorems |
+| `lexlean verify` | The 28 arithmetic theorems in `proofs/Laws` |
 | `prismpm --project app verify` | Build the holo, replay the vectors, check the proofs |
 | `node scripts/reference.mjs --write` | Regenerate the acceptance vectors after a model change |
 | `cargo xtask engine tick --write --prove` | One engine tick, locally |

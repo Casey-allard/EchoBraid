@@ -16,6 +16,12 @@ concurrency:
 jobs:
   verify:
     name: headless browser acceptance
+    # This acceptance drives the template's own try page: the Calculator
+    # fixture behind the default text input. EchoBraid replaces that input
+    # with its own surface (site/card.html) and publishes no try page, so the
+    # job runs only where that page exists; EchoBraid's page is held to the
+    # page gates in pages.yml instead.
+    if: github.repository == 'UOR-Foundation/template'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

@@ -42,7 +42,11 @@ fn main() -> ExitCode {
                     args.iter().any(|a| a == "--prove"),
                 ),
                 Some("status") => engine::status(&root),
-                _ => Err("cargo xtask engine tick [--write] [--prove] | engine status".into()),
+                Some("render") => engine::render(&root),
+                _ => Err(
+                    "cargo xtask engine tick [--write] [--prove] | engine status | engine render"
+                        .into(),
+                ),
             }
         }
         "new-capability" => {
@@ -65,6 +69,7 @@ fn main() -> ExitCode {
                  engine tick [--write] [--prove]\n\
                                    one self-improvement tick: Rule 30, Hessian sorting, Lean proof\n\
                  engine status     the frontier and the Hebbian weights\n\
+                 engine render     rewrite the frontier module from frontier.toml\n\
                  new-capability <ID> <level> <suite> <statement>\n\
                                    R3: write the register row, scenario and failing test\n\
                  \n\

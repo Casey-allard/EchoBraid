@@ -1,0 +1,61 @@
+\begin{lexlean}{Laws.ResonanceLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Resonance}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: driftStepBounded,
+  parameters: [drift : Nat, length : Nat],
+  statement: ((Braid.Resonance::driftStep drift length) <= 100),
+  proof: linear_arithmetic{definitions: [Braid.Resonance::clampDrift, Braid.Resonance::driftStep]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: restStepBounded,
+  parameters: [drift : Nat],
+  statement: ((Braid.Resonance::restStep drift) <= 100),
+  proof: linear_arithmetic{definitions: [Braid.Resonance::clampDrift, Braid.Resonance::restStep]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: restNeverRaisesDrift,
+  parameters: [drift : Nat],
+  statement: ((drift <= 100) -> ((Braid.Resonance::restStep drift) <= drift)),
+  proof: linear_arithmetic{definitions: [Braid.Resonance::clampDrift, Braid.Resonance::restStep]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: pauseOnlyWhenDivergent,
+  parameters: [drift : Nat],
+  statement: (((Braid.Resonance::offersPause drift) = true) -> ((Braid.Resonance::isDivergent drift) = true)),
+  proof: linear_arithmetic{
+    definitions: [Braid.Resonance::isDivergent, Braid.Resonance::offersPause]
+  },
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: divergentDecides,
+  parameters: [drift : Nat],
+  statement: (((Braid.Resonance::isDivergent drift) = true) <-> ((Braid.Resonance::coherenceRank drift) = 2)),
+  proof: linear_arithmetic{
+    definitions: [Braid.Resonance::coherenceRank, Braid.Resonance::isDivergent]
+  },
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+theorem{
+  name: coherenceMonotone,
+  parameters: [lower : Nat, upper : Nat],
+  statement: ((lower <= upper) -> ((Braid.Resonance::coherenceRank lower) <= (Braid.Resonance::coherenceRank upper))),
+  proof: linear_arithmetic{definitions: [Braid.Resonance::coherenceRank]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

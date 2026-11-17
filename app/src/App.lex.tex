@@ -45,7 +45,7 @@ definition{
   name: rhythmAt,
   parameters: [index : Nat],
   result: Braid.Breath::Rhythm,
-  body: (if (index =? 0) then (Braid.Breath::relax478) else (Braid.Breath::nthRhythm (Braid.Frontier::frontierRhythms) (prim subtract index 1 : Nat)))
+  body: (if (index =? 0) then (Braid.Breath::relax478) else (Braid.Frontier::frontierAt (prim subtract index 1 : Nat)))
 }
 
 definition{
@@ -123,7 +123,7 @@ definition{
   name: frontierReply,
   parameters: [],
   result: Bytes,
-  body: (Braid.Text::fields (cons (Braid.Text::decimal (Braid.Frontier::frontierCount)) (cons (prim join (Braid.Frontier::frontierNames) "," : String) (nil String)))),
+  body: (Braid.Text::fields (cons (Braid.Text::decimal (Braid.Frontier::frontierCount)) (cons (Braid.Frontier::frontierNamesFrom 0 (Braid.Frontier::frontierCount)) (nil String)))),
   axioms: [propext]
 }
 

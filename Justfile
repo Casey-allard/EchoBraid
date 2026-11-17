@@ -8,7 +8,7 @@
 default: vv
 
 # The whole gate.
-vv: fmt-check model template-check vectors lint test deny app
+vv: fmt-check model template-check vectors proofs lint test deny app
     @echo "vv: the acceptance gate passed"
 
 fmt-check:
@@ -99,6 +99,16 @@ new-capability id level suite statement:
 # slower guest replay in `app` would.
 vectors:
     node scripts/reference.mjs --check
+
+# The arithmetic theorems about app/src, proved in the root LexLean project
+# (proofs/Laws). They live outside the holo because a text application's
+# native build compiles the LexLean runtime from source, and the runtime's
+# arithmetic laws exceed PrismPM's fixed compile budget; `lexlean verify`
+# checks them against the prebuilt runtime, over the same app/src files.
+proofs:
+    lexlean fmt --check
+    lexlean lock --check
+    lexlean verify
 
 # One self-improvement tick: Rule 30, Hessian sorting, the Lean proof.
 engine-tick:

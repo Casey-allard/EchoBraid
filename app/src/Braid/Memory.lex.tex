@@ -79,10 +79,11 @@ definition{
 definition{
   name: tilesFrom,
   parameters: [state : Nat, remaining : Nat],
-  result: (List String),
+  result: String,
   body: (match remaining
-    | Nat.zero => (nil String)
-    | Nat.succ rest => (cons (Braid.Text::digit (tileOf (step state))) (tilesFrom (step state) rest))),
+    | Nat.zero => ""
+    | Nat.succ rest => (prim join (cons (Braid.Text::digit (tileOf (step state))) (cons (tilesFrom (step state) rest) (nil String))) "" : String)),
+  axioms: [propext],
   recursive_argument: remaining
 }
 
@@ -90,7 +91,7 @@ definition{
   name: sequenceText,
   parameters: [seed : Nat, level : Nat],
   result: String,
-  body: (prim join (tilesFrom (seedState seed) (levelLength level)) "" : String),
+  body: (tilesFrom (seedState seed) (levelLength level)),
   axioms: [propext]
 }
 
@@ -106,46 +107,6 @@ definition{
   parameters: [code : Nat],
   result: String,
   body: (if (code =? 0) then "wrong" else (if (code =? 1) then "correct" else (if (code =? 2) then "level" else "victory")))
-}
-
-theorem{
-  name: tileBounded,
-  parameters: [state : Nat],
-  statement: ((tileOf state) < 4),
-  proof: linear_arithmetic{definitions: [tileOf]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: levelLengthBounded,
-  parameters: [level : Nat],
-  statement: ((levelLength level) <= 23),
-  proof: linear_arithmetic{definitions: [levelLength]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: victoryOnlyAtFinalLevel,
-  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
-  statement: (((level =? 7) = false) -> ((verdictCode level index expected chosen) <= 2)),
-  proof: linear_arithmetic{definitions: [verdictCode]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: wrongTileEndsRound,
-  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
-  statement: (((chosen =? expected) = false) -> ((verdictCode level index expected chosen) = 0)),
-  proof: linear_arithmetic{definitions: [verdictCode]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: seedNeverDegenerate,
-  parameters: [seed : Nat],
-  statement: (1 <= (seedState seed)),
-  proof: linear_arithmetic{definitions: [seedState]},
-  axioms: [Quot.sound, propext]
 }
 \end{semanticmodule}
 \end{lexlean}

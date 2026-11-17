@@ -354,6 +354,16 @@ pub fn tick(root: &Path, write_tree: bool, prove: bool) -> Result<(), Fail> {
     Ok(())
 }
 
+/// Rewrites `app/src/Braid/Frontier.lex.tex` from `frontier.toml`, the record
+/// it is derived from.
+pub fn render(root: &Path) -> Result<(), Fail> {
+    let (_, frontier) = load(root)?;
+    let rhythms: Vec<Rhythm> = frontier.claim.iter().map(|c| rhythm(c.rhythm)).collect();
+    write(root, MODULE, &frontier_module(&rhythms))?;
+    println!("{MODULE}: {} rhythms from {FRONTIER}", rhythms.len());
+    Ok(())
+}
+
 /// Prints the frontier and the weights.
 pub fn status(root: &Path) -> Result<(), Fail> {
     let (state, frontier) = load(root)?;

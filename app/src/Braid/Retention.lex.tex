@@ -13,14 +13,6 @@ definition{
 }
 
 theorem{
-  name: dayPolicyErases,
-  parameters: [age : Nat],
-  statement: ((24 <= age) -> ((shouldErase 1 age) = true)),
-  proof: linear_arithmetic{definitions: [shouldErase]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
   name: immediatePolicyAlwaysErases,
   parameters: [age : Nat],
   statement: ((shouldErase 0 age) = true),

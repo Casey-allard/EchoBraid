@@ -1,0 +1,6 @@
+name = "EchoBraidProofs"
+version = "0.1.0"
+defaultTargets = ["EchoBraidProofs"]
+
+[[lean_lib]]
+name = "EchoBraidProofs"

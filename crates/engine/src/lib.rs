@@ -504,19 +504,33 @@ pub fn plan(driver: Driver, weights: &Weights, frontier: &[Rhythm], refuted: &[R
 /// rhythms as records, their names, their count, and the theorem the kernel
 /// must prove for the tick to stand.
 pub fn frontier_module(frontier: &[Rhythm]) -> String {
-    let mut rhythms = String::from("(nil Braid.Breath::Rhythm)");
-    let mut names = String::from("(nil String)");
+    // Indexed, not a static list: PrismPM's exporter renders a zero-argument
+    // list only when it is an allocation-free constant, which a list of
+    // records is not.
+    let mut rhythms = String::from("(Braid.Breath::relax478)");
+    let mut names = String::from("\"\"");
     for (i, r) in frontier.iter().enumerate().rev() {
         rhythms = format!(
-            "(cons (record Braid.Breath::Rhythm {{inhale := {}, hold := {}, exhale := {}, rest := {}}}) {rhythms})",
+            "(if (index =? {i}) then (record Braid.Breath::Rhythm {{inhale := {}, hold := {}, exhale := {}, rest := {}}}) else {rhythms})",
             r.inhale, r.hold, r.exhale, r.rest
         );
-        names = format!("(cons \"F{} {}\" {names})", i + 1, r.label());
+        names = format!(
+            "(if (index =? {i}) then \"F{} {}\" else {names})",
+            i + 1,
+            r.label()
+        );
     }
-    format!(
-        "\\begin{{lexlean}}{{Braid.Frontier}}\n\\useglossary{{lexlean.std.bool@1.2.0}}\n\\useglossary{{lexlean.std.nat@1.2.0}}\n\\useglossary{{prism.arch@1.0.0}}\n\\useglossary{{echobraid.domain@1.0.0}}\n\\importmodule{{Braid.Breath}}\n\\title{{EchoBraid learning companion model}}\n\\begin{{semanticmodule}}\ndefinition{{\n  name: frontierRhythms,\n  parameters: [],\n  result: (List Braid.Breath::Rhythm),\n  body: {rhythms}\n}}\n\ndefinition{{\n  name: frontierNames,\n  parameters: [],\n  result: (List String),\n  body: {names}\n}}\n\ndefinition{{name: frontierCount, parameters: [], result: Nat, body: {}}}\n\ntheorem{{\n  name: frontierSafe,\n  parameters: [],\n  statement: ((Braid.Breath::allSafe (frontierRhythms)) = true),\n  proof: decide{{}}\n}}\n\\end{{semanticmodule}}\n\\end{{lexlean}}\n",
-        frontier.len()
-    )
+    let count = frontier.len();
+    let head = "\\begin{lexlean}{Braid.Frontier}\n\\useglossary{lexlean.std.bool@1.2.0}\n\\useglossary{lexlean.std.nat@1.2.0}\n\\useglossary{prism.arch@1.0.0}\n\\useglossary{echobraid.domain@1.0.0}\n\\importmodule{Braid.Breath}\n\\title{EchoBraid learning companion model}\n\\begin{semanticmodule}\n";
+    let body = format!(
+        "definition{{name: frontierCount, parameters: [], result: Nat, body: {count}}}\n\n\
+         definition{{\n  name: frontierAt,\n  parameters: [index : Nat],\n  result: Braid.Breath::Rhythm,\n  body: {rhythms}\n}}\n\n\
+         definition{{\n  name: frontierName,\n  parameters: [index : Nat],\n  result: String,\n  body: {names}\n}}\n\n\
+         definition{{\n  name: frontierSafeFrom,\n  parameters: [index : Nat, remaining : Nat],\n  result: Bool,\n  body: (match remaining\n    | Nat.zero => true\n    | Nat.succ rest => ((Braid.Breath::rhythmSafe (frontierAt index)) && (frontierSafeFrom (index + 1) rest))),\n  recursive_argument: remaining\n}}\n\n\
+         definition{{\n  name: frontierNamesFrom,\n  parameters: [index : Nat, remaining : Nat],\n  result: String,\n  body: (match remaining\n    | Nat.zero => \"\"\n    | Nat.succ rest => (if (rest =? 0) then (frontierName index) else (prim join (cons (frontierName index) (cons \",\" (cons (frontierNamesFrom (index + 1) rest) (nil String)))) \"\" : String))),\n  axioms: [propext],\n  recursive_argument: remaining\n}}\n\n\
+         theorem{{\n  name: frontierSafe,\n  parameters: [],\n  statement: ((frontierSafeFrom 0 (frontierCount)) = true),\n  proof: decide{{}}\n}}\n"
+    );
+    format!("{head}{body}\\end{{semanticmodule}}\n\\end{{lexlean}}\n")
 }
 
 #[cfg(test)]

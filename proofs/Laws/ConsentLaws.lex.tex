@@ -1,0 +1,41 @@
+\begin{lexlean}{Laws.ConsentLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Consent}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: noSilentGrant,
+  parameters: [current : Nat, grant : Nat, revoke : Nat, action : Nat],
+  statement: (((action =? grant) = false) -> ((current = 0) -> ((Braid.Consent::nextFlag current grant revoke action) = 0))),
+  proof: linear_arithmetic{definitions: [Braid.Consent::nextFlag]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: revokeAllClears,
+  parameters: [current : Nat, grant : Nat, revoke : Nat],
+  statement: ((Braid.Consent::nextFlag current grant revoke 7) = 0),
+  proof: linear_arithmetic{definitions: [Braid.Consent::nextFlag]},
+  axioms: [propext]
+}
+
+theorem{
+  name: flagIsBinary,
+  parameters: [current : Nat, grant : Nat, revoke : Nat, action : Nat],
+  statement: ((Braid.Consent::nextFlag current grant revoke action) <= 1),
+  proof: linear_arithmetic{definitions: [Braid.Consent::nextFlag]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: revokeWins,
+  parameters: [current : Nat, grant : Nat, revoke : Nat],
+  statement: ((grant < revoke) -> ((revoke < 7) -> ((Braid.Consent::nextFlag current grant revoke revoke) = 0))),
+  proof: linear_arithmetic{definitions: [Braid.Consent::nextFlag]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

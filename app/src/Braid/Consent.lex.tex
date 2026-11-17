@@ -11,37 +11,5 @@ definition{
   result: Nat,
   body: (if (action =? 7) then 0 else (if (action =? grant) then 1 else (if (action =? revoke) then 0 else (if (current =? 0) then 0 else 1))))
 }
-
-theorem{
-  name: noSilentGrant,
-  parameters: [current : Nat, grant : Nat, revoke : Nat, action : Nat],
-  statement: (((action =? grant) = false) -> ((current = 0) -> ((nextFlag current grant revoke action) = 0))),
-  proof: linear_arithmetic{definitions: [nextFlag]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: revokeAllClears,
-  parameters: [current : Nat, grant : Nat, revoke : Nat],
-  statement: ((nextFlag current grant revoke 7) = 0),
-  proof: linear_arithmetic{definitions: [nextFlag]},
-  axioms: [propext]
-}
-
-theorem{
-  name: flagIsBinary,
-  parameters: [current : Nat, grant : Nat, revoke : Nat, action : Nat],
-  statement: ((nextFlag current grant revoke action) <= 1),
-  proof: linear_arithmetic{definitions: [nextFlag]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: revokeWins,
-  parameters: [current : Nat, grant : Nat, revoke : Nat],
-  statement: ((grant < revoke) -> ((revoke < 7) -> ((nextFlag current grant revoke revoke) = 0))),
-  proof: linear_arithmetic{definitions: [nextFlag]},
-  axioms: [Quot.sound, propext]
-}
 \end{semanticmodule}
 \end{lexlean}

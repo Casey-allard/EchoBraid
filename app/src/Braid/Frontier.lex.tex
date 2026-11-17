@@ -6,26 +6,47 @@
 \importmodule{Braid.Breath}
 \title{EchoBraid learning companion model}
 \begin{semanticmodule}
-definition{
-  name: frontierRhythms,
-  parameters: [],
-  result: (List Braid.Breath::Rhythm),
-  body: (cons (record Braid.Breath::Rhythm {inhale := 4, hold := 1, exhale := 8, rest := 1}) (nil Braid.Breath::Rhythm))
-}
-
-definition{
-  name: frontierNames,
-  parameters: [],
-  result: (List String),
-  body: (cons "F1 4-1-8-1" (nil String))
-}
-
 definition{name: frontierCount, parameters: [], result: Nat, body: 1}
+
+definition{
+  name: frontierAt,
+  parameters: [index : Nat],
+  result: Braid.Breath::Rhythm,
+  body: (if (index =? 0) then (record Braid.Breath::Rhythm {inhale := 4, hold := 1, exhale := 8, rest := 1}) else (Braid.Breath::relax478))
+}
+
+definition{
+  name: frontierName,
+  parameters: [index : Nat],
+  result: String,
+  body: (if (index =? 0) then "F1 4-1-8-1" else "")
+}
+
+definition{
+  name: frontierSafeFrom,
+  parameters: [index : Nat, remaining : Nat],
+  result: Bool,
+  body: (match remaining
+    | Nat.zero => true
+    | Nat.succ rest => ((Braid.Breath::rhythmSafe (frontierAt index)) && (frontierSafeFrom (index + 1) rest))),
+  recursive_argument: remaining
+}
+
+definition{
+  name: frontierNamesFrom,
+  parameters: [index : Nat, remaining : Nat],
+  result: String,
+  body: (match remaining
+    | Nat.zero => ""
+    | Nat.succ rest => (if (rest =? 0) then (frontierName index) else (prim join (cons (frontierName index) (cons "," (cons (frontierNamesFrom (index + 1) rest) (nil String)))) "" : String))),
+  axioms: [propext],
+  recursive_argument: remaining
+}
 
 theorem{
   name: frontierSafe,
   parameters: [],
-  statement: ((Braid.Breath::allSafe (frontierRhythms)) = true),
+  statement: ((frontierSafeFrom 0 (frontierCount)) = true),
   proof: decide{}
 }
 \end{semanticmodule}

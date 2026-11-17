@@ -39,49 +39,49 @@
     {
       "name": "driftStepBounded",
       "statement": "driftStep drift length ≤ 100, for every drift and message length",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Resonance.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/ResonanceLaws.lex.tex"
     },
     {
       "name": "pauseComesFirst",
       "statement": "offersPause drift = true → guideIndex drift variant = 0",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Reflection.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/ReflectionLaws.lex.tex"
     },
     {
       "name": "countPositive",
       "statement": "position < cycleLength rhythm → 1 ≤ countAt rhythm position, for every rhythm",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Breath.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/BreathLaws.lex.tex"
     },
     {
       "name": "noSilentGrant",
       "statement": "action ≠ grant → current = 0 → nextFlag current grant revoke action = 0",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Consent.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/ConsentLaws.lex.tex"
     },
     {
       "name": "victoryOnlyAtFinalLevel",
       "statement": "level ≠ 7 → verdictCode level index expected chosen ≤ 2",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Memory.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/MemoryLaws.lex.tex"
     },
     {
       "name": "quorumIntersection",
       "statement": "n + f + 1 ≤ |Q1| + |Q2| → |Q1 ∪ Q2| ≤ n → f + 1 ≤ |Q1 ∩ Q2|",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Logic.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/LogicLaws.lex.tex"
     },
     {
       "name": "dayPolicyErases",
       "statement": "24 ≤ age → shouldErase 1 age = true",
-      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
-      "where": "app/src/Braid/Retention.lex.tex"
+      "how": "Linear arithmetic over the app/src definitions the guest runs, checked by the Lean kernel (lexlean verify of the proofs project) in every gate run",
+      "where": "proofs/Laws/RetentionLaws.lex.tex"
     },
     {
       "name": "frontierSafe",
       "statement": "allSafe frontierRhythms = true: every rhythm the engine wrote is safe",
-      "how": "Decided by the Lean kernel over the frontier the engine wrote, on every engine tick",
+      "how": "Decided by the Lean kernel inside the holo (prismpm verify), on every engine tick and every page build",
       "where": "app/src/Braid/Frontier.lex.tex"
     }
   ],

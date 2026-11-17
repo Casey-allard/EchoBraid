@@ -73,50 +73,6 @@ definition{
   body: ((2 <=? (project rhythm inhale)) && (((project rhythm inhale) <=? 8) && (((project rhythm hold) <=? 8) && (((project rhythm inhale) <=? (project rhythm exhale)) && (((project rhythm exhale) <=? 10) && (((project rhythm rest) <=? 6) && ((cycleLength rhythm) <=? 30)))))))
 }
 
-definition{
-  name: allSafe,
-  parameters: [rhythms : (List Rhythm)],
-  result: Bool,
-  body: (match rhythms
-    | List.nil => true
-    | List.cons head tail => ((rhythmSafe head) && (allSafe tail))),
-  recursive_argument: rhythms
-}
-
-definition{
-  name: nthRhythm,
-  parameters: [rhythms : (List Rhythm), index : Nat],
-  result: Rhythm,
-  body: (match rhythms
-    | List.nil => (relax478)
-    | List.cons head tail => (if (index =? 0) then head else (nthRhythm tail (prim subtract index 1 : Nat)))),
-  recursive_argument: rhythms
-}
-
-theorem{
-  name: countPositive,
-  parameters: [rhythm : Rhythm, position : Nat],
-  statement: ((position < (cycleLength rhythm)) -> (1 <= (countAt rhythm position))),
-  proof: linear_arithmetic{definitions: [countAt, cycleLength]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: countWithinPhase,
-  parameters: [rhythm : Rhythm, position : Nat],
-  statement: ((countAt rhythm position) <= (cycleLength rhythm)),
-  proof: linear_arithmetic{definitions: [countAt, cycleLength]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: phaseBounded,
-  parameters: [rhythm : Rhythm, position : Nat],
-  statement: ((phaseAt rhythm position) <= 3),
-  proof: linear_arithmetic{definitions: [phaseAt]},
-  axioms: [Quot.sound, propext]
-}
-
 theorem{
   name: relaxCycleIsNineteen,
   parameters: [],

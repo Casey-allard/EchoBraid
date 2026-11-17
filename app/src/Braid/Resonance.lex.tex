@@ -45,53 +45,5 @@ definition{
   result: String,
   body: (if ((coherenceRank drift) =? 0) then "stable" else (if ((coherenceRank drift) =? 1) then "drifting" else "divergent"))
 }
-
-theorem{
-  name: driftStepBounded,
-  parameters: [drift : Nat, length : Nat],
-  statement: ((driftStep drift length) <= 100),
-  proof: linear_arithmetic{definitions: [clampDrift, driftStep]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: restStepBounded,
-  parameters: [drift : Nat],
-  statement: ((restStep drift) <= 100),
-  proof: linear_arithmetic{definitions: [clampDrift, restStep]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: restNeverRaisesDrift,
-  parameters: [drift : Nat],
-  statement: ((drift <= 100) -> ((restStep drift) <= drift)),
-  proof: linear_arithmetic{definitions: [clampDrift, restStep]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: pauseOnlyWhenDivergent,
-  parameters: [drift : Nat],
-  statement: (((offersPause drift) = true) -> ((isDivergent drift) = true)),
-  proof: linear_arithmetic{definitions: [isDivergent, offersPause]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: divergentDecides,
-  parameters: [drift : Nat],
-  statement: (((isDivergent drift) = true) <-> ((coherenceRank drift) = 2)),
-  proof: linear_arithmetic{definitions: [coherenceRank, isDivergent]},
-  axioms: [Classical.choice, Quot.sound, propext]
-}
-
-theorem{
-  name: coherenceMonotone,
-  parameters: [lower : Nat, upper : Nat],
-  statement: ((lower <= upper) -> ((coherenceRank lower) <= (coherenceRank upper))),
-  proof: linear_arithmetic{definitions: [coherenceRank]},
-  axioms: [Quot.sound, propext]
-}
 \end{semanticmodule}
 \end{lexlean}

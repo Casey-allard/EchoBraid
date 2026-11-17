@@ -70,6 +70,7 @@ jobs:
               set -euo pipefail
               cargo run -q --locked -p xtask -- engine tick --write --prove
               cargo run -q --locked -p xtask -- engine status
+              lexlean verify
               cargo test -q --locked -p repo-conformance --test echobraid --test engine
             '
           if [ -f .engine-output.env ]; then

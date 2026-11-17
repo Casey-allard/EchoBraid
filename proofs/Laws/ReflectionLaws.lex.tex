@@ -1,0 +1,52 @@
+\begin{lexlean}{Laws.ReflectionLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Reflection}
+\importmodule{Braid.Resonance}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: pauseComesFirst,
+  parameters: [drift : Nat, variant : Nat],
+  statement: (((Braid.Resonance::offersPause drift) = true) -> ((Braid.Reflection::guideIndex drift variant) = 0)),
+  proof: linear_arithmetic{definitions: [Braid.Reflection::guideIndex]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: guideIndexBounded,
+  parameters: [drift : Nat, variant : Nat],
+  statement: ((Braid.Reflection::guideIndex drift variant) <= 9),
+  proof: linear_arithmetic{
+    definitions: [Braid.Reflection::guideIndex, Braid.Resonance::coherenceRank]
+  },
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: promptPrimeBounded,
+  parameters: [index : Nat],
+  statement: ((2 <= (Braid.Reflection::promptPrime index)) /\ ((Braid.Reflection::promptPrime index) <= 7)),
+  proof: linear_arithmetic{definitions: [Braid.Reflection::promptPrime]},
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+theorem{
+  name: promptPrimeNotFour,
+  parameters: [index : Nat],
+  statement: (((Braid.Reflection::promptPrime index) =? 4) = false),
+  proof: linear_arithmetic{definitions: [Braid.Reflection::promptPrime]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: promptPrimeNotSix,
+  parameters: [index : Nat],
+  statement: (((Braid.Reflection::promptPrime index) =? 6) = false),
+  proof: linear_arithmetic{definitions: [Braid.Reflection::promptPrime]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

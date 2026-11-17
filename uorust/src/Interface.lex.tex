@@ -9,14 +9,14 @@ definition{
   name: acEchobraidEngineEchobraidEngineRule30MatchesTheCellRule,
   parameters: [],
   result: String,
-  body: "rule30_matches_the_cell_rule at crates/engine/src/lib.rs:527 passes."
+  body: "rule30_matches_the_cell_rule at crates/engine/src/lib.rs:541 passes."
 }
 
 definition{
   name: acEchobraidEngineEchobraidEngineRelaxIsSafeAndHessianIsSymmetric,
   parameters: [],
   result: String,
-  body: "relax_is_safe_and_hessian_is_symmetric at crates/engine/src/lib.rs:538 passes."
+  body: "relax_is_safe_and_hessian_is_symmetric at crates/engine/src/lib.rs:552 passes."
 }
 
 definition{
@@ -58,21 +58,21 @@ definition{
   name: acRepoConformanceEchobraidEchobraidEb01,
   parameters: [],
   result: String,
-  body: "echobraid_eb_01 at crates/conformance/tests/echobraid.rs:70: EB-01: Semantic drift stays within 0 to 100 under every message and every rest, and a rest never raises it"
+  body: "echobraid_eb_01 at crates/conformance/tests/echobraid.rs:86: EB-01: Semantic drift stays within 0 to 100 under every message and every rest, and a rest never raises it"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb02,
   parameters: [],
   result: String,
-  body: "echobraid_eb_02 at crates/conformance/tests/echobraid.rs:92: EB-02: A pause is offered only when drift is divergent, and when it is offered the guide answers with the pause and nothing else"
+  body: "echobraid_eb_02 at crates/conformance/tests/echobraid.rs:108: EB-02: A pause is offered only when drift is divergent, and when it is offered the guide answers with the pause and nothing else"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb03,
   parameters: [],
   result: String,
-  body: "echobraid_eb_03 at crates/conformance/tests/echobraid.rs:109: EB-03: Coherence rises monotonically with drift and is divergent exactly when drift is at least 70"
+  body: "echobraid_eb_03 at crates/conformance/tests/echobraid.rs:117: EB-03: Coherence rises monotonically with drift and is divergent exactly when drift is at least 70"
 }
 
 definition{
@@ -86,42 +86,42 @@ definition{
   name: acRepoConformanceEchobraidEchobraidEb05,
   parameters: [],
   result: String,
-  body: "echobraid_eb_05 at crates/conformance/tests/echobraid.rs:158: EB-05: No sensor consent turns on without its own grant, revoke-all clears every flag, and a flag is always 0 or 1"
+  body: "echobraid_eb_05 at crates/conformance/tests/echobraid.rs:154: EB-05: No sensor consent turns on without its own grant, revoke-all clears every flag, and a flag is always 0 or 1"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb06,
   parameters: [],
   result: String,
-  body: "echobraid_eb_06 at crates/conformance/tests/echobraid.rs:182: EB-06: The memory game's Rule 30 tiles are always one of four, its prime-length levels never exceed 23, a wrong tile ends the round and victory comes only at level 7"
+  body: "echobraid_eb_06 at crates/conformance/tests/echobraid.rs:174: EB-06: The memory game's Rule 30 tiles are always one of four, its prime-length levels never exceed 23, a wrong tile ends the round and victory comes only at level 7"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb07,
   parameters: [],
   result: String,
-  body: "echobraid_eb_07 at crates/conformance/tests/echobraid.rs:213: EB-07: Every reflection prompt is indexed by one of the primes 2, 3, 5 and 7, and every guide reply is one of ten fixed, non-directive texts"
+  body: "echobraid_eb_07 at crates/conformance/tests/echobraid.rs:197: EB-07: Every reflection prompt is indexed by one of the primes 2, 3, 5 and 7, and every guide reply is one of ten fixed, non-directive texts"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb08,
   parameters: [],
   result: String,
-  body: "echobraid_eb_08 at crates/conformance/tests/echobraid.rs:257: EB-08: Two quorums whose sizes sum past the membership plus the fault bound share at least one more member than the fault bound, and the ring buffer never overflows or reorders"
+  body: "echobraid_eb_08 at crates/conformance/tests/echobraid.rs:235: EB-08: Two quorums whose sizes sum past the membership plus the fault bound share at least one more member than the fault bound, and the ring buffer never overflows or reorders"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb09,
   parameters: [],
   result: String,
-  body: "echobraid_eb_09 at crates/conformance/tests/echobraid.rs:274: EB-09: Data kept under the 24-hour policy is erased once it is 24 hours old, immediate data is always erased and kept data never is"
+  body: "echobraid_eb_09 at crates/conformance/tests/echobraid.rs:252: EB-09: Data kept under the 24-hour policy is erased once it is 24 hours old, immediate data is always erased and kept data never is"
 }
 
 definition{
   name: acRepoConformanceEchobraidEchobraidEb10,
   parameters: [],
   result: String,
-  body: "echobraid_eb_10 at crates/conformance/tests/echobraid.rs:295: EB-10: Every breathing rhythm the engine has written into the frontier is proved safe by the Lean kernel"
+  body: "echobraid_eb_10 at crates/conformance/tests/echobraid.rs:273: EB-10: Every breathing rhythm the engine has written into the frontier is proved safe by the Lean kernel"
 }
 
 definition{
@@ -513,77 +513,77 @@ definition{
   name: acXtaskXtaskACommittedDirectoryWithItsRecordedChecksumPasses,
   parameters: [],
   result: String,
-  body: "a_committed_directory_with_its_recorded_checksum_passes at xtask/src/main.rs:240 passes."
+  body: "a_committed_directory_with_its_recorded_checksum_passes at xtask/src/main.rs:245 passes."
 }
 
 definition{
   name: acXtaskXtaskACommittedFileWithItsRecordedChecksumPasses,
   parameters: [],
   result: String,
-  body: "a_committed_file_with_its_recorded_checksum_passes at xtask/src/main.rs:247 passes."
+  body: "a_committed_file_with_its_recorded_checksum_passes at xtask/src/main.rs:252 passes."
 }
 
 definition{
   name: acXtaskXtaskACommittedArtifactWithNoChecksumFails,
   parameters: [],
   result: String,
-  body: "a_committed_artifact_with_no_checksum_fails at xtask/src/main.rs:254 passes."
+  body: "a_committed_artifact_with_no_checksum_fails at xtask/src/main.rs:259 passes."
 }
 
 definition{
   name: acXtaskXtaskACommittedArtifactWhoseChecksumDoesNotMatchFails,
   parameters: [],
   result: String,
-  body: "a_committed_artifact_whose_checksum_does_not_match_fails at xtask/src/main.rs:260 passes."
+  body: "a_committed_artifact_whose_checksum_does_not_match_fails at xtask/src/main.rs:265 passes."
 }
 
 definition{
   name: acXtaskXtaskAFileAddedToOrRemovedFromTheArtifactChangesItsChecksum,
   parameters: [],
   result: String,
-  body: "a_file_added_to_or_removed_from_the_artifact_changes_its_checksum at xtask/src/main.rs:267 passes."
+  body: "a_file_added_to_or_removed_from_the_artifact_changes_its_checksum at xtask/src/main.rs:272 passes."
 }
 
 definition{
   name: acXtaskXtaskAChecksumWithNoArtifactToCheckFails,
   parameters: [],
   result: String,
-  body: "a_checksum_with_no_artifact_to_check_fails at xtask/src/main.rs:277 passes."
+  body: "a_checksum_with_no_artifact_to_check_fails at xtask/src/main.rs:282 passes."
 }
 
 definition{
   name: acXtaskXtaskAnArtifactThatIsNotCommittedFails,
   parameters: [],
   result: String,
-  body: "an_artifact_that_is_not_committed_fails at xtask/src/main.rs:283 passes."
+  body: "an_artifact_that_is_not_committed_fails at xtask/src/main.rs:288 passes."
 }
 
 definition{
   name: acXtaskXtaskAnArtifactOutsideTheRepositoryFails,
   parameters: [],
   result: String,
-  body: "an_artifact_outside_the_repository_fails at xtask/src/main.rs:289 passes."
+  body: "an_artifact_outside_the_repository_fails at xtask/src/main.rs:294 passes."
 }
 
 definition{
   name: acXtaskXtaskAChecksumThatIsNotASha256Fails,
   parameters: [],
   result: String,
-  body: "a_checksum_that_is_not_a_sha256_fails at xtask/src/main.rs:297 passes."
+  body: "a_checksum_that_is_not_a_sha256_fails at xtask/src/main.rs:302 passes."
 }
 
 definition{
   name: acXtaskXtaskAnArtifactWithNothingInItFails,
   parameters: [],
   result: String,
-  body: "an_artifact_with_nothing_in_it_fails at xtask/src/main.rs:305 passes."
+  body: "an_artifact_with_nothing_in_it_fails at xtask/src/main.rs:310 passes."
 }
 
 definition{
   name: acXtaskXtaskTheTemplateItselfPasses,
   parameters: [],
   result: String,
-  body: "the_template_itself_passes at xtask/src/main.rs:312 passes."
+  body: "the_template_itself_passes at xtask/src/main.rs:317 passes."
 }
 
 definition{

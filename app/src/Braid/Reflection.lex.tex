@@ -47,45 +47,5 @@ definition{
   result: String,
   body: (if (index =? 0) then (copyText 2) else (if (index =? 1) then "Steady. The words arrived and settled. Nothing needs to happen next." else (if (index =? 2) then "There is ground under this. Stay as long as it feels right." else (if (index =? 3) then "Quiet and clear. You can rest here, or keep going, at your pace." else (if (index =? 4) then "Something is moving. It does not need a name yet." else (if (index =? 5) then "The thread loosens a little. That is allowed. We can follow it slowly." else (if (index =? 6) then "A few directions at once. Any one of them is enough for now." else (if (index =? 7) then "Many things at once. Feet on the floor can be a small anchor, if it helps." else (if (index =? 8) then "This is a lot. Silence is welcome here too." else "The edges feel far apart. Nothing has to be solved right now.")))))))))
 }
-
-theorem{
-  name: pauseComesFirst,
-  parameters: [drift : Nat, variant : Nat],
-  statement: (((Braid.Resonance::offersPause drift) = true) -> ((guideIndex drift variant) = 0)),
-  proof: linear_arithmetic{definitions: [guideIndex]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: guideIndexBounded,
-  parameters: [drift : Nat, variant : Nat],
-  statement: ((guideIndex drift variant) <= 9),
-  proof: linear_arithmetic{definitions: [Braid.Resonance::coherenceRank, guideIndex]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: promptPrimeBounded,
-  parameters: [index : Nat],
-  statement: ((2 <= (promptPrime index)) /\ ((promptPrime index) <= 7)),
-  proof: linear_arithmetic{definitions: [promptPrime]},
-  axioms: [Classical.choice, Quot.sound, propext]
-}
-
-theorem{
-  name: promptPrimeNotFour,
-  parameters: [index : Nat],
-  statement: (((promptPrime index) =? 4) = false),
-  proof: linear_arithmetic{definitions: [promptPrime]},
-  axioms: [Quot.sound, propext]
-}
-
-theorem{
-  name: promptPrimeNotSix,
-  parameters: [index : Nat],
-  statement: (((promptPrime index) =? 6) = false),
-  proof: linear_arithmetic{definitions: [promptPrime]},
-  axioms: [Quot.sound, propext]
-}
 \end{semanticmodule}
 \end{lexlean}

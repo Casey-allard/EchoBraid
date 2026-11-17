@@ -8,7 +8,8 @@ product-specific verification evidence in project-owned files").
 
 | Gate | Command | What it refuses |
 | --- | --- | --- |
-| Lean kernel | `cd app && lexlean verify` (also inside `prismpm --project app verify`) | Any of the 33 theorems in `app/src` that does not hold, any declaration whose axioms differ from what Lean observes, and an engine frontier holding an unsafe rhythm (`frontierSafe` is decided over the concrete list) |
+| Lean kernel, holo | `cd app && lexlean verify` (also inside `prismpm --project app verify`) | The holo's kernel-decided theorems (`frontierSafe` over the concrete frontier, 4-7-8 safety and cycle, the fixed retention policies), and any declaration whose axioms differ from what Lean observes |
+| Lean kernel, proofs | `lexlean verify` at the root (`just proofs`) | Any of the 28 arithmetic theorems in `proofs/Laws` that does not hold over the `app/src` definitions it imports |
 | Guest replay | `prismpm --project app verify` | Any acceptance vector whose response the compiled WebAssembly guest does not reproduce byte for byte; the vectors are written by `scripts/reference.mjs` |
 | Vectors current | `node scripts/reference.mjs --check` | A model edit that left the acceptance vectors stale |
 | Claim pins | `cargo test -p repo-conformance --test echobraid --test engine` | A weakened theorem statement, an extra axiom, a `dispatch` that stops deciding through the proved definition, a directive guide text, an engine whose safety filter drifts from `rhythmSafe`, a Rule 30 step that is not rule 30, a ranking that is not Hessian sorting, a tick admitting more than one or an unsafe rhythm, a Hebbian weight outside 1 to 16 |
@@ -38,13 +39,22 @@ group of 10, overlap 0). The model proves the correct statement instead,
 `f + 1`), with the classic case as its corollary `byzantineQuorum`. The Logic
 place on the page lets a learner find the counterexample themselves.
 
-## Where the full build runs
+## Why two LexLean projects
 
-`lexlean verify` checks every theorem locally in under a minute, because the
-SDK image carries the LexLean runtime prebuilt. `prismpm verify` also compiles
-that runtime natively from source within a fixed 600-second limit; on the
-4-core sandbox this repository was written in, the runtime's `Laws` module
-alone took longer than that, so the full holo build, its guest replay and its
-signed provenance are produced on GitHub's runners by `pages.yml` and
-`build.yml`, as for every other Prism app with arithmetic proofs (afflom/me,
-afflom/stitch, afflom/UORust, afflom/prism-devrel).
+A text application's `prismpm verify` compiles the generated Lean natively,
+LexLean runtime included, within a fixed 600-second limit. A `linear_arithmetic`
+proof makes the generated Lean import the runtime's arithmetic laws
+(`LexLeanRuntime/Laws.lean`, 684 KB), which alone exceeded that limit both in
+the sandbox this repository was written in and on a GitHub runner
+(`PP5007: application-lean timed out`, pages run 44000420820). So the holo
+(`app/`) carries the definitions, the dispatch, the acceptance vectors and the
+theorems the kernel decides, and the root project proves the 28 arithmetic
+theorems over the same `app/src` files with `lexlean verify`, which uses the
+SDK's prebuilt runtime. Both run in `just vv`; `echobraid_eb_*` pins each
+theorem's statement and that its file is an entrypoint of the project that
+verifies it.
+
+Local evidence for the split: `prismpm --project app verify` printed
+`verified attestation: 36cca3a752acc0e2ec63a90dae12eaac0a06464994726e2de6d16f00fed5039a`,
+the holo is 32 717 bytes, and `prism-code vectors` replayed 60 of 60 vectors
+with identities verified. The root project printed `verified 15 modules`.

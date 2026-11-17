@@ -1,0 +1,17 @@
+\begin{lexlean}{Laws.RetentionLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Retention}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: dayPolicyErases,
+  parameters: [age : Nat],
+  statement: ((24 <= age) -> ((Braid.Retention::shouldErase 1 age) = true)),
+  proof: linear_arithmetic{definitions: [Braid.Retention::shouldErase]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

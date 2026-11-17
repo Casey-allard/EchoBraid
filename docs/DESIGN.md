@@ -72,3 +72,10 @@ proved property or a structural choice:
    are Rust. `scripts/uorust.sh` projects the workspace with afflom/UORust
    into `uorust/`, a Prism project the Lean kernel verifies; `uorust.yml`
    keeps it current.
+7. **Arithmetic proofs beside the holo, not in it.** PrismPM compiles a text
+   application's Lean natively within a fixed time limit, and `linear_arithmetic`
+   pulls the LexLean runtime's arithmetic laws into that compile, past the
+   limit. The holo keeps what the kernel decides (the frontier, 4-7-8 safety);
+   `proofs/Laws` proves the rest over the same source files. The frontier is
+   written as indexed functions (`frontierAt`, `frontierName`), because the
+   exporter renders no static list of records.

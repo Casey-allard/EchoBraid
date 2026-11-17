@@ -51,7 +51,7 @@ export const rhythmSafe = (r) =>
 export function frontier(text = readFileSync(FRONTIER, "utf8")) {
   const rhythms = [...text.matchAll(/record Braid\.Breath::Rhythm \{inhale := (\d+), hold := (\d+), exhale := (\d+), rest := (\d+)\}/g)]
     .map((m) => ({ inhale: +m[1], hold: +m[2], exhale: +m[3], rest: +m[4] }));
-  const names = [...(text.match(/name: frontierNames,[\s\S]*?body: ([^\n]*)/)?.[1] ?? "").matchAll(/cons "([^"]*)"/g)].map((m) => m[1]);
+  const names = [...(text.match(/name: frontierName,[\s\S]*?body: ([^\n]*)/)?.[1] ?? "").matchAll(/then "([^"]*)"/g)].map((m) => m[1]);
   return { rhythms, names };
 }
 

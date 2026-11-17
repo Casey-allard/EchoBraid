@@ -1,0 +1,49 @@
+\begin{lexlean}{Laws.MemoryLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Memory}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: tileBounded,
+  parameters: [state : Nat],
+  statement: ((Braid.Memory::tileOf state) < 4),
+  proof: linear_arithmetic{definitions: [Braid.Memory::tileOf]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: levelLengthBounded,
+  parameters: [level : Nat],
+  statement: ((Braid.Memory::levelLength level) <= 23),
+  proof: linear_arithmetic{definitions: [Braid.Memory::levelLength]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: victoryOnlyAtFinalLevel,
+  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
+  statement: (((level =? 7) = false) -> ((Braid.Memory::verdictCode level index expected chosen) <= 2)),
+  proof: linear_arithmetic{definitions: [Braid.Memory::verdictCode]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: wrongTileEndsRound,
+  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
+  statement: (((chosen =? expected) = false) -> ((Braid.Memory::verdictCode level index expected chosen) = 0)),
+  proof: linear_arithmetic{definitions: [Braid.Memory::verdictCode]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: seedNeverDegenerate,
+  parameters: [seed : Nat],
+  statement: (1 <= (Braid.Memory::seedState seed)),
+  proof: linear_arithmetic{definitions: [Braid.Memory::seedState]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

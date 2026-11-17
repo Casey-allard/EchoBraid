@@ -37,11 +37,11 @@ route = "UR-R21"
 refusals = 1
 
 [lift]
-functions = 132
+functions = 133
 lifted = 32
 residue = 53
 foreign = 4
-effect = 43
+effect = 44
 
 [[construct]]
 construct = "Fs effect: Path::exists"
@@ -105,6 +105,11 @@ functions = 2
 
 [[construct]]
 construct = "calls repo_model::Model::load, which reaches an effect"
+cause = "effect"
+functions = 2
+
+[[construct]]
+construct = "calls xtask::engine::write, which performs a Fs effect: std::fs::write"
 cause = "effect"
 functions = 2
 
@@ -195,11 +200,6 @@ functions = 1
 
 [[construct]]
 construct = "calls xtask::engine::read, which performs a Fs effect: std::fs::read_to_string"
-cause = "effect"
-functions = 1
-
-[[construct]]
-construct = "calls xtask::engine::write, which performs a Fs effect: std::fs::write"
 cause = "effect"
 functions = 1
 
@@ -466,7 +466,7 @@ detail = "type outside the lift: f64"
 
 [[residue]]
 status = "open"
-kappa = "aad5d695e3d86fe026399f361d55c10130e7d7fb9bfe8998bf08751f58c2e104"
+kappa = "7bf8260b8792d060feab330ee905200f58f6308ca36c2f048890bcae0b3e6d9e"
 function = "echobraid_engine::frontier_module"
 span = "crates/engine/src/lib.rs:506"
 reason = "arithmetic"
@@ -961,7 +961,7 @@ effect = "Fs effect: std::fs::read_dir"
 [[effect]]
 kappa = "4647d2c87e1c28e01fdeedd58fb21e513a6ca8c092c3a9f2980f629c77cf8f41"
 function = "xtask::check_model"
-span = "xtask/src/main.rs:91"
+span = "xtask/src/main.rs:96"
 effect = "Fs effect: std::fs::write"
 
 [[effect]]
@@ -975,6 +975,12 @@ kappa = "7fe37326f86cbb1a0f785eb89ee9a9f2011f4b0fdd63e4e451ede09878663144"
 function = "xtask::engine::read"
 span = "xtask/src/engine.rs:86"
 effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "7c56867536b126bbaeb8f1932cc8911d83aa71ad76fefe6d384ac4a7bc9bf552"
+function = "xtask::engine::render"
+span = "xtask/src/engine.rs:359"
+effect = "calls xtask::engine::write, which performs a Fs effect: std::fs::write"
 
 [[effect]]
 kappa = "bcf7684ef81411497c7468fd7774529579a052382857e34f62d4171c8fd1216f"
@@ -991,7 +997,7 @@ effect = "calls xtask::engine::write, which performs a Fs effect: std::fs::write
 [[effect]]
 kappa = "d343005eccda09cd05c1116c73999fc21956c9c5f7b710dcb8131f06f38f0acf"
 function = "xtask::engine::status"
-span = "xtask/src/engine.rs:358"
+span = "xtask/src/engine.rs:368"
 effect = "calls xtask::engine::load, which performs a Fs effect: Path::exists"
 
 [[effect]]
@@ -1007,7 +1013,7 @@ span = "xtask/src/engine.rs:90"
 effect = "Fs effect: std::fs::write"
 
 [[effect]]
-kappa = "9ce5c5d1722660a615fa3b518b5e369352e307d451981314b707446c9097c5df"
+kappa = "7a9ab6ac29d8739bd72f4540359b0be88315a8de0316183ad3d033c65bb6ca67"
 function = "xtask::main"
 span = "xtask/src/main.rs:19"
 effect = "Env effect: std::env::args"
@@ -1063,7 +1069,7 @@ effect = "Fs effect: std::fs::read_to_string"
 [[effect]]
 kappa = "c3a946691bcb339e90b4a51ab95598a5e1b48daecba40d0d4aa25f64ce230ef6"
 function = "xtask::validate"
-span = "xtask/src/main.rs:128"
+span = "xtask/src/main.rs:133"
 effect = "calls xtask::audit::audit_limits, which reaches an effect"
 
 [[lifted]]

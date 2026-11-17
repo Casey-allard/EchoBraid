@@ -1,0 +1,33 @@
+\begin{lexlean}{Laws.BreathLaws}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Breath}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+theorem{
+  name: countPositive,
+  parameters: [rhythm : Braid.Breath::Rhythm, position : Nat],
+  statement: ((position < (Braid.Breath::cycleLength rhythm)) -> (1 <= (Braid.Breath::countAt rhythm position))),
+  proof: linear_arithmetic{definitions: [Braid.Breath::countAt, Braid.Breath::cycleLength]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: countWithinPhase,
+  parameters: [rhythm : Braid.Breath::Rhythm, position : Nat],
+  statement: ((Braid.Breath::countAt rhythm position) <= (Braid.Breath::cycleLength rhythm)),
+  proof: linear_arithmetic{definitions: [Braid.Breath::countAt, Braid.Breath::cycleLength]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: phaseBounded,
+  parameters: [rhythm : Braid.Breath::Rhythm, position : Nat],
+  statement: ((Braid.Breath::phaseAt rhythm position) <= 3),
+  proof: linear_arithmetic{definitions: [Braid.Breath::phaseAt]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}
