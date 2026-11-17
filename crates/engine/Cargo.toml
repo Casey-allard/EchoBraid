@@ -1,0 +1,11 @@
+[package]
+name = "echobraid-engine"
+description = "EchoBraid's self-improvement engine: Rule 30 abduction, Hessian sorting and Hebbian strategy weights over breathing rhythms. Dev and CI only."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true

@@ -1,0 +1,75 @@
+\begin{lexlean}{Braid.Logic}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+definition{
+  name: overlap,
+  parameters: [quorumA : Nat, quorumB : Nat, joined : Nat],
+  result: Nat,
+  body: (prim subtract (quorumA + quorumB) joined : Nat)
+}
+
+definition{
+  name: quorumWellFormed,
+  parameters: [members : Nat, quorumA : Nat, quorumB : Nat, joined : Nat],
+  result: Bool,
+  body: ((joined <=? members) && ((quorumA <=? joined) && ((quorumB <=? joined) && (joined <=? (quorumA + quorumB)))))
+}
+
+definition{
+  name: quorumHolds,
+  parameters: [faults : Nat, quorumA : Nat, quorumB : Nat, joined : Nat],
+  result: Bool,
+  body: ((faults + 1) <=? (overlap quorumA quorumB joined))
+}
+
+definition{
+  name: ringAdmit,
+  parameters: [capacity : Nat, read : Nat, write : Nat],
+  result: Nat,
+  body: (if ((prim subtract capacity (prim subtract write read : Nat) : Nat) <? 4) then (prim subtract capacity (prim subtract write read : Nat) : Nat) else 4)
+}
+
+definition{
+  name: ringWrite,
+  parameters: [capacity : Nat, read : Nat, write : Nat],
+  result: Nat,
+  body: (write + (ringAdmit capacity read write))
+}
+
+theorem{
+  name: quorumIntersection,
+  parameters: [members : Nat, faults : Nat, quorumA : Nat, quorumB : Nat, joined : Nat],
+  statement: (((members + (faults + 1)) <= (quorumA + quorumB)) -> ((joined <= members) -> ((quorumHolds faults quorumA quorumB joined) = true))),
+  proof: linear_arithmetic{definitions: [overlap, quorumHolds]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: byzantineQuorum,
+  parameters: [faults : Nat, quorumA : Nat, quorumB : Nat, joined : Nat],
+  statement: ((((faults + faults) + 1) <= quorumA) -> ((((faults + faults) + 1) <= quorumB) -> ((joined <= (((faults + faults) + faults) + 1)) -> ((quorumHolds faults quorumA quorumB joined) = true)))),
+  proof: linear_arithmetic{definitions: [overlap, quorumHolds]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: ringStaysOrdered,
+  parameters: [capacity : Nat, read : Nat, write : Nat],
+  statement: ((read <= write) -> (read <= (ringWrite capacity read write))),
+  proof: linear_arithmetic{definitions: [ringAdmit, ringWrite]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: ringNeverOverflows,
+  parameters: [capacity : Nat, read : Nat, write : Nat],
+  statement: ((read <= write) -> (((prim subtract write read : Nat) <= capacity) -> ((prim subtract (ringWrite capacity read write) read : Nat) <= capacity))),
+  proof: linear_arithmetic{definitions: [ringAdmit, ringWrite]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

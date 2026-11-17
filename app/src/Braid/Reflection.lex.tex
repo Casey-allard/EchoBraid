@@ -1,0 +1,91 @@
+\begin{lexlean}{Braid.Reflection}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Resonance}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+definition{
+  name: promptPrime,
+  parameters: [index : Nat],
+  result: Nat,
+  body: (if ((prim remainder index 4 0 : Nat) =? 0) then 2 else (if ((prim remainder index 4 0 : Nat) =? 1) then 3 else (if ((prim remainder index 4 0 : Nat) =? 2) then 5 else 7)))
+}
+
+definition{
+  name: promptCategory,
+  parameters: [index : Nat],
+  result: String,
+  body: (if ((prim remainder index 4 0 : Nat) =? 0) then "Clarity" else (if ((prim remainder index 4 0 : Nat) =? 1) then "Intention" else (if ((prim remainder index 4 0 : Nat) =? 2) then "Emotion" else "Structure")))
+}
+
+definition{
+  name: promptText,
+  parameters: [index : Nat],
+  result: String,
+  body: (if ((prim remainder index 4 0 : Nat) =? 0) then "What is one thing that feels true right now?" else (if ((prim remainder index 4 0 : Nat) =? 1) then "Start, middle, end. Which part feels heaviest?" else (if ((prim remainder index 4 0 : Nat) =? 2) then "Name five textures in your current experience." else "If this feeling had a shape, how many sides would it have?")))
+}
+
+definition{
+  name: copyText,
+  parameters: [key : Nat],
+  result: String,
+  body: (if (key =? 0) then "We can just sit. Your pace is law here." else (if (key =? 1) then "Breathe or write when ready..." else (if (key =? 2) then "We may be nearing something unsayable. Would a brief pause help?" else (if (key =? 3) then "Notice any shift, even subtle? No need to explain." else (if (key =? 4) then "This session will vanish in 24 hours." else "Voice can help me hear your pace. Shall we listen? You can turn this off anytime.")))))
+}
+
+definition{
+  name: guideIndex,
+  parameters: [drift : Nat, variant : Nat],
+  result: Nat,
+  body: (if (Braid.Resonance::offersPause drift) then 0 else (1 + ((prim multiply (Braid.Resonance::coherenceRank drift) 3 : Nat) + (prim remainder variant 3 0 : Nat))))
+}
+
+definition{
+  name: guideText,
+  parameters: [index : Nat],
+  result: String,
+  body: (if (index =? 0) then (copyText 2) else (if (index =? 1) then "Steady. The words arrived and settled. Nothing needs to happen next." else (if (index =? 2) then "There is ground under this. Stay as long as it feels right." else (if (index =? 3) then "Quiet and clear. You can rest here, or keep going, at your pace." else (if (index =? 4) then "Something is moving. It does not need a name yet." else (if (index =? 5) then "The thread loosens a little. That is allowed. We can follow it slowly." else (if (index =? 6) then "A few directions at once. Any one of them is enough for now." else (if (index =? 7) then "Many things at once. Feet on the floor can be a small anchor, if it helps." else (if (index =? 8) then "This is a lot. Silence is welcome here too." else "The edges feel far apart. Nothing has to be solved right now.")))))))))
+}
+
+theorem{
+  name: pauseComesFirst,
+  parameters: [drift : Nat, variant : Nat],
+  statement: (((Braid.Resonance::offersPause drift) = true) -> ((guideIndex drift variant) = 0)),
+  proof: linear_arithmetic{definitions: [guideIndex]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: guideIndexBounded,
+  parameters: [drift : Nat, variant : Nat],
+  statement: ((guideIndex drift variant) <= 9),
+  proof: linear_arithmetic{definitions: [Braid.Resonance::coherenceRank, guideIndex]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: promptPrimeBounded,
+  parameters: [index : Nat],
+  statement: ((2 <= (promptPrime index)) /\ ((promptPrime index) <= 7)),
+  proof: linear_arithmetic{definitions: [promptPrime]},
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+theorem{
+  name: promptPrimeNotFour,
+  parameters: [index : Nat],
+  statement: (((promptPrime index) =? 4) = false),
+  proof: linear_arithmetic{definitions: [promptPrime]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: promptPrimeNotSix,
+  parameters: [index : Nat],
+  statement: (((promptPrime index) =? 6) = false),
+  proof: linear_arithmetic{definitions: [promptPrime]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

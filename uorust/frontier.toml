@@ -1,0 +1,1262 @@
+# frontier.toml: what uorust did not admit or lift, each with a typed reason.
+# A refusal is an open claim: the router proposed it and admission would
+# not decide it. A residue row is a pure function outside the lift's floor.
+# An effect row is the I/O shell: a function that performs an operating-system
+# effect (file system, process, environment, network), or calls one that does;
+# the security facet records each effect as a capability of its crate.
+# A foreign row is a function whose parameter or result is a type of a registry
+# dependency (syn, toml, serde_json, ...) that has no LexLean model.
+# A lifted row names the definition a function lifted to and, where that
+# definition parts from the Rust function, its divergence. Every function of
+# product code has exactly one residue, foreign, effect or lifted row, keyed
+# by the κ of its question (crate path and tokens): a lifted κ never turns
+# unlifted in a later projection.
+# The work queue comes first: [admission] counts the refusals and each
+# [[reason]] row the refusals of one reason; [lift] counts the functions by
+# table and each [[construct]] row the functions one cause and detail stops.
+# Both queues are ranked, what stops the most first.
+
+spec = "uorust/frontier/1"
+
+[admission]
+refusals = 6
+
+[[reason]]
+reason = "undefined-slot"
+route = "UR-R29"
+refusals = 3
+
+[[reason]]
+reason = "feature-without-acceptance"
+route = "UR-R10"
+refusals = 2
+
+[[reason]]
+reason = "advisories-unconsulted"
+route = "UR-R21"
+refusals = 1
+
+[lift]
+functions = 132
+lifted = 32
+residue = 53
+foreign = 4
+effect = 43
+
+[[construct]]
+construct = "Fs effect: Path::exists"
+cause = "effect"
+functions = 6
+
+[[construct]]
+construct = "Fs effect: std::fs::read_dir"
+cause = "effect"
+functions = 6
+
+[[construct]]
+construct = "Fs effect: std::fs::read_to_string"
+cause = "effect"
+functions = 6
+
+[[construct]]
+construct = "type outside the lift: ModelError::Io.1: std::io::Error"
+cause = "type"
+functions = 6
+
+[[construct]]
+construct = "type outside the lift: f64"
+cause = "type"
+functions = 6
+
+[[construct]]
+construct = "Fs effect: std::fs::read"
+cause = "effect"
+functions = 4
+
+[[construct]]
+construct = "Process effect: Command::new"
+cause = "effect"
+functions = 4
+
+[[construct]]
+construct = "expression form outside the lift: free name Strategy::ALL"
+cause = "form"
+functions = 4
+
+[[construct]]
+construct = "usize + wraps or panics where its value leaves the pointer width: past 2^32 on wasm32-unknown-unknown and thumbv7em-none-eabihf, past 2^64 on x86_64-unknown-linux-gnu and aarch64-unknown-linux-gnu"
+cause = "arithmetic"
+functions = 3
+
+[[construct]]
+construct = "takes or returns Value, a type of the serde_json crate with no LexLean model"
+cause = "foreign"
+functions = 3
+
+[[construct]]
+construct = "type outside the lift: _"
+cause = "type"
+functions = 3
+
+[[construct]]
+construct = "Fs effect: std::fs::write"
+cause = "effect"
+functions = 2
+
+[[construct]]
+construct = "calls repo_model::Model::load, which reaches an effect"
+cause = "effect"
+functions = 2
+
+[[construct]]
+construct = "expression form outside the lift: a while let, whose walk the lift reads no measure for"
+cause = "form"
+functions = 2
+
+[[construct]]
+construct = "the body has statements other than let"
+cause = "statements"
+functions = 2
+
+[[construct]]
+construct = "type outside the lift: Rhythm"
+cause = "type"
+functions = 2
+
+[[construct]]
+construct = "integer operator & wraps or panics depending on the build profile"
+cause = "arithmetic"
+functions = 1
+
+[[construct]]
+construct = "integer operator + wraps or panics depending on the build profile"
+cause = "arithmetic"
+functions = 1
+
+[[construct]]
+construct = "calls from_slice, which is not lifted"
+cause = "call"
+functions = 1
+
+[[construct]]
+construct = "calls from_str, which is not lifted"
+cause = "call"
+functions = 1
+
+[[construct]]
+construct = "calls with_capacity, which is not lifted"
+cause = "call"
+functions = 1
+
+[[construct]]
+construct = "Env effect: std::env::args"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "Env effect: std::env::var_os"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "Fs effect: std::fs::symlink_metadata"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls repo_conformance::runner::workspace_test_names, which performs a Fs effect: std::fs::read_dir"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls repo_model::artifact::artifact_checksum, which performs a Fs effect: std::fs::symlink_metadata"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls repo_model::read, which performs a Fs effect: std::fs::read_to_string"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::audit::audit_limits, which reaches an effect"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::audit::git, which performs a Process effect: Command::new"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::engine::load, which performs a Fs effect: Path::exists"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::engine::read, which performs a Fs effect: std::fs::read_to_string"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::engine::write, which performs a Fs effect: std::fs::write"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::proof::check, which reaches an effect"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "calls xtask::proof::observe, which performs a Fs effect: std::fs::read"
+cause = "effect"
+functions = 1
+
+[[construct]]
+construct = "takes or returns serde_json::Value, a type of the serde_json crate with no LexLean model"
+cause = "foreign"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: a cast from an unsigned to a signed integer, where LexLean binds no conversion from Nat to Int64"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: expr::macro"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: expr::reference"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: let of another type"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: method call .components"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: method call .cycle"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: method call .rotate_right"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "expression form outside the lift: method call .sum"
+cause = "form"
+functions = 1
+
+[[construct]]
+construct = "signature outside the lift: takes &mut self of Driver: the lift reads self and &self as the value, and threads no other receiver"
+cause = "signature"
+functions = 1
+
+[[construct]]
+construct = "signature outside the lift: takes &mut self of Measure: the lift reads self and &self as the value, and threads no other receiver"
+cause = "signature"
+functions = 1
+
+[[construct]]
+construct = "signature outside the lift: takes &mut self of Weights: the lift reads self and &self as the value, and threads no other receiver"
+cause = "signature"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: Plan.ranked: Ranked.score: f64"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: Ranked"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: Ranked.score: f64"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: Self"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: Weights"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: impl FnMut(&str) -> Result<Option<String>, Fail>"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: impl Into<String>"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: repo_model::Authorities"
+cause = "type"
+functions = 1
+
+[[construct]]
+construct = "type outside the lift: std::io::Error"
+cause = "type"
+functions = 1
+
+[[refusal]]
+status = "open"
+reason = "feature-without-acceptance"
+route = "UR-R10"
+span = "crates/model/src/registry.rs:25"
+detail = "Interface::featureRepoModelRegistry has interface calls but no test, doctest or example exercises them"
+
+[[refusal]]
+status = "open"
+reason = "feature-without-acceptance"
+route = "UR-R10"
+span = "xtask/src/main.rs:19"
+detail = "Interface::featureXtaskMain has interface calls but no test, doctest or example exercises them"
+
+[[refusal]]
+status = "open"
+reason = "advisories-unconsulted"
+route = "UR-R21"
+span = "Cargo.lock"
+detail = "no RustSec advisory database was given (--advisories), so no locked package was checked against advisories"
+
+[[refusal]]
+status = "open"
+reason = "undefined-slot"
+route = "UR-R29"
+span = "echobraid-engine/Cargo.toml"
+detail = "the library profile's library is undefined: a project holds one NativeLibrary value and the workspace has more than one library package"
+
+[[refusal]]
+status = "open"
+reason = "undefined-slot"
+route = "UR-R29"
+span = "repo-conformance/Cargo.toml"
+detail = "the library profile's library is undefined: a project holds one NativeLibrary value and the workspace has more than one library package"
+
+[[refusal]]
+status = "open"
+reason = "undefined-slot"
+route = "UR-R29"
+span = "repo-model/Cargo.toml"
+detail = "the library profile's library is undefined: a project holds one NativeLibrary value and the workspace has more than one library package"
+
+[[residue]]
+status = "open"
+kappa = "75cdaf024fe6938fb1b5d115e33370704d94b60635c4c6aeaecd8b9eaec1a661"
+function = "echobraid_engine::Driver::next_word"
+span = "crates/engine/src/lib.rs:58"
+reason = "signature"
+detail = "signature outside the lift: takes &mut self of Driver: the lift reads self and &self as the value, and threads no other receiver"
+
+[[residue]]
+status = "open"
+kappa = "cede2baff6f59c34dbce93819e8b44c9aa8bfbf091a1409e430ec6ebd3de17d7"
+function = "echobraid_engine::Rhythm::as_point"
+span = "crates/engine/src/lib.rs:125"
+reason = "type"
+detail = "type outside the lift: f64"
+
+[[residue]]
+status = "open"
+kappa = "63210b5ce66b92585cdb4a59f93f4ae5a7645660034cbb8fbe0266a10947600f"
+function = "echobraid_engine::Rhythm::cycle"
+span = "crates/engine/src/lib.rs:92"
+reason = "arithmetic"
+detail = "integer operator + wraps or panics depending on the build profile"
+
+[[residue]]
+status = "open"
+kappa = "063fe784a267b6d1b9b3aaa34c19568386600c39592548602f59739e1ec9adba"
+function = "echobraid_engine::Rhythm::safe"
+span = "crates/engine/src/lib.rs:100"
+reason = "form"
+detail = "expression form outside the lift: method call .cycle"
+
+[[residue]]
+status = "open"
+kappa = "c760160c731738830c80f5a1b4dc1595b1bd30dc5d0af3a46d1442faee8fe47d"
+function = "echobraid_engine::Strategy::named"
+span = "crates/engine/src/lib.rs:322"
+reason = "form"
+detail = "expression form outside the lift: free name Strategy::ALL"
+
+[[residue]]
+status = "open"
+kappa = "6bcb9d2eb45f8b404ae40df4179dbedd8c03f931d32b0d39d4842fd9d272a600"
+function = "echobraid_engine::Strategy::propose"
+span = "crates/engine/src/lib.rs:328"
+reason = "arithmetic"
+detail = "integer operator & wraps or panics depending on the build profile"
+
+[[residue]]
+status = "open"
+kappa = "96fc178a551c6a27d6020b91a14d9c089fa3e6bdc0192f6bedb6bba79c2d0fb5"
+function = "echobraid_engine::Weights::allocation"
+span = "crates/engine/src/lib.rs:397"
+reason = "form"
+detail = "expression form outside the lift: free name Strategy::ALL"
+
+[[residue]]
+status = "open"
+kappa = "bb81c6c64ba04728edd5e799d09754ecb3e61369d99b6c419841a8d204dfc99b"
+function = "echobraid_engine::Weights::default"
+span = "crates/engine/src/lib.rs:374"
+reason = "form"
+detail = "expression form outside the lift: free name Strategy::ALL"
+
+[[residue]]
+status = "open"
+kappa = "a3bf83ef214ef96d7d8deb23b58bbe0fac2389f2538d7ff95fbb99a2d223db43"
+function = "echobraid_engine::Weights::learn"
+span = "crates/engine/src/lib.rs:414"
+reason = "signature"
+detail = "signature outside the lift: takes &mut self of Weights: the lift reads self and &self as the value, and threads no other receiver"
+
+[[residue]]
+status = "open"
+kappa = "8f75ac70987173c633dbeee6e3f25ee5a581745eeddf72ffb72ce35157db53c9"
+function = "echobraid_engine::Weights::schedule"
+span = "crates/engine/src/lib.rs:389"
+reason = "form"
+detail = "expression form outside the lift: free name Strategy::ALL"
+
+[[residue]]
+status = "open"
+kappa = "d9e4cc511e42d064fc38a9bb6b02b8bd125f489d99d4ab75c60e7b905b44b965"
+function = "echobraid_engine::calm_score"
+span = "crates/engine/src/lib.rs:136"
+reason = "type"
+detail = "type outside the lift: f64"
+
+[[residue]]
+status = "open"
+kappa = "9a713c7b534e6163eb49cb9c7d75af1177df1c2a383b1a9822aa510a6fb2c8ea"
+function = "echobraid_engine::eigenvalues"
+span = "crates/engine/src/lib.rs:195"
+reason = "type"
+detail = "type outside the lift: f64"
+
+[[residue]]
+status = "open"
+kappa = "636057c7b4aab6958591a9a8057b9dec19894eebb7c9bb897a8893103a51fe3b"
+function = "echobraid_engine::frobenius"
+span = "crates/engine/src/lib.rs:189"
+reason = "type"
+detail = "type outside the lift: f64"
+
+[[residue]]
+status = "open"
+kappa = "aad5d695e3d86fe026399f361d55c10130e7d7fb9bfe8998bf08751f58c2e104"
+function = "echobraid_engine::frontier_module"
+span = "crates/engine/src/lib.rs:506"
+reason = "arithmetic"
+detail = "usize + wraps or panics where its value leaves the pointer width: past 2^32 on wasm32-unknown-unknown and thumbv7em-none-eabihf, past 2^64 on x86_64-unknown-linux-gnu and aarch64-unknown-linux-gnu"
+
+[[residue]]
+status = "open"
+kappa = "d14245d8b56ee385e9c477ee0baf4de36145920f87eb778890a539892f32b898"
+function = "echobraid_engine::hessian"
+span = "crates/engine/src/lib.rs:147"
+reason = "type"
+detail = "type outside the lift: f64"
+
+[[residue]]
+status = "open"
+kappa = "7d2f35dca648d5970bd57f858e0116a188b4bb63cc604af2017a3ed30188447b"
+function = "echobraid_engine::hessian_sort"
+span = "crates/engine/src/lib.rs:265"
+reason = "type"
+detail = "type outside the lift: Ranked.score: f64"
+
+[[residue]]
+status = "open"
+kappa = "c2a4d48c0031931346e39b58b686e4e3d5901de37bb4825f711927654055eeb9"
+function = "echobraid_engine::plan"
+span = "crates/engine/src/lib.rs:457"
+reason = "type"
+detail = "type outside the lift: Plan.ranked: Ranked.score: f64"
+
+[[residue]]
+status = "open"
+kappa = "0a2be65355da87c2a7d682b0397b370c91f6d1d864c27169baa38d049b5e786a"
+function = "echobraid_engine::robust_score"
+span = "crates/engine/src/lib.rs:241"
+reason = "type"
+detail = "type outside the lift: f64"
+
+[[residue]]
+status = "open"
+kappa = "173815d55b876bab0f9d1b45461ab37ac80a2c89f4beaed89694c3f02a9b0b27"
+function = "echobraid_engine::step_rule30_u64"
+span = "crates/engine/src/lib.rs:35"
+reason = "form"
+detail = "expression form outside the lift: method call .rotate_right"
+
+[[residue]]
+status = "open"
+kappa = "f2bf060ffde1eef49d395e224f0720e95c903f8c4f1ff27037eda3af479eca81"
+function = "repo_model::Model::check"
+span = "crates/model/src/lib.rs:75"
+reason = "type"
+detail = "type outside the lift: ModelError::Io.1: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "6a4a2c6d6818010f1cb941bfc9c355fbd873523367ad58481047a1959d97f9b7"
+function = "repo_model::Model::check_authorities"
+span = "crates/model/src/lib.rs:119"
+reason = "type"
+detail = "type outside the lift: ModelError::Io.1: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "e66f742a352fc60bf58e474f583d14a9ff28a56fbc680037085fce118f547a23"
+function = "repo_model::Model::check_ids"
+span = "crates/model/src/lib.rs:89"
+reason = "type"
+detail = "type outside the lift: ModelError::Io.1: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "112a5545774f1f3b18dfec6d479fa45597bcc26f91b9d13af599d5bac3eff7cd"
+function = "repo_model::ModelError::fmt"
+span = "crates/model/src/lib.rs:45"
+reason = "type"
+detail = "type outside the lift: ModelError::Io.1: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "aef8a0876562362782582c6deba0670f9ef782794ca9c91d99ffca3948ffe618"
+function = "repo_model::artifact::hex"
+span = "crates/model/src/artifact.rs:38"
+reason = "call"
+detail = "calls with_capacity, which is not lifted"
+
+[[residue]]
+status = "open"
+kappa = "111fcbd2082dbbc92ed63038252eb153d81728f4599467cdafcc471cf9713b0d"
+function = "repo_model::artifact::io"
+span = "crates/model/src/artifact.rs:46"
+reason = "type"
+detail = "type outside the lift: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "717fd73f77fc27eb9c01433ef6e34564274342edd2aa631c9ed46d2a6d7bf16c"
+function = "repo_model::artifact::is_inside"
+span = "crates/model/src/artifact.rs:26"
+reason = "form"
+detail = "expression form outside the lift: method call .components"
+
+[[residue]]
+status = "open"
+kappa = "b30156946dfcd1fd41d0d82c86aa3b6fc8a6f84517e3e06aba7ecc593224b83f"
+function = "repo_model::codegen::render_conformance"
+span = "crates/model/src/codegen.rs:20"
+reason = "form"
+detail = "expression form outside the lift: expr::reference"
+
+[[residue]]
+status = "open"
+kappa = "4df9e839e9d2cf31ba8ef23964fa4a53b327b73e0916f6615dc78d9a8de32481"
+function = "repo_model::registry::Ids::declared_failures"
+span = "crates/model/src/registry.rs:183"
+reason = "type"
+detail = "type outside the lift: ModelError::Io.1: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "d260f019dcf7e44d78ca9541fedd2b033d7fa448dc8a62e3ea426891d23bda5b"
+function = "repo_model::registry::Ledger::check"
+span = "crates/model/src/registry.rs:73"
+reason = "type"
+detail = "type outside the lift: ModelError::Io.1: std::io::Error"
+
+[[residue]]
+status = "open"
+kappa = "6b8a571956c4424cbc44c6691fe1a86e21ee41dd97bc2c899da30ae5cf693d04"
+function = "repo_model::repo_root"
+span = "crates/model/src/lib.rs:202"
+reason = "form"
+detail = "expression form outside the lift: expr::macro"
+
+[[residue]]
+status = "open"
+kappa = "b9901fd043a35a8c0b5d2e52983c63b4ba9ca4f7fa8a8880fe27537655cdc210"
+function = "xtask::audit::Measure::add"
+span = "xtask/src/audit.rs:808"
+reason = "signature"
+detail = "signature outside the lift: takes &mut self of Measure: the lift reads self and &self as the value, and threads no other receiver"
+
+[[residue]]
+status = "open"
+kappa = "2f17fddb534117d7e7c590f70c442a39238b13c0d24c2ba6d06bb6a07b551b57"
+function = "xtask::audit::Measure::total"
+span = "xtask/src/audit.rs:803"
+reason = "form"
+detail = "expression form outside the lift: method call .sum"
+
+[[residue]]
+status = "open"
+kappa = "0c1b9a6a9831c4c68c5db750a5336a0bad217ed3626bfb91706d60d2449eb78a"
+function = "xtask::audit::bound"
+span = "xtask/src/audit.rs:767"
+reason = "type"
+detail = "type outside the lift: impl FnMut(&str) -> Result<Option<String>, Fail>"
+
+[[residue]]
+status = "open"
+kappa = "9fcade3eecccb44f7f9d36d4ce51eac75e6a7f06b17d7af0593d0bd51621d02e"
+function = "xtask::audit::count_lines"
+span = "xtask/src/audit.rs:718"
+reason = "arithmetic"
+detail = "usize + wraps or panics where its value leaves the pointer width: past 2^32 on wasm32-unknown-unknown and thumbv7em-none-eabihf, past 2^64 on x86_64-unknown-linux-gnu and aarch64-unknown-linux-gnu"
+
+[[residue]]
+status = "open"
+kappa = "144be536cd1b2e3e2af8c52d3ee25bd06ceeedf5752a471e096ebd94ecc76aa6"
+function = "xtask::audit::effective_lines"
+span = "xtask/src/audit.rs:87"
+reason = "form"
+detail = "expression form outside the lift: a cast from an unsigned to a signed integer, where LexLean binds no conversion from Nat to Int64"
+
+[[residue]]
+status = "open"
+kappa = "62aa38b0a165fc315905b35a949d8478ae50eb7150319d6c153bf44ee73d728c"
+function = "xtask::audit::outside_code_spans"
+span = "xtask/src/audit.rs:324"
+reason = "form"
+detail = "expression form outside the lift: a while let, whose walk the lift reads no measure for"
+
+[[residue]]
+status = "open"
+kappa = "1682849f3b5ab55cb88e982e830a42340bfe05d99b02ea03007d2cd9c0b08c9c"
+function = "xtask::audit::refusals"
+span = "xtask/src/audit.rs:828"
+reason = "statements"
+detail = "the body has statements other than let"
+
+[[residue]]
+status = "open"
+kappa = "3290596435e62ebba1a1096f9f179cad52bb7f6e759630ea93a139db9e2af4fe"
+function = "xtask::audit::result_errors"
+span = "xtask/src/audit.rs:188"
+reason = "form"
+detail = "expression form outside the lift: a while let, whose walk the lift reads no measure for"
+
+[[residue]]
+status = "open"
+kappa = "36238701fb2396d3f7a5121c8df8f3ed1ef2f95da783722e4d629e74d6e40fff"
+function = "xtask::bootstrap::dependency_updates_are_confined"
+span = "xtask/src/bootstrap.rs:546"
+reason = "call"
+detail = "calls from_str, which is not lifted"
+
+[[residue]]
+status = "open"
+kappa = "c7f465b417e31cda20c0b7774574c2145efdf8bcf484a6df7f79a49fc4d6d563"
+function = "xtask::bootstrap::docker_credentials_are_confined"
+span = "xtask/src/bootstrap.rs:83"
+reason = "type"
+detail = "type outside the lift: _"
+
+[[residue]]
+status = "open"
+kappa = "33f9423e9537477066c28b505b50eeeb4c16d0664cc3d6eeb5bbf600c1874d61"
+function = "xtask::bootstrap::policy_boundary_is_canonical"
+span = "xtask/src/bootstrap.rs:126"
+reason = "statements"
+detail = "the body has statements other than let"
+
+[[residue]]
+status = "open"
+kappa = "30bc8b508554437f91bacda73441e2580abdb952ee347bc781537f2a4d31dfeb"
+function = "xtask::bootstrap::private_scratch"
+span = "xtask/src/bootstrap.rs:71"
+reason = "type"
+detail = "type outside the lift: _"
+
+[[residue]]
+status = "open"
+kappa = "53e1abe55473d185d38c0479f407160d3aac421fcecc6e38bd2d1349ba69b108"
+function = "xtask::bootstrap::proof_reuse_is_confined"
+span = "xtask/src/bootstrap.rs:222"
+reason = "type"
+detail = "type outside the lift: _"
+
+[[residue]]
+status = "open"
+kappa = "a5a6913a073db7bffcf47498cbb3da8576292a604ffc8b8da6f5f2e47ff97e85"
+function = "xtask::bootstrap::upstream_pins"
+span = "xtask/src/bootstrap.rs:528"
+reason = "type"
+detail = "type outside the lift: repo_model::Authorities"
+
+[[residue]]
+status = "open"
+kappa = "90c6e3bbfa3ba7d81c2284dc30a873df00699477263ac946df72904e2cdc7fa4"
+function = "xtask::engine::array"
+span = "xtask/src/engine.rs:103"
+reason = "type"
+detail = "type outside the lift: Rhythm"
+
+[[residue]]
+status = "open"
+kappa = "0386f0ebd7120d8257a14547f8b982d89a453deacd20c1bfaf9c1d526d509114"
+function = "xtask::engine::bump_version"
+span = "xtask/src/engine.rs:173"
+reason = "arithmetic"
+detail = "usize + wraps or panics where its value leaves the pointer width: past 2^32 on wasm32-unknown-unknown and thumbv7em-none-eabihf, past 2^64 on x86_64-unknown-linux-gnu and aarch64-unknown-linux-gnu"
+
+[[residue]]
+status = "open"
+kappa = "4d9b9f56d2c06bac559cff7e03bd80b83574fda72f994faab9a5c15a93afde63"
+function = "xtask::engine::describe"
+span = "xtask/src/engine.rs:185"
+reason = "type"
+detail = "type outside the lift: Ranked"
+
+[[residue]]
+status = "open"
+kappa = "a3d1a95eb830b47c9fc3d68bd9c8d882d53f48515dae3d5e96ae91817bcb7d5c"
+function = "xtask::engine::fail"
+span = "xtask/src/engine.rs:82"
+reason = "type"
+detail = "type outside the lift: impl Into<String>"
+
+[[residue]]
+status = "open"
+kappa = "d1188b2937f06aa409f4b2691e04813289c4c25d020c7f8533e8baf37d0da90d"
+function = "xtask::engine::rhythm"
+span = "xtask/src/engine.rs:94"
+reason = "type"
+detail = "type outside the lift: Rhythm"
+
+[[residue]]
+status = "open"
+kappa = "14c6a84d2199b1ab5ba30f56ee1c32b53e5784bb691264ed31f658df02625c70"
+function = "xtask::engine::weights"
+span = "xtask/src/engine.rs:131"
+reason = "type"
+detail = "type outside the lift: Weights"
+
+[[residue]]
+status = "open"
+kappa = "aa9f2e538cb4e3051647112fdf731e263aa73fa37a70bb0496078673fd9a31f7"
+function = "xtask::proof::binds"
+span = "xtask/src/proof.rs:112"
+reason = "call"
+detail = "calls from_slice, which is not lifted"
+
+[[residue]]
+status = "open"
+kappa = "01d8e4f31fd96bd31df861c2e2e8db7c38a133d5d836e261458235a6bca1b377"
+function = "xtask::scaffold::Capability::parse"
+span = "xtask/src/scaffold.rs:35"
+reason = "type"
+detail = "type outside the lift: Self"
+
+[[residue]]
+status = "open"
+kappa = "0761a008dd9aa083f6a933802b3cba2d1cbd08640b1e8e119af99498380843d5"
+function = "xtask::scaffold::register_with"
+span = "xtask/src/scaffold.rs:114"
+reason = "form"
+detail = "expression form outside the lift: let of another type"
+
+[[foreign]]
+kappa = "540ca4889f33ed9054727dce400ae758300dab2d48c9c078e5060ebca1967b6a"
+function = "xtask::bootstrap::compare_sdk_inventory"
+span = "xtask/src/bootstrap.rs:400"
+detail = "takes or returns serde_json::Value, a type of the serde_json crate with no LexLean model"
+
+[[foreign]]
+kappa = "ed85948bba3898cdd257b8a3f3f45913e7fff3086b02573815c873b0fd9cdf34"
+function = "xtask::proof::acceptance_digest"
+span = "xtask/src/proof.rs:101"
+detail = "takes or returns Value, a type of the serde_json crate with no LexLean model"
+
+[[foreign]]
+kappa = "ca7d36c763a9ca1ce36e41dfd1d72f0d4c444108626ac3470653b8bef1ae2b97"
+function = "xtask::proof::text"
+span = "xtask/src/proof.rs:61"
+detail = "takes or returns Value, a type of the serde_json crate with no LexLean model"
+
+[[foreign]]
+kappa = "f996c99c865c15c91814ba724569c89e000f9368c01f0606ac67012165dc4519"
+function = "xtask::proof::workspace_paths"
+span = "xtask/src/proof.rs:78"
+detail = "takes or returns Value, a type of the serde_json crate with no LexLean model"
+
+[[effect]]
+kappa = "eba2c06181d46eaeaa45ade563b40f571288b26cb90007da3808aafd09f9c0b6"
+function = "repo_conformance::meta::check_honesty"
+span = "crates/conformance/src/meta.rs:59"
+effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "69e89075ec210457d1900ec08299e9b9df34805c6188e9a3304c0827f2eb199e"
+function = "repo_conformance::runner::scenarios_in"
+span = "crates/conformance/src/runner.rs:36"
+effect = "Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "efe411baaf4ccd25313efcbfdeddafdbbbf775aff2cca517bb2e28fe70abc200"
+function = "repo_conformance::runner::workspace_test_names"
+span = "crates/conformance/src/runner.rs:111"
+effect = "Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "da383e279cb86efcb06103f60c37ebc5c7c9e467b6689644faa9cc2c14826130"
+function = "repo_model::Model::load"
+span = "crates/model/src/lib.rs:58"
+effect = "calls repo_model::read, which performs a Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "314d0d9ef3f617e1342ea6f63a12ba535b63d86a76389dfc1278c80d6ae2bcdb"
+function = "repo_model::Model::load_from_repo_root"
+span = "crates/model/src/lib.rs:68"
+effect = "calls repo_model::Model::load, which reaches an effect"
+
+[[effect]]
+kappa = "60e4f0d5df75518fc9c99d05d899376ff5c4329e7789403004f645c225cd54c2"
+function = "repo_model::artifact::Model::check_artifacts"
+span = "crates/model/src/artifact.rs:131"
+effect = "calls repo_model::artifact::artifact_checksum, which performs a Fs effect: std::fs::symlink_metadata"
+
+[[effect]]
+kappa = "88a68fa953b5b8fffcaa7e44d5f6d5a387fe1a456ed6a117709f52f691713046"
+function = "repo_model::artifact::artifact_checksum"
+span = "crates/model/src/artifact.rs:85"
+effect = "Fs effect: std::fs::symlink_metadata"
+
+[[effect]]
+kappa = "e3048837c5191b4f472a4cdc5b7189efc2e348252b860fefc8183164336c34ba"
+function = "repo_model::artifact::files"
+span = "crates/model/src/artifact.rs:51"
+effect = "Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "f82051b785c37051ce3cdfa5f9ba57245008f4f922953535b4b1dc76c5e7b8cd"
+function = "repo_model::read"
+span = "crates/model/src/lib.rs:195"
+effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "da6c1ba2ecb3da0ca5b7fdd95898474ab02bc6d9fd574e7ee3a314b0029b430c"
+function = "xtask::audit::audit"
+span = "xtask/src/audit.rs:968"
+effect = "calls xtask::audit::git, which performs a Process effect: Command::new"
+
+[[effect]]
+kappa = "d5be65eafa3c6aa84765192b5c54cf611f0de518dc0510ef2b6dafd31984de55"
+function = "xtask::audit::audit_deferral"
+span = "xtask/src/audit.rs:254"
+effect = "Fs effect: Path::exists"
+
+[[effect]]
+kappa = "d721f63252c42ce531ba19f9b99de2fa898c821da53a9fd283283155e762b619"
+function = "xtask::audit::audit_limits"
+span = "xtask/src/audit.rs:128"
+effect = "calls repo_conformance::runner::workspace_test_names, which performs a Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "fd877f3caf765d2033109235479e424a45770081640775ca39a36e7f4dc94ef0"
+function = "xtask::audit::collect"
+span = "xtask/src/audit.rs:64"
+effect = "Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "5565b9fa3a04b94f51a597f8d573b62e25482e49e0b71e2ee17e8fa14dac0cdb"
+function = "xtask::audit::gather_all"
+span = "xtask/src/audit.rs:340"
+effect = "Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "433afa1fa65552cad6210d9462ffb08b2bfe130154f5bd684d908438237c0404"
+function = "xtask::audit::git"
+span = "xtask/src/audit.rs:869"
+effect = "Process effect: Command::new"
+
+[[effect]]
+kappa = "7ec50c3163fddce23d7c2f0fbe082c90f555cd6c342d079d554638dd636fa20d"
+function = "xtask::audit::measure_commit"
+span = "xtask/src/audit.rs:907"
+effect = "Process effect: Command::new"
+
+[[effect]]
+kappa = "f6ebbde97d83133bcfc96856be3920ad66f1ded41163a18ab2a0277f157d6ae6"
+function = "xtask::audit::measure_worktree"
+span = "xtask/src/audit.rs:883"
+effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "3b7219413757d0df1c7140ab874a8ef03fa79e626f56ce0bde0792b729a1c481"
+function = "xtask::audit::shipped"
+span = "xtask/src/audit.rs:24"
+effect = "Fs effect: Path::exists"
+
+[[effect]]
+kappa = "d0f7df7976bbf3f86bb6d6fd74e2c80f39df0370c5b84248f34301b16bb22bde"
+function = "xtask::audit::shipped_sources"
+span = "xtask/src/audit.rs:52"
+effect = "Fs effect: Path::exists"
+
+[[effect]]
+kappa = "a5271b17e2a24dde4e6cfd05957468c9c785ec0aba88674f66298117b7c3041c"
+function = "xtask::bootstrap::audit"
+span = "xtask/src/bootstrap.rs:605"
+effect = "Fs effect: Path::exists"
+
+[[effect]]
+kappa = "a4f10673c2277bc69e97bab61c1d8bcc4485181af4522872579bf83e6718e383"
+function = "xtask::bootstrap::audit_dependency_updates"
+span = "xtask/src/bootstrap.rs:592"
+effect = "calls repo_model::Model::load, which reaches an effect"
+
+[[effect]]
+kappa = "8d79cab07f7d9ed0ca73645146b1ebd2b3ef859a857e07bf28cd39cd5d107f84"
+function = "xtask::bootstrap::audit_policy_files"
+span = "xtask/src/bootstrap.rs:293"
+effect = "Fs effect: std::fs::read"
+
+[[effect]]
+kappa = "1d403c51b030c8eae88b85b8a553d5b7f45a603b828fb30d9db11601967bfd8e"
+function = "xtask::bootstrap::audit_sdk_inventory"
+span = "xtask/src/bootstrap.rs:384"
+effect = "Env effect: std::env::var_os"
+
+[[effect]]
+kappa = "04758ae9755a95b9dcd6411b21297cc0e7ffb462f65e7b357f4c17fd8e7ad571"
+function = "xtask::bootstrap::read"
+span = "xtask/src/bootstrap.rs:19"
+effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "1644c5308397f8c35b3c889440befa66f3a4ace3eb0930f176160b002ab51795"
+function = "xtask::bootstrap::workflow_files"
+span = "xtask/src/bootstrap.rs:512"
+effect = "Fs effect: std::fs::read_dir"
+
+[[effect]]
+kappa = "4647d2c87e1c28e01fdeedd58fb21e513a6ca8c092c3a9f2980f629c77cf8f41"
+function = "xtask::check_model"
+span = "xtask/src/main.rs:91"
+effect = "Fs effect: std::fs::write"
+
+[[effect]]
+kappa = "f98d1a750ae48f885bc9ba697a92eff97d289eb504ea26f2cef426069686f177"
+function = "xtask::engine::load"
+span = "xtask/src/engine.rs:107"
+effect = "Fs effect: Path::exists"
+
+[[effect]]
+kappa = "7fe37326f86cbb1a0f785eb89ee9a9f2011f4b0fdd63e4e451ede09878663144"
+function = "xtask::engine::read"
+span = "xtask/src/engine.rs:86"
+effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "bcf7684ef81411497c7468fd7774529579a052382857e34f62d4171c8fd1216f"
+function = "xtask::engine::run"
+span = "xtask/src/engine.rs:157"
+effect = "Process effect: Command::new"
+
+[[effect]]
+kappa = "0d5aa034a40205eccffdc4a293accb3ca8b6ec5f8ede541088d08471c02a3cc3"
+function = "xtask::engine::save"
+span = "xtask/src/engine.rs:150"
+effect = "calls xtask::engine::write, which performs a Fs effect: std::fs::write"
+
+[[effect]]
+kappa = "d343005eccda09cd05c1116c73999fc21956c9c5f7b710dcb8131f06f38f0acf"
+function = "xtask::engine::status"
+span = "xtask/src/engine.rs:358"
+effect = "calls xtask::engine::load, which performs a Fs effect: Path::exists"
+
+[[effect]]
+kappa = "6741774802c93a3c8c4aca5f698c8ed4e07741946eb97bf154c5c7c3b7cd38da"
+function = "xtask::engine::tick"
+span = "xtask/src/engine.rs:199"
+effect = "calls xtask::engine::read, which performs a Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "59e2b5754878b1bd9306a0e0d86349af2441c7942654e11d841ceae400415e72"
+function = "xtask::engine::write"
+span = "xtask/src/engine.rs:90"
+effect = "Fs effect: std::fs::write"
+
+[[effect]]
+kappa = "9ce5c5d1722660a615fa3b518b5e369352e307d451981314b707446c9097c5df"
+function = "xtask::main"
+span = "xtask/src/main.rs:19"
+effect = "Env effect: std::env::args"
+
+[[effect]]
+kappa = "6d5c7898d04bb97d1ec6d3b65b0e6aa44f1cd42bb886ce93d9cf9d74189d32a3"
+function = "xtask::proof::check"
+span = "xtask/src/proof.rs:303"
+effect = "calls xtask::proof::observe, which performs a Fs effect: std::fs::read"
+
+[[effect]]
+kappa = "cc7a7c015834ac41a03af3894165119ec1b3c2a60012d0b67814bcac074c341a"
+function = "xtask::proof::inputs"
+span = "xtask/src/proof.rs:234"
+effect = "Fs effect: std::fs::read"
+
+[[effect]]
+kappa = "0dbaf98fdb57d67b997889ada05fc778982d93b92e3fe034a105afbd19377d5c"
+function = "xtask::proof::keep"
+span = "xtask/src/proof.rs:330"
+effect = "Fs effect: Path::exists"
+
+[[effect]]
+kappa = "0d3e3f3c6dc66c99b80f39406572a4307557c127ffd6b8ea1e3196153783116c"
+function = "xtask::proof::observe"
+span = "xtask/src/proof.rs:255"
+effect = "Fs effect: std::fs::read"
+
+[[effect]]
+kappa = "07c8cc1dff40bd9f29e46f249723481f23dffc7eef3843f4442d0245f515dde0"
+function = "xtask::proof::read_kept"
+span = "xtask/src/proof.rs:288"
+effect = "Fs effect: std::fs::read"
+
+[[effect]]
+kappa = "80daff23e48bd07127887d37f666dfe124942fe70ae13eec71d19250f64f7ebf"
+function = "xtask::proof::reuse"
+span = "xtask/src/proof.rs:312"
+effect = "calls xtask::proof::check, which reaches an effect"
+
+[[effect]]
+kappa = "57a6a12b0378131070dfd4fdaf15276df9ad469585d7379576e79ba435831040"
+function = "xtask::proof::run"
+span = "xtask/src/proof.rs:214"
+effect = "Process effect: Command::new"
+
+[[effect]]
+kappa = "630582ab12fcde0d16ee2dd9d552369da07720787c88321b19c3ecdc4cf2783e"
+function = "xtask::scaffold::new_capability"
+span = "xtask/src/scaffold.rs:165"
+effect = "Fs effect: std::fs::read_to_string"
+
+[[effect]]
+kappa = "c3a946691bcb339e90b4a51ab95598a5e1b48daecba40d0d4aa25f64ce230ef6"
+function = "xtask::validate"
+span = "xtask/src/main.rs:128"
+effect = "calls xtask::audit::audit_limits, which reaches an effect"
+
+[[lifted]]
+kappa = "2bb207d81e9efda31934ec6ba01787b1cc49fb3bfda25b775739759a29395199"
+function = "echobraid_engine::Rhythm::kappa"
+span = "crates/engine/src/lib.rs:110"
+definition = "Behavior::rhythmKappa"
+
+[[lifted]]
+kappa = "7093975aca5fc586566e68aa775dda0b8344b691a08d3fd3fd700f349abc04e7"
+function = "echobraid_engine::Rhythm::label"
+span = "crates/engine/src/lib.rs:118"
+definition = "Behavior::rhythmLabel"
+
+[[lifted]]
+kappa = "97091348635f870c534cb2b823d482756de7c7ec5ddc540070aa1f4fee252ae1"
+function = "echobraid_engine::Strategy::name"
+span = "crates/engine/src/lib.rs:313"
+definition = "Behavior::strategyName"
+
+[[lifted]]
+kappa = "4bef6840b4f5211c866ef54c3e556b299235a7dbf62ab395593a0d8ecdc63c0c"
+function = "echobraid_engine::Weights::of"
+span = "crates/engine/src/lib.rs:381"
+definition = "Behavior::weightsOf"
+
+[[lifted]]
+kappa = "bf090f2d75015178d48c603ad5c9dad0326d15e56de3bbc877cd3343ab4e7a67"
+function = "repo_conformance::meta::HonestyReport::is_clean"
+span = "crates/conformance/src/meta.rs:34"
+definition = "Behavior::honestyReportIsClean"
+
+[[lifted]]
+kappa = "814866982c92ee41bac4de4a350ea9c6db4d882b26afa59bbde861cf121cdd3e"
+function = "repo_conformance::runner::SuiteReport::ids"
+span = "crates/conformance/src/runner.rs:95"
+definition = "Behavior::suiteReportIds"
+
+[[lifted]]
+kappa = "5c879d68808eb5845d46aac5d91b206ad93e220db5e831ae5a365765a28edff2"
+function = "repo_model::artifact::is_sha256"
+span = "crates/model/src/artifact.rs:34"
+definition = "Behavior::isSha256"
+
+[[lifted]]
+kappa = "b6024fa2fdeeaaec0d5a81b45b498c410127f8771d76e6e257f453494bfdd8d6"
+function = "repo_model::registry::Ids::get"
+span = "crates/model/src/registry.rs:173"
+definition = "Behavior::idsGet"
+
+[[lifted]]
+kappa = "1ce636ad5f2cbd6c746527bfcce7f98f5fb5c4e6f0aff981ae91f1a2af62740a"
+function = "repo_model::registry::Ledger::get"
+span = "crates/model/src/registry.rs:123"
+definition = "Behavior::ledgerGet"
+
+[[lifted]]
+kappa = "64ae818b9fc3988bb54c03e9c57e9e42f7a4eddcf7dcb35a092de382da928f30"
+function = "repo_model::registry::Level::as_str"
+span = "crates/model/src/registry.rs:25"
+definition = "Behavior::levelAsStr"
+
+[[lifted]]
+kappa = "30f6da701f78c80c673a5cdc18058cee3ee47ae657d263008826d7f9b03d5944"
+function = "xtask::audit::hex"
+span = "xtask/src/audit.rs:823"
+definition = "Behavior::xtaskAuditHex"
+
+[[lifted]]
+kappa = "5224ac085f68719e040b3ab99bd39e1acfbe2790855478b9fd898df39cff7993"
+function = "xtask::audit::language"
+span = "xtask/src/audit.rs:707"
+definition = "Behavior::language"
+
+[[lifted]]
+kappa = "9346353461b2c4a2dd668dfd893d7aa8d476c254091e85b36f5232caf4f60a7a"
+function = "xtask::bootstrap::action_reference_is_pinned"
+span = "xtask/src/bootstrap.rs:461"
+definition = "Behavior::actionReferenceIsPinned"
+
+[[lifted]]
+kappa = "0963d69858d0ea5272be5cafd5f519e2a68e22ab8fefcbc6f967fbe862ee61ed"
+function = "xtask::bootstrap::content_matches"
+span = "xtask/src/bootstrap.rs:63"
+definition = "Behavior::contentMatches"
+
+[[lifted]]
+kappa = "c35a803fb333caca79a512c37a85551fd754049b9127f28dffaf5fb376a71f9b"
+function = "xtask::bootstrap::immutable_image"
+span = "xtask/src/bootstrap.rs:24"
+definition = "Behavior::immutableImage"
+
+[[lifted]]
+kappa = "d86f100a893bc87071052f82ff391060283e2391105eb1f7bcd96a1a2d21fed4"
+function = "xtask::bootstrap::native_coverage_is_complete"
+span = "xtask/src/bootstrap.rs:144"
+definition = "Behavior::nativeCoverageIsComplete"
+
+[[lifted]]
+kappa = "7d7f2ad74b020d00449e24f24145306579512c64d7e6487261aca7ac2916ef58"
+function = "xtask::bootstrap::pipeline_lifecycle_is_complete"
+span = "xtask/src/bootstrap.rs:479"
+definition = "Behavior::pipelineLifecycleIsComplete"
+
+[[lifted]]
+kappa = "dc8140c06bd6e5c4e035c93bc44cc9dff2a088cd30d687f5ad90700605e1988f"
+function = "xtask::bootstrap::sdk_image"
+span = "xtask/src/bootstrap.rs:48"
+definition = "Behavior::sdkImage"
+
+[[lifted]]
+kappa = "49d8095f8c935d6aaa81abdc14804b89608375168ec8493d5199b9eb3bb8f814"
+function = "xtask::bootstrap::sha256"
+span = "xtask/src/bootstrap.rs:54"
+definition = "Behavior::sha256"
+
+[[lifted]]
+kappa = "fd99727f4de2de3b499af9f7d029fce8d3af1a0978fd22f9038553c907fc2949"
+function = "xtask::bootstrap::update_preserves_project_content"
+span = "xtask/src/bootstrap.rs:278"
+definition = "Behavior::updatePreservesProjectContent"
+
+[[lifted]]
+kappa = "30497fdb1dad1ab60d11b8b916e1755cd7b9afb0f4302bd74ceff27267db4d3c"
+function = "xtask::bootstrap::workflow_history_is_complete"
+span = "xtask/src/bootstrap.rs:268"
+definition = "Behavior::workflowHistoryIsComplete"
+
+[[lifted]]
+kappa = "8ff7768b1756e2cb637d9821d02f6f72d2b9790b3bd6d641045a3128d69c1a4f"
+function = "xtask::engine::header"
+span = "xtask/src/engine.rs:143"
+definition = "Behavior::header"
+
+[[lifted]]
+kappa = "767665080a8e832189946d379357baf73a8c2b905433fddfe1b9c00a7df9a52f"
+function = "xtask::proof::hex"
+span = "xtask/src/proof.rs:47"
+definition = "Behavior::xtaskProofHex"
+
+[[lifted]]
+kappa = "033beba02e07198289969c4b79780b11434a6a1abbd0193d80812ab43520b2ca"
+function = "xtask::proof::is_id"
+span = "xtask/src/proof.rs:54"
+definition = "Behavior::isId"
+
+[[lifted]]
+kappa = "e2d0a4cad842282e7677de54d82f8b1e6815ede10303f32e500aab1c5403e95a"
+function = "xtask::proof::same"
+span = "xtask/src/proof.rs:68"
+definition = "Behavior::same"
+
+[[lifted]]
+kappa = "8f19c5063aee90357f93316cddddd4883fecfd9d02dfd33e95aa9f5134fe1e35"
+function = "xtask::scaffold::Capability::slug"
+span = "xtask/src/scaffold.rs:75"
+definition = "Behavior::capabilitySlug"
+divergence = "to_lowercase lowers every letter the Unicode case table maps; the lift lowers the ASCII letters only, since no Unicode case table is bound in LexLean or the SDK, so the two differ on text holding a non-ASCII letter that has a lowercase form"
+
+[[lifted]]
+kappa = "8c7cbbe7dd415ab59419adbf4d2e52a4d8bffd0fa5df54960e958cc8d0aad8d8"
+function = "xtask::scaffold::Capability::test_name"
+span = "xtask/src/scaffold.rs:80"
+definition = "Behavior::capabilityTestName"
+divergence = "to_lowercase lowers every letter the Unicode case table maps; the lift lowers the ASCII letters only, since no Unicode case table is bound in LexLean or the SDK, so the two differ on text holding a non-ASCII letter that has a lowercase form"
+
+[[lifted]]
+kappa = "7984e8055d9d535423a5230f7a717636cb06521807fef8c1d43f1be280f781f4"
+function = "xtask::scaffold::id_is_well_formed"
+span = "xtask/src/scaffold.rs:85"
+definition = "Behavior::idIsWellFormed"
+
+[[lifted]]
+kappa = "d10d4766daa531c71faf902d093a4e0422b081630bcd3c97dd11318f57c3665b"
+function = "xtask::scaffold::paths"
+span = "xtask/src/scaffold.rs:152"
+definition = "Behavior::paths"
+
+[[lifted]]
+kappa = "6aa2a168a39d26adac7a01aa0c64a796d87ab3d993f5b118ee3a99fa89a4a956"
+function = "xtask::scaffold::scenario"
+span = "xtask/src/scaffold.rs:133"
+definition = "Behavior::scenario"
+
+[[lifted]]
+kappa = "c024e53c910ce92670c394aa49c6dd4ae5fc241e3a160b8fdcc6d739f0827405"
+function = "xtask::scaffold::test_case"
+span = "xtask/src/scaffold.rs:142"
+definition = "Behavior::testCase"
+divergence = "to_lowercase lowers every letter the Unicode case table maps; the lift lowers the ASCII letters only, since no Unicode case table is bound in LexLean or the SDK, so the two differ on text holding a non-ASCII letter that has a lowercase form"
+
+[[lifted]]
+kappa = "80c10049fbf368c0cbc2a8fe32353542fe2c8325afea7d274acf00718555468f"
+function = "xtask::scaffold::toml_string"
+span = "xtask/src/scaffold.rs:98"
+definition = "Behavior::tomlString"

@@ -1,0 +1,1428 @@
+\begin{lexlean}{Behavior}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{uorust.titles@1.0.0}
+\importmodule{Prelude}
+\title{Lifted Rust behavior}
+\begin{semanticmodule}
+inductive{
+  name: ModelErrorFailure,
+  type_parameters: [],
+  parameters: [],
+  constructors: [
+    {name: Io, fields: []},
+    {name: Parse, fields: []},
+    {name: Inconsistent, fields: []}
+  ]
+}
+
+structure{
+  name: Capability,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: idValue, type: String},
+    {name: level, type: String},
+    {name: suite, type: String},
+    {name: statement, type: String}
+  ]
+}
+
+inductive{
+  name: CmpOrdering,
+  type_parameters: [],
+  parameters: [],
+  constructors: [{name: Less, fields: []}, {name: Equal, fields: []}, {name: Greater, fields: []}]
+}
+
+inductive{
+  name: Comments,
+  type_parameters: [],
+  parameters: [],
+  constructors: [
+    {name: C, fields: []},
+    {name: Hash, fields: []},
+    {name: Lean, fields: []},
+    {name: Html, fields: []}
+  ]
+}
+
+structure{
+  name: HonestyReport,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: violations, type: (List String)},
+    {name: idsChecked, type: Nat},
+    {name: scenariosChecked, type: Nat}
+  ]
+}
+
+inductive{
+  name: Level,
+  type_parameters: [],
+  parameters: [],
+  constructors: [{name: SomeTrue, fields: []}, {name: Build, fields: []}, {name: Open, fields: []}]
+}
+
+structure{
+  name: IdRow,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: idValue, type: String},
+    {name: level, type: Level},
+    {name: suite, type: String},
+    {name: statement, type: String},
+    {name: failure, type: (Option String)},
+    {name: negative, type: (Option String)}
+  ]
+}
+
+structure{
+  name: Ids,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: spec, type: String}, {name: idValue, type: (List IdRow)}]
+}
+
+structure{
+  name: RepoModelClaim,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: idValue, type: String},
+    {name: level, type: Level},
+    {name: statement, type: String},
+    {name: feature, type: (Option String)},
+    {name: authority, type: (Option String)},
+    {name: sampleSize, type: (Option Nat)},
+    {name: seed, type: (Option Nat)}
+  ]
+}
+
+structure{
+  name: Ledger,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: spec, type: String}, {name: claim, type: (List RepoModelClaim)}]
+}
+
+structure{
+  name: Rhythm,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: inhale, type: Nat},
+    {name: hold, type: Nat},
+    {name: exhale, type: Nat},
+    {name: rest, type: Nat}
+  ]
+}
+
+structure{
+  name: Scenario,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: idValue, type: String},
+    {name: level, type: String},
+    {name: statement, type: String},
+    {name: suite, type: String},
+    {name: steps, type: (List String)}
+  ]
+}
+
+inductive{
+  name: Strategy,
+  type_parameters: [],
+  parameters: [],
+  constructors: [
+    {name: Direct, fields: []},
+    {name: Mutate, fields: []},
+    {name: Crossover, fields: []}
+  ]
+}
+
+definition{
+  name: equalStrategy,
+  parameters: [left : Strategy, right : Strategy],
+  result: Bool,
+  body: (match left
+    | Strategy.Direct => (match right
+      | Strategy.Direct => true
+      | Strategy.Mutate => false
+      | Strategy.Crossover => false)
+    | Strategy.Mutate => (match right
+      | Strategy.Direct => false
+      | Strategy.Mutate => true
+      | Strategy.Crossover => false)
+    | Strategy.Crossover => (match right
+      | Strategy.Direct => false
+      | Strategy.Mutate => false
+      | Strategy.Crossover => true))
+}
+
+structure{
+  name: SuiteReport,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: scenarios, type: (List Scenario)}, {name: files, type: Nat}]
+}
+
+structure{
+  name: TupleStrategyNat,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: item0, type: Strategy}, {name: item1, type: Nat}]
+}
+
+structure{
+  name: Weights,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: item0, type: (List TupleStrategyNat)}]
+}
+
+structure{
+  name: TupleNatNat,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: item0, type: Nat}, {name: item1, type: Nat}]
+}
+
+structure{
+  name: TupleStringString,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: item0, type: String}, {name: item1, type: String}]
+}
+
+structure{
+  name: TupleStringComments,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: item0, type: String}, {name: item1, type: Comments}]
+}
+
+structure{
+  name: TupleStringOptionString,
+  type_parameters: [],
+  parameters: [],
+  fields: [{name: item0, type: String}, {name: item1, type: (Option String)}]
+}
+
+structure{
+  name: TupleFilePathFilePathFilePath,
+  type_parameters: [],
+  parameters: [],
+  fields: [
+    {name: item0, type: Prelude::FilePath},
+    {name: item1, type: Prelude::FilePath},
+    {name: item2, type: Prelude::FilePath}
+  ]
+}
+
+definition{
+  name: ordering_is_Less,
+  parameters: [value : CmpOrdering],
+  result: Bool,
+  body: (match value
+    | CmpOrdering.Less => true
+    | CmpOrdering.Equal => false
+    | CmpOrdering.Greater => false)
+}
+
+definition{
+  name: ordering_is_Equal,
+  parameters: [value : CmpOrdering],
+  result: Bool,
+  body: (match value
+    | CmpOrdering.Less => false
+    | CmpOrdering.Equal => true
+    | CmpOrdering.Greater => false)
+}
+
+definition{
+  name: ordering_is_Greater,
+  parameters: [value : CmpOrdering],
+  result: Bool,
+  body: (match value
+    | CmpOrdering.Less => false
+    | CmpOrdering.Equal => false
+    | CmpOrdering.Greater => true)
+}
+
+definition{
+  name: reverse_Ordering,
+  parameters: [value : CmpOrdering],
+  result: CmpOrdering,
+  body: (match value
+    | CmpOrdering.Less => (ctor CmpOrdering.Greater)
+    | CmpOrdering.Equal => (ctor CmpOrdering.Equal)
+    | CmpOrdering.Greater => (ctor CmpOrdering.Less))
+}
+
+definition{
+  name: compare_String,
+  parameters: [left : String, right : String],
+  result: CmpOrdering,
+  body: (if (prim less_than left right : Bool) then (ctor CmpOrdering.Less) else (if (prim equal left right : Bool) then (ctor CmpOrdering.Equal) else (ctor CmpOrdering.Greater))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: compare_ListString,
+  parameters: [left : (List String), right : (List String)],
+  result: CmpOrdering,
+  body: (match left
+    | List.nil => (match right
+      | List.nil => (ctor CmpOrdering.Equal)
+      | List.cons y0 y1 => (ctor CmpOrdering.Less))
+    | List.cons x0 x1 => (match right
+      | List.nil => (ctor CmpOrdering.Greater)
+      | List.cons y0 y1 => (match (compare_String x0 y0)
+        | CmpOrdering.Less => (ctor CmpOrdering.Less)
+        | CmpOrdering.Equal => (match (compare_ListString x1 y1)
+          | CmpOrdering.Less => (ctor CmpOrdering.Less)
+          | CmpOrdering.Equal => (ctor CmpOrdering.Equal)
+          | CmpOrdering.Greater => (ctor CmpOrdering.Greater))
+        | CmpOrdering.Greater => (ctor CmpOrdering.Greater)))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: left
+}
+
+definition{
+  name: rhythmKappa,
+  parameters: [selfValue : Rhythm],
+  result: String,
+  body: (prim join (prim append (cons "eb:v1:breath:" (cons (Prelude::natDecimal (project selfValue inhale)) (cons "-" (cons (Prelude::natDecimal (project selfValue hold)) (nil String))))) (cons "-" (cons (Prelude::natDecimal (project selfValue exhale)) (cons "-" (cons (Prelude::natDecimal (project selfValue rest)) (nil String))))) : (List String)) "" : String),
+  axioms: [propext]
+}
+
+definition{
+  name: rhythmLabel,
+  parameters: [selfValue : Rhythm],
+  result: String,
+  body: (prim join (prim append (cons (Prelude::natDecimal (project selfValue inhale)) (cons "-" (cons (Prelude::natDecimal (project selfValue hold)) (nil String)))) (prim append (cons "-" (cons (Prelude::natDecimal (project selfValue exhale)) (nil String))) (cons "-" (cons (Prelude::natDecimal (project selfValue rest)) (nil String))) : (List String)) : (List String)) "" : String),
+  axioms: [propext]
+}
+
+definition{
+  name: strategyName,
+  parameters: [selfValue : Strategy],
+  result: String,
+  body: (match selfValue
+    | Strategy.Direct => "rule30-direct"
+    | Strategy.Mutate => "mutate-best"
+    | Strategy.Crossover => "crossover")
+}
+
+definition{
+  name: weightsOfFind1,
+  parameters: [items1 : (List TupleStrategyNat), strategy : Strategy],
+  result: (Option TupleStrategyNat),
+  body: (match items1
+    | List.nil => (ctor Option.none [TupleStrategyNat])
+    | List.cons pair1 rest1 => (let s : Strategy := (project pair1 item0); (let item1 : Nat := (project pair1 item1); (if (equalStrategy s strategy) then (ctor Option.some [TupleStrategyNat] pair1) else (weightsOfFind1 rest1 strategy))))),
+  recursive_argument: items1
+}
+
+definition{
+  name: weightsOf,
+  parameters: [selfValue : Weights, strategy : Strategy],
+  result: Nat,
+  body: (match (weightsOfFind1 (project selfValue item0) strategy)
+    | Option.none => 8
+    | Option.some pair2 => (let item2 : Strategy := (project pair2 item0); (let w : Nat := (project pair2 item1); w)))
+}
+
+definition{
+  name: relax478,
+  parameters: [],
+  result: Rhythm,
+  body: (record Rhythm {inhale := 4, hold := 7, exhale := 8, rest := 0})
+}
+
+definition{
+  name: weightRange,
+  parameters: [],
+  result: TupleNatNat,
+  body: (record TupleNatNat {item0 := 1, item1 := 16})
+}
+
+definition{name: candidates, parameters: [], result: Nat, body: 12}
+
+definition{name: frontierCapacity, parameters: [], result: Nat, body: 32}
+
+definition{
+  name: honestyReportIsClean,
+  parameters: [selfValue : HonestyReport],
+  result: Bool,
+  body: ((prim length (project selfValue violations) : Nat) =? 0)
+}
+
+definition{
+  name: suiteReportIdsMap1,
+  parameters: [items1 : (List Scenario)],
+  result: (List String),
+  body: (match items1
+    | List.nil => (nil String)
+    | List.cons s rest1 => (cons (project s idValue) (suiteReportIdsMap1 rest1))),
+  recursive_argument: items1
+}
+
+definition{
+  name: suiteReportIds,
+  parameters: [selfValue : SuiteReport],
+  result: (List String),
+  body: (suiteReportIdsMap1 (project selfValue scenarios))
+}
+
+definition{
+  name: assertive,
+  parameters: [],
+  result: (List String),
+  body: (prim append (cons "proves" (cons "proven" (cons "proof that" (cons "guarantees" (nil String))))) (cons "establishes" (cons "demonstrates that" (cons "shows that" (cons "confirms" (nil String))))) : (List String))
+}
+
+definition{
+  name: isSha256All1,
+  parameters: [items1 : (List Nat)],
+  result: Bool,
+  body: (match items1
+    | List.nil => true
+    | List.cons b rest1 => (if (if (((48 <=? b) && (b <=? 57)) || ((97 <=? b) && (b <=? 102))) then true else false) then (isSha256All1 rest1) else false)),
+  recursive_argument: items1
+}
+
+definition{
+  name: isSha256,
+  parameters: [s : String],
+  result: Bool,
+  body: (((Prelude::textLength s) =? 64) && (isSha256All1 (Prelude::textBytes s))),
+  axioms: [Quot.sound, propext]
+}
+
+definition{
+  name: levelAsStr,
+  parameters: [selfValue : Level],
+  result: String,
+  body: (match selfValue
+    | Level.SomeTrue => "some-true"
+    | Level.Build => "build"
+    | Level.Open => "open")
+}
+
+definition{
+  name: ledgerGetFind1,
+  parameters: [items1 : (List RepoModelClaim), idValue : String],
+  result: (Option RepoModelClaim),
+  body: (match items1
+    | List.nil => (ctor Option.none [RepoModelClaim])
+    | List.cons c rest1 => (if (prim equal (project c idValue) idValue : Bool) then (ctor Option.some [RepoModelClaim] c) else (ledgerGetFind1 rest1 idValue))),
+  recursive_argument: items1
+}
+
+definition{
+  name: ledgerGet,
+  parameters: [selfValue : Ledger, idValue : String],
+  result: (Option RepoModelClaim),
+  body: (ledgerGetFind1 (project selfValue claim) idValue)
+}
+
+definition{
+  name: idsGetFind1,
+  parameters: [items1 : (List IdRow), idValue : String],
+  result: (Option IdRow),
+  body: (match items1
+    | List.nil => (ctor Option.none [IdRow])
+    | List.cons r rest1 => (if (prim equal (project r idValue) idValue : Bool) then (ctor Option.some [IdRow] r) else (idsGetFind1 rest1 idValue))),
+  recursive_argument: items1
+}
+
+definition{
+  name: idsGet,
+  parameters: [selfValue : Ids, idValue : String],
+  result: (Option IdRow),
+  body: (idsGetFind1 (project selfValue idValue) idValue)
+}
+
+definition{name: conformancePath, parameters: [], result: String, body: "CONFORMANCE.md"}
+
+definition{
+  name: authorityRule,
+  parameters: [],
+  result: String,
+  body: "An authority is cited, never re-derived, and never gated on: what it states is not claimed as established here, so the claim that reproduces it stays `some-true`, and that is all \"gated on\" excludes. Its artifact (a standard's text, a corpus) may be committed when its row names the path in `artifact` and records in `checksum` a SHA-256 over the committed bytes, which `cargo xtask check-model` recomputes; a conformance test may then use a committed corpus as its oracle, as evidence for a `build` claim. With nothing committed, `checksum` is `none` and `checksum_reason` says why."
+}
+
+definition{
+  name: languagePart1,
+  parameters: [path : String],
+  result: String,
+  body: (match (prim index (Prelude::textRsplit path "/") 0 : (Option String))
+    | Option.none => path
+    | Option.some value1 => value1),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: languagePart2,
+  parameters: [name : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textLast name ".")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at1 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice name 0 at1), item1 := (Prelude::textSlice name (at1 + (Prelude::textLength ".")) (Prelude::textLength name))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: languageFind1,
+  parameters: [items1 : (List TupleStringComments), extension : String],
+  result: (Option TupleStringComments),
+  body: (match items1
+    | List.nil => (ctor Option.none [TupleStringComments])
+    | List.cons pair2 rest1 => (let e : String := (project pair2 item0); (let item2 : Comments := (project pair2 item1); (if (prim equal e extension : Bool) then (ctor Option.some [TupleStringComments] pair2) else (languageFind1 rest1 extension))))),
+  recursive_argument: items1
+}
+
+definition{
+  name: xtaskAuditHex,
+  parameters: [bytes : (List Nat)],
+  result: String,
+  body: (Prelude::hexBytes bytes),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImagePart1,
+  parameters: [value : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textLast value "@sha256:")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at1 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice value 0 at1), item1 := (Prelude::textSlice value (at1 + (Prelude::textLength "@sha256:")) (Prelude::textLength value))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImagePart2,
+  parameters: [name : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textFirst name "/")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at2 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice name 0 at2), item1 := (Prelude::textSlice name (at2 + (Prelude::textLength "/")) (Prelude::textLength name))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImagePart3,
+  parameters: [registry : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textLast registry ":")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at3 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice registry 0 at3), item1 := (Prelude::textSlice registry (at3 + (Prelude::textLength ":")) (Prelude::textLength registry))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImagePart4,
+  parameters: [registry : String],
+  result: TupleStringOptionString,
+  body: (match (immutableImagePart3 registry)
+    | Option.none => (record TupleStringOptionString {item0 := registry, item1 := (ctor Option.none [String])})
+    | Option.some pair3 => (let host : String := (project pair3 item0); (let port : String := (project pair3 item1); (record TupleStringOptionString {item0 := host, item1 := (ctor Option.some [String] port)})))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImageContains1,
+  parameters: [items1 : (List Nat), needle1 : Nat],
+  result: Bool,
+  body: (match items1
+    | List.nil => false
+    | List.cons item1 rest1 => (if (item1 =? needle1) then true else (immutableImageContains1 rest1 needle1))),
+  recursive_argument: items1
+}
+
+definition{
+  name: immutableImageAll1,
+  parameters: [items2 : (List Nat)],
+  result: Bool,
+  body: (match items2
+    | List.nil => true
+    | List.cons byte rest2 => (if ((((97 <=? byte) && (byte <=? 122)) || ((48 <=? byte) && (byte <=? 57))) || (immutableImageContains1 (cons 46 (cons 45 (nil Nat))) byte)) then (immutableImageAll1 rest2) else false)),
+  recursive_argument: items2
+}
+
+definition{
+  name: immutableImagePart5,
+  parameters: [port1 : String],
+  result: Bool,
+  body: (match (Prelude::textParseNat port1 65535)
+    | Result.ok port => (0 <? port)
+    | Result.error error5 => false),
+  axioms: [Quot.sound, propext]
+}
+
+definition{
+  name: immutableImagePart6,
+  parameters: [port : (Option String)],
+  result: Bool,
+  body: (match port | Option.none => true | Option.some port1 => (immutableImagePart5 port1)),
+  axioms: [Quot.sound, propext]
+}
+
+definition{
+  name: immutableImageContains2,
+  parameters: [items3 : (List Nat), needle2 : Nat],
+  result: Bool,
+  body: (match items3
+    | List.nil => false
+    | List.cons item2 rest3 => (if (item2 =? needle2) then true else (immutableImageContains2 rest3 needle2))),
+  recursive_argument: items3
+}
+
+definition{
+  name: immutableImageAll2,
+  parameters: [items4 : (List Nat)],
+  result: Bool,
+  body: (match items4
+    | List.nil => true
+    | List.cons byte rest4 => (if ((((97 <=? byte) && (byte <=? 122)) || ((48 <=? byte) && (byte <=? 57))) || (immutableImageContains2 (prim append (cons 46 (cons 47 (nil Nat))) (cons 95 (cons 45 (nil Nat))) : (List Nat)) byte)) then (immutableImageAll2 rest4) else false)),
+  recursive_argument: items4
+}
+
+definition{
+  name: immutableImagePart7,
+  parameters: [path : String, registry : String],
+  result: Bool,
+  body: (let pair4 : TupleStringOptionString := (immutableImagePart4 registry); (let host : String := (project pair4 item0); (let port : (Option String) := (project pair4 item1); (((((not (prim equal host "" : Bool)) && (immutableImageAll1 (Prelude::textBytes host))) && (immutableImagePart6 port)) && (not (prim equal path "" : Bool))) && (immutableImageAll2 (Prelude::textBytes path)))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImagePart8,
+  parameters: [name : String],
+  result: Bool,
+  body: (match (immutableImagePart2 name)
+    | Option.none => false
+    | Option.some pair2 => (let registry : String := (project pair2 item0); (let path : String := (project pair2 item1); (immutableImagePart7 path registry)))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImageAll3,
+  parameters: [items5 : (List Nat)],
+  result: Bool,
+  body: (match items5
+    | List.nil => true
+    | List.cons byte rest5 => (if ((((48 <=? byte) && (byte <=? 57)) || (((65 <=? byte) && (byte <=? 70)) || ((97 <=? byte) && (byte <=? 102)))) && (not ((65 <=? byte) && (byte <=? 90)))) then (immutableImageAll3 rest5) else false)),
+  recursive_argument: items5
+}
+
+definition{
+  name: immutableImagePart9,
+  parameters: [digest : String, name : String],
+  result: Bool,
+  body: (let validRegistry : Bool := (immutableImagePart8 name); ((validRegistry && ((Prelude::textLength digest) =? 64)) && (immutableImageAll3 (Prelude::textBytes digest)))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: immutableImage,
+  parameters: [value : String],
+  result: Bool,
+  body: (match (immutableImagePart1 value)
+    | Option.none => false
+    | Option.some pair1 => (let name : String := (project pair1 item0); (let digest : String := (project pair1 item1); (immutableImagePart9 digest name)))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: sdkImagePart1,
+  parameters: [lockArg : String, prefix : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textFirst lockArg prefix)
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at1 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice lockArg 0 at1), item1 := (Prelude::textSlice lockArg (at1 + (Prelude::textLength prefix)) (Prelude::textLength lockArg))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: sdkImagePart2,
+  parameters: [rest : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textFirst rest "\"")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at2 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice rest 0 at2), item1 := (Prelude::textSlice rest (at2 + (Prelude::textLength "\"")) (Prelude::textLength rest))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: sdkImage,
+  parameters: [lockArg : String],
+  result: (Option String),
+  body: (let prefix : String := "\"sdk_image\":\""; (match (sdkImagePart1 lockArg prefix)
+    | Option.none => (ctor Option.none [String])
+    | Option.some tried1 => (let rest : String := (project tried1 item1); (match (sdkImagePart2 rest)
+      | Option.none => (ctor Option.none [String])
+      | Option.some pair1 => (let value : String := (project pair1 item0); (let item1 : String := (project pair1 item1); (ctor Option.some [String] value))))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: sha256,
+  parameters: [bytes : (List Nat)],
+  result: String,
+  body: (let digest : (List Nat) := (Prelude::sha256 bytes); (let hex1 : String := (Prelude::hexBytes digest); (prim join (cons "sha256:" (cons hex1 (nil String))) "" : String))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: contentMatches,
+  parameters: [bytes : (List Nat), expected : String],
+  result: Bool,
+  body: (prim equal (sha256 bytes) expected : Bool),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: nativeCoverageIsCompleteFilterMap1,
+  parameters: [items1 : (List String), key : String],
+  result: (List String),
+  body: (match items1
+    | List.nil => (nil String)
+    | List.cons line rest1 => (match (Prelude::textStripPrefix (Prelude::textTrim line) key)
+      | Option.none => (nativeCoverageIsCompleteFilterMap1 rest1 key)
+      | Option.some found1 => (cons found1 (nativeCoverageIsCompleteFilterMap1 rest1 key)))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items1
+}
+
+definition{
+  name: nativeCoverageIsCompleteMap1,
+  parameters: [items2 : (List String)],
+  result: (List String),
+  body: (match items2
+    | List.nil => (nil String)
+    | List.cons argument0 rest2 => (cons (Prelude::textTrim argument0) (nativeCoverageIsCompleteMap1 rest2))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items2
+}
+
+definition{
+  name: nativeCoverageIsCompletePart1,
+  parameters: [bootstrap : String],
+  result: (List String),
+  body: (let key : String := "runner:"; (nativeCoverageIsCompleteMap1 (nativeCoverageIsCompleteFilterMap1 (Prelude::textLines bootstrap) key))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: nativeCoverageIsCompleteFilterMap2,
+  parameters: [items3 : (List String), key : String],
+  result: (List String),
+  body: (match items3
+    | List.nil => (nil String)
+    | List.cons line rest3 => (match (Prelude::textStripPrefix (Prelude::textTrim line) key)
+      | Option.none => (nativeCoverageIsCompleteFilterMap2 rest3 key)
+      | Option.some found2 => (cons found2 (nativeCoverageIsCompleteFilterMap2 rest3 key)))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items3
+}
+
+definition{
+  name: nativeCoverageIsCompleteMap2,
+  parameters: [items4 : (List String)],
+  result: (List String),
+  body: (match items4
+    | List.nil => (nil String)
+    | List.cons argument0 rest4 => (cons (Prelude::textTrim argument0) (nativeCoverageIsCompleteMap2 rest4))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items4
+}
+
+definition{
+  name: nativeCoverageIsCompletePart2,
+  parameters: [bootstrap : String, group : String],
+  result: (List String),
+  body: (let key : String := "group:"; (nativeCoverageIsCompleteMap2 (nativeCoverageIsCompleteFilterMap2 (Prelude::textLines bootstrap) key))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: nativeCoverageIsCompleteFilterMap3,
+  parameters: [items5 : (List String), key : String],
+  result: (List String),
+  body: (match items5
+    | List.nil => (nil String)
+    | List.cons line rest5 => (match (Prelude::textStripPrefix (Prelude::textTrim line) key)
+      | Option.none => (nativeCoverageIsCompleteFilterMap3 rest5 key)
+      | Option.some found3 => (cons found3 (nativeCoverageIsCompleteFilterMap3 rest5 key)))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items5
+}
+
+definition{
+  name: nativeCoverageIsCompleteMap3,
+  parameters: [items6 : (List String)],
+  result: (List String),
+  body: (match items6
+    | List.nil => (nil String)
+    | List.cons argument0 rest6 => (cons (Prelude::textTrim argument0) (nativeCoverageIsCompleteMap3 rest6))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items6
+}
+
+definition{
+  name: nativeCoverageIsCompletePart3,
+  parameters: [bootstrap : String, cancel : String],
+  result: (List String),
+  body: (let key : String := "cancel-in-progress:"; (nativeCoverageIsCompleteMap3 (nativeCoverageIsCompleteFilterMap3 (Prelude::textLines bootstrap) key))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: nativeCoverageIsCompleteMap4,
+  parameters: [items7 : (List String)],
+  result: (List String),
+  body: (match items7
+    | List.nil => (nil String)
+    | List.cons argument0 rest7 => (cons (Prelude::textTrim argument0) (nativeCoverageIsCompleteMap4 rest7))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items7
+}
+
+definition{
+  name: nativeCoverageIsCompleteAny1,
+  parameters: [items8 : (List String), line : String],
+  result: Bool,
+  body: (match items8
+    | List.nil => false
+    | List.cons key rest8 => (if (Prelude::textStartsWith line key) then true else (nativeCoverageIsCompleteAny1 rest8 line))),
+  recursive_argument: items8
+}
+
+definition{
+  name: nativeCoverageIsCompleteAny2,
+  parameters: [items9 : (List String)],
+  result: Bool,
+  body: (match items9
+    | List.nil => false
+    | List.cons line rest9 => (if (nativeCoverageIsCompleteAny1 (prim append (cons "if:" (cons "continue-on-error:" (cons "include:" (cons "exclude:" (nil String))))) (cons "paths:" (cons "paths-ignore:" (cons "branches-ignore:" (cons "tags-ignore:" (nil String))))) : (List String)) line) then true else (nativeCoverageIsCompleteAny2 rest9))),
+  recursive_argument: items9
+}
+
+definition{
+  name: nativeCoverageIsCompleteFilterMap4,
+  parameters: [items10 : (List String), key : String],
+  result: (List String),
+  body: (match items10
+    | List.nil => (nil String)
+    | List.cons line rest10 => (match (Prelude::textStripPrefix (Prelude::textTrim line) key)
+      | Option.none => (nativeCoverageIsCompleteFilterMap4 rest10 key)
+      | Option.some found4 => (cons found4 (nativeCoverageIsCompleteFilterMap4 rest10 key)))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items10
+}
+
+definition{
+  name: nativeCoverageIsCompleteMap5,
+  parameters: [items11 : (List String)],
+  result: (List String),
+  body: (match items11
+    | List.nil => (nil String)
+    | List.cons argument0 rest11 => (cons (Prelude::textTrim argument0) (nativeCoverageIsCompleteMap5 rest11))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items11
+}
+
+definition{
+  name: nativeCoverageIsCompletePart4,
+  parameters: [bootstrap : String],
+  result: (List String),
+  body: (let key : String := "runs-on:"; (nativeCoverageIsCompleteMap5 (nativeCoverageIsCompleteFilterMap4 (Prelude::textLines bootstrap) key))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: nativeCoverageIsComplete,
+  parameters: [bootstrap : String],
+  result: Bool,
+  body: (let triggers : String := "on:\n  push:\n    branches: [main]\n    tags: ['**']\n  pull_request:\n  merge_group:\n  workflow_dispatch:\n\n"; (let both : String := "[ubuntu-24.04, ubuntu-24.04-arm]"; (let pullRequestAmd64 : String := "${{ fromJSON((github.event_name == 'pull_request' || github.event_name == 'merge_group') && '[\"ubuntu-24.04\"]' || '[\"ubuntu-24.04\", \"ubuntu-24.04-arm\"]') }}"; (let group : String := "${{ github.event_name == 'pull_request' && format('bootstrap-pr-{0}', github.event.pull_request.number) || format('bootstrap-run-{0}', github.run_id) }}"; (let cancel : String := "${{ github.event_name == 'pull_request' }}"; (let runners : (List String) := (nativeCoverageIsCompletePart1 bootstrap); (let groups : (List String) := (nativeCoverageIsCompletePart2 bootstrap group); (let cancels : (List String) := (nativeCoverageIsCompletePart3 bootstrap cancel); (let skipsRuns : Bool := (nativeCoverageIsCompleteAny2 (nativeCoverageIsCompleteMap4 (Prelude::textLines bootstrap))); (((((Prelude::textContains bootstrap triggers) && ((ordering_is_Equal (compare_ListString runners (cons both (nil String)))) || (ordering_is_Equal (compare_ListString runners (cons pullRequestAmd64 (nil String)))))) && (ordering_is_Equal (compare_ListString (nativeCoverageIsCompletePart4 bootstrap) (cons "${{ matrix.runner }}" (nil String))))) && ((((prim length groups : Nat) =? 0) && ((prim length cancels : Nat) =? 0)) || ((ordering_is_Equal (compare_ListString groups (cons group (nil String)))) && (ordering_is_Equal (compare_ListString cancels (cons cancel (nil String))))))) && (not skipsRuns))))))))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: workflowHistoryIsCompleteAny1,
+  parameters: [items1 : (List String)],
+  result: Bool,
+  body: (match items1
+    | List.nil => false
+    | List.cons line rest1 => (if (prim equal (Prelude::textTrim line) "fetch-depth: 0" : Bool) then true else (workflowHistoryIsCompleteAny1 rest1))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items1
+}
+
+definition{
+  name: workflowHistoryIsCompleteAny2,
+  parameters: [items2 : (List String)],
+  result: Bool,
+  body: (match items2
+    | List.nil => false
+    | List.cons line rest2 => (if (prim equal (Prelude::textTrim line) "persist-credentials: false" : Bool) then true else (workflowHistoryIsCompleteAny2 rest2))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items2
+}
+
+definition{
+  name: workflowHistoryIsCompleteAll1,
+  parameters: [items3 : (List String)],
+  result: Bool,
+  body: (match items3
+    | List.nil => true
+    | List.cons step rest3 => (if ((not (Prelude::textContains step "uses: actions/checkout@")) || ((workflowHistoryIsCompleteAny1 (Prelude::textLines step)) && (workflowHistoryIsCompleteAny2 (Prelude::textLines step)))) then (workflowHistoryIsCompleteAll1 rest3) else false)),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items3
+}
+
+definition{
+  name: workflowHistoryIsComplete,
+  parameters: [source : String],
+  result: Bool,
+  body: (workflowHistoryIsCompleteAll1 (Prelude::textSplit source "\n      - ")),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: updatePreservesProjectContentPart1,
+  parameters: [line : String],
+  result: (Option String),
+  body: (match (Prelude::textStripPrefix (Prelude::textTrim line) "for path in ")
+    | Option.none => (ctor Option.none [String])
+    | Option.some line1 => (Prelude::textStripSuffix line1 "; do")),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: updatePreservesProjectContentFindMap1,
+  parameters: [items1 : (List String)],
+  result: (Option String),
+  body: (match items1
+    | List.nil => (ctor Option.none [String])
+    | List.cons line rest1 => (match (updatePreservesProjectContentPart1 line)
+      | Option.none => (updatePreservesProjectContentFindMap1 rest1)
+      | Option.some found1 => (ctor Option.some [String] found1))),
+  axioms: [Classical.choice, Quot.sound, propext],
+  recursive_argument: items1
+}
+
+definition{
+  name: updatePreservesProjectContentPart2,
+  parameters: [source : String],
+  result: Bool,
+  body: (match (updatePreservesProjectContentFindMap1 (Prelude::textLines source))
+    | Option.none => (match (ctor Option.some [String] "AGENTS.md VERIFICATION.md template-contract.json .github/workflows/bootstrap.yml")
+      | Option.none => true
+      | Option.some right1 => false)
+    | Option.some left1 => (match (ctor Option.some [String] "AGENTS.md VERIFICATION.md template-contract.json .github/workflows/bootstrap.yml")
+      | Option.none => false
+      | Option.some right1 => (prim equal left1 right1 : Bool))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: updatePreservesProjectContent,
+  parameters: [source : String],
+  result: Bool,
+  body: ((((((((updatePreservesProjectContentPart2 source) && (Prelude::textContains source "prismpm.lock standards.lock template-contract.json template.lock")) && (Prelude::textContains source "test \"$(git -C .template-policy rev-parse HEAD)\" = \"$TEMPLATE_REVISION\"")) && (Prelude::textContains source "--volume \"$PWD/.template-policy:/template-policy:ro\"")) && (Prelude::textContains source "/template-policy/bootstrap/render.mjs \"$SDK_IMAGE\" \"$ACTION_REFERENCE\" \"$TEMPLATE_REVISION\" /sdk-platforms")) && (not (Prelude::textContains source ".github/workflows/ci.yml"))) && (not (Prelude::textContains source ".github/workflows/honesty.yml"))) && (not (Prelude::textContains source ".github/actions/prismpm"))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: actionReferenceIsPinnedPart1,
+  parameters: [reference : String],
+  result: String,
+  body: (match (prim index (Prelude::textSplit reference "#") 0 : (Option String))
+    | Option.none => ""
+    | Option.some value1 => value1),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: actionReferenceIsPinnedPart2,
+  parameters: [reference1 : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textLast reference1 "@")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at1 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice reference1 0 at1), item1 := (Prelude::textSlice reference1 (at1 + (Prelude::textLength "@")) (Prelude::textLength reference1))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: actionReferenceIsPinnedAll1,
+  parameters: [items1 : (List Nat)],
+  result: Bool,
+  body: (match items1
+    | List.nil => true
+    | List.cons byte rest1 => (if ((((48 <=? byte) && (byte <=? 57)) || (((65 <=? byte) && (byte <=? 70)) || ((97 <=? byte) && (byte <=? 102)))) && (not ((65 <=? byte) && (byte <=? 90)))) then (actionReferenceIsPinnedAll1 rest1) else false)),
+  recursive_argument: items1
+}
+
+definition{
+  name: actionReferenceIsPinned,
+  parameters: [line : String],
+  result: Bool,
+  body: (match (Prelude::textStripPrefix (Prelude::textTrim line) "uses:")
+    | Option.none => true
+    | Option.some reference => (let reference1 : String := (Prelude::textTrim (actionReferenceIsPinnedPart1 reference)); (if (Prelude::textStartsWith reference1 "./") then false else (match (actionReferenceIsPinnedPart2 reference1)
+      | Option.none => false
+      | Option.some value => (let name : String := (project value item0); (let revision : String := (project value item1); (((not (prim equal name "" : Bool)) && ((Prelude::textLength revision) =? 40)) && (actionReferenceIsPinnedAll1 (Prelude::textBytes revision))))))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart1,
+  parameters: [source : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textFirst source "\n  deploy:\n")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at1 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice source 0 at1), item1 := (Prelude::textSlice source (at1 + (Prelude::textLength "\n  deploy:\n")) (Prelude::textLength source))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart2,
+  parameters: [rest : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textFirst rest "\n  verify-deployment:\n")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at2 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice rest 0 at2), item1 := (Prelude::textSlice rest (at2 + (Prelude::textLength "\n  verify-deployment:\n")) (Prelude::textLength rest))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart3,
+  parameters: [source : String],
+  result: (Option TupleStringString),
+  body: (match (pipelineLifecycleIsCompletePart1 source)
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some pair1 => (let item1 : String := (project pair1 item0); (let rest : String := (project pair1 item1); (pipelineLifecycleIsCompletePart2 rest)))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart4,
+  parameters: [source : String],
+  result: Bool,
+  body: (match (pipelineLifecycleIsCompletePart3 source)
+    | Option.none => false
+    | Option.some pair2 => (let deploy : String := (project pair2 item0); (let item2 : String := (project pair2 item1); (Prelude::textContains deploy "id-token: write")))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart5,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "command: build"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart6,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "command: fetch"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart7,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "command: pull"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart8,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "command: prepare-promotion"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart9,
+  parameters: [conformance : (Option Nat), source : String],
+  result: Nat,
+  body: (let needle : String := "command: conformance"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart10,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "command: sign-evidence"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart11,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "command: verify-release"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart12,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "Explicitly replay candidate release trust after the clean pull"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart13,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "Explicitly replay deployed release trust after the clean pull"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart14,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "Explicitly replay deployed release trust before acceptance"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart15,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "Independently replay every signature and promotion decision"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart16,
+  parameters: [evidenceSignature : (Option Nat), offset : Nat],
+  result: Bool,
+  body: (match evidenceSignature
+    | Option.none => false
+    | Option.some signature => (offset <? signature))
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart17,
+  parameters: [conformance : (Option Nat), evidenceSignature : (Option Nat)],
+  result: Bool,
+  body: (match conformance
+    | Option.none => false
+    | Option.some offset => (pipelineLifecycleIsCompletePart16 evidenceSignature offset))
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart18,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "name: prismpm-deployment-plan"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart19,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "path: .prism/plans"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart20,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "name: prismpm-deployment-state"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsCompletePart21,
+  parameters: [source : String],
+  result: Nat,
+  body: (let needle : String := "path: .prism/targets"; (prim subtract (prim length (Prelude::textSplit source needle) : Nat) 1 : Nat)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: pipelineLifecycleIsComplete,
+  parameters: [source : String],
+  result: Bool,
+  body: (let conformance : (Option Nat) := (Prelude::textFirst source "command: conformance"); (let evidenceSignature : (Option Nat) := (Prelude::textFirst source "command: sign-evidence"); (let deployHasSigningIdentity : Bool := (pipelineLifecycleIsCompletePart4 source); (((((((((((((((((((((((pipelineLifecycleIsCompletePart5 source) =? 1) && ((pipelineLifecycleIsCompletePart6 source) =? 2)) && ((pipelineLifecycleIsCompletePart7 source) =? 5)) && ((pipelineLifecycleIsCompletePart8 source) =? 2)) && ((pipelineLifecycleIsCompletePart9 conformance source) =? 1)) && ((pipelineLifecycleIsCompletePart10 source) =? 1)) && ((pipelineLifecycleIsCompletePart11 source) =? 5)) && ((pipelineLifecycleIsCompletePart12 source) =? 2)) && ((pipelineLifecycleIsCompletePart13 source) =? 1)) && ((pipelineLifecycleIsCompletePart14 source) =? 1)) && ((pipelineLifecycleIsCompletePart15 source) =? 1)) && (pipelineLifecycleIsCompletePart17 conformance evidenceSignature)) && (Prelude::textContains source "needs: [resolve-sdk, promote, deploy, verify-deployment, conformance]")) && (not deployHasSigningIdentity)) && (Prelude::textContains source "policy: ${{ steps.policy.outputs.policy-path }}")) && (Prelude::textContains source "trusted-root: ${{ steps.policy.outputs.trusted-root-path }}")) && ((pipelineLifecycleIsCompletePart18 source) =? 2)) && ((pipelineLifecycleIsCompletePart19 source) =? 2)) && ((pipelineLifecycleIsCompletePart20 source) =? 2)) && ((pipelineLifecycleIsCompletePart21 source) =? 2)) && (not (Prelude::textContains source "inputs.promotion-policy"))) && (not (Prelude::textContains source "inputs.trusted-root")))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: header,
+  parameters: [path : String],
+  result: String,
+  body: "# model/engine.toml: the EchoBraid engine's state. Written by `cargo xtask engine tick`; never edit by hand.\n"
+}
+
+definition{
+  name: xtaskProofHex,
+  parameters: [bytes : (List Nat)],
+  result: String,
+  body: (Prelude::hexBytes (Prelude::sha256 bytes)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: isIdAll1,
+  parameters: [items1 : (List Nat)],
+  result: Bool,
+  body: (match items1
+    | List.nil => true
+    | List.cons byte rest1 => (if (((48 <=? byte) && (byte <=? 57)) || ((97 <=? byte) && (byte <=? 102))) then (isIdAll1 rest1) else false)),
+  recursive_argument: items1
+}
+
+definition{
+  name: isId,
+  parameters: [value : String],
+  result: Bool,
+  body: (((Prelude::textLength value) =? 64) && (isIdAll1 (Prelude::textBytes value))),
+  axioms: [Quot.sound, propext]
+}
+
+definition{
+  name: same,
+  parameters: [what : String, keptArg : String, observed : String],
+  result: (Result Unit String),
+  body: (if (prim equal keptArg observed : Bool) then (ctor Result.ok [Unit, String] ()) else (ctor Result.error [Unit, String] (prim join (prim append (cons what (cons " differs: the kept proof has " (nil String))) (cons keptArg (cons ", this run has " (cons observed (nil String)))) : (List String)) "" : String))),
+  axioms: [propext]
+}
+
+definition{
+  name: capabilitySlug,
+  parameters: [selfValue : Capability],
+  result: String,
+  body: (Prelude::textReplace (Prelude::textAsciiLower (project selfValue idValue)) "-" "_"),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: capabilityTestName,
+  parameters: [selfValue : Capability],
+  result: String,
+  body: (prim join (prim append (cons (Prelude::textReplace (project selfValue suite) "-" "_") (nil String)) (cons "_" (cons (capabilitySlug selfValue) (nil String))) : (List String)) "" : String),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: idIsWellFormedPart1,
+  parameters: [idValue : String],
+  result: (Option TupleStringString),
+  body: (match (Prelude::textFirst idValue "-")
+    | Option.none => (ctor Option.none [TupleStringString])
+    | Option.some at1 => (ctor Option.some [TupleStringString] (record TupleStringString {item0 := (Prelude::textSlice idValue 0 at1), item1 := (Prelude::textSlice idValue (at1 + (Prelude::textLength "-")) (Prelude::textLength idValue))}))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: idIsWellFormedPart2,
+  parameters: [prefix : String],
+  result: Bool,
+  body: (match (prim index (Prelude::textChars prefix) 0 : (Option String))
+    | Option.none => false
+    | Option.some c => (Prelude::textIsAsciiUppercase c)),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: idIsWellFormedAll1,
+  parameters: [items1 : (List Nat)],
+  result: Bool,
+  body: (match items1
+    | List.nil => true
+    | List.cons b rest1 => (if (((65 <=? b) && (b <=? 90)) || ((48 <=? b) && (b <=? 57))) then (idIsWellFormedAll1 rest1) else false)),
+  recursive_argument: items1
+}
+
+definition{
+  name: idIsWellFormedAll2,
+  parameters: [items2 : (List Nat)],
+  result: Bool,
+  body: (match items2
+    | List.nil => true
+    | List.cons b rest2 => (if ((48 <=? b) && (b <=? 57)) then (idIsWellFormedAll2 rest2) else false)),
+  recursive_argument: items2
+}
+
+definition{
+  name: idIsWellFormed,
+  parameters: [idValue : String],
+  result: Bool,
+  body: (match (idIsWellFormedPart1 idValue)
+    | Option.none => false
+    | Option.some value => (let prefix : String := (project value item0); (let number : String := (project value item1); ((((idIsWellFormedPart2 prefix) && (idIsWellFormedAll1 (Prelude::textBytes prefix))) && (not (prim equal number "" : Bool))) && (idIsWellFormedAll2 (Prelude::textBytes number)))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: tomlStringLoop1,
+  parameters: [items1 : (List String), state1 : String],
+  result: String,
+  body: (match items1
+    | List.nil => state1
+    | List.cons c rest1 => (if (prim equal c "\"" : Bool) then (let out1 : String := (prim join (cons state1 (cons "\\\"" (nil String))) "" : String); (tomlStringLoop1 rest1 out1)) else (if (prim equal c "\\" : Bool) then (let out2 : String := (prim join (cons state1 (cons "\\\\" (nil String))) "" : String); (tomlStringLoop1 rest1 out2)) else (if (prim equal c "\t" : Bool) then (let out3 : String := (prim join (cons state1 (cons "\\t" (nil String))) "" : String); (tomlStringLoop1 rest1 out3)) else (let out4 : String := (prim join (cons state1 (cons c (nil String))) "" : String); (tomlStringLoop1 rest1 out4)))))),
+  axioms: [propext],
+  recursive_argument: items1
+}
+
+definition{
+  name: tomlString,
+  parameters: [value : String],
+  result: String,
+  body: (let out : String := "\""; (let state2 : String := (tomlStringLoop1 (Prelude::textChars value) out); (let out5 : String := (prim join (cons state2 (cons "\"" (nil String))) "" : String); out5))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: scenario,
+  parameters: [c : Capability],
+  result: String,
+  body: (prim join (prim append (prim append (cons "\n  @" (cons (project c idValue) (cons " @" (nil String)))) (cons (project c level) (cons "\n  Scenario: " (cons (project c statement) (nil String)))) : (List String)) (prim append (cons "\n    Given the fixture " (cons (project c idValue) (cons " needs\n    When the suite exercises " (nil String)))) (cons (project c idValue) (cons "\n    Then " (cons (project c statement) (cons "\n" (nil String))))) : (List String)) : (List String)) "" : String),
+  axioms: [propext]
+}
+
+definition{
+  name: testCase,
+  parameters: [c : Capability],
+  result: String,
+  body: (prim join (prim append (cons "\n/// `" (cons (project c idValue) (cons "`: " (cons (Prelude::textReplace (project c statement) "`" "'") (nil String))))) (prim append (cons "\n#[test]\nfn " (cons (capabilityTestName c) (nil String))) (cons "() {\n    panic!(\"" (cons (project c idValue) (cons " is registered and not built: assert what its scenario states\");\n}\n" (nil String)))) : (List String)) : (List String)) "" : String),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: paths,
+  parameters: [root : Prelude::FilePath, c : Capability],
+  result: TupleFilePathFilePathFilePath,
+  body: (record TupleFilePathFilePathFilePath {item0 := (Prelude::pathJoin root "model/ids.toml"), item1 := (Prelude::pathJoin (Prelude::pathJoin root "features/suites") (prim join (cons (project c suite) (cons ".feature" (nil String))) "" : String)), item2 := (Prelude::pathJoin (Prelude::pathJoin root "crates/conformance/tests") (prim join (cons (Prelude::textReplace (project c suite) "-" "_") (cons ".rs" (nil String))) "" : String))}),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+
+definition{
+  name: languages,
+  parameters: [],
+  result: (List TupleStringComments),
+  body: (prim append (prim append (cons (record TupleStringComments {item0 := "rs", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "ts", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "tsx", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "mts", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "cts", item1 := (ctor Comments.C)}) (nil TupleStringComments)))))) (cons (record TupleStringComments {item0 := "js", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "mjs", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "cjs", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "jsx", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "css", item1 := (ctor Comments.C)}) (nil TupleStringComments)))))) : (List TupleStringComments)) (prim append (cons (record TupleStringComments {item0 := "scss", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "c", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "h", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "cpp", item1 := (ctor Comments.C)}) (cons (record TupleStringComments {item0 := "html", item1 := (ctor Comments.Html)}) (nil TupleStringComments)))))) (cons (record TupleStringComments {item0 := "py", item1 := (ctor Comments.Hash)}) (cons (record TupleStringComments {item0 := "sh", item1 := (ctor Comments.Hash)}) (cons (record TupleStringComments {item0 := "bash", item1 := (ctor Comments.Hash)}) (cons (record TupleStringComments {item0 := "awk", item1 := (ctor Comments.Hash)}) (cons (record TupleStringComments {item0 := "lean", item1 := (ctor Comments.Lean)}) (nil TupleStringComments)))))) : (List TupleStringComments)) : (List TupleStringComments))
+}
+
+definition{
+  name: prismLocks,
+  parameters: [],
+  result: (List String),
+  body: (cons "frame.lock" (cons "identity/stitch.lock" (nil String)))
+}
+
+definition{
+  name: gate,
+  parameters: [],
+  result: (List Nat),
+  body: (prim append (prim append (cons 112 (cons 117 (cons 98 (nil Nat)))) (cons 32 (cons 109 (cons 111 (cons 100 (nil Nat))))) : (List Nat)) (prim append (cons 32 (cons 112 (cons 114 (cons 105 (nil Nat))))) (cons 115 (cons 109 (cons 32 (cons 123 (nil Nat))))) : (List Nat)) : (List Nat))
+}
+
+definition{
+  name: universalPolicyPaths,
+  parameters: [],
+  result: (List String),
+  body: (prim append (cons ".devcontainer/devcontainer.json" (cons ".github/workflows/bootstrap.yml" (cons "AGENTS.md" (nil String)))) (prim append (cons "VERIFICATION.md" (cons "prismpm.lock" (nil String))) (cons "template-contract.json" (cons "template.lock" (nil String))) : (List String)) : (List String))
+}
+
+definition{
+  name: projectContentPaths,
+  parameters: [],
+  result: (List String),
+  body: (cons "CONFORMANCE.md" (nil String))
+}
+
+definition{
+  name: proofKey,
+  parameters: [],
+  result: String,
+  body: "key: prism-proof-${{ runner.os }}-${{ runner.arch }}-sdk-${{ steps.proof-inputs.outputs.sdk }}-lean-${{ steps.proof-inputs.outputs.lean }}-${{ hashFiles('app/**', '!app/specs/**', 'prismpm.lock', 'Justfile', 'rust-toolchain.toml') }}"
+}
+
+definition{
+  name: proofInputs,
+  parameters: [],
+  result: (List String),
+  body: (prim append (cons "id: proof-inputs" (cons "shell: bash" (cons "run: |" (cons "set -euo pipefail" (nil String))))) (cons "sdk=$(sed -n 's/.*\"sdk_image\":\"[^\"@]*@sha256:\\([0-9a-f]\\{64\\}\\)\".*/\\1/p' prismpm.lock)" (cons "lean=$(sed -n 's/^leanprover\\/lean4:\\(v[0-9A-Za-z.-]*\\)$/\\1/p' app/lean-toolchain)" (cons "test -n \"$sdk\"" (cons "test -n \"$lean\"" (nil String))))) : (List String))
+}
+
+definition{
+  name: proofRecipe,
+  parameters: [],
+  result: (List String),
+  body: (prim append (prim append (cons "case \"${PRISM_PROOF_EVENT:-}\" in" (cons "pull_request:*|merge_group:*|push:refs/heads/main)" (cons "if cargo run -q --locked -p xtask -- proof-reuse; then" (nil String)))) (cons "exit 0" (cons "fi" (cons ";;" (nil String)))) : (List String)) (prim append (cons "esac" (cons "rm -rf .prism-proof" (cons "prismpm --project app verify | tee .prism-proof.log" (nil String)))) (cons "attestation=$(sed -n 's/^verified attestation: \\([0-9a-f]\\{64\\}\\)$/\\1/p' .prism-proof.log)" (cons "rm -f .prism-proof.log" (cons "cargo run -q --locked -p xtask -- proof-keep \"$attestation\"" (nil String)))) : (List String)) : (List String))
+}
+
+definition{name: state, parameters: [], result: String, body: "model/engine.toml"}
+
+definition{name: frontier, parameters: [], result: String, body: "frontier.toml"}
+
+definition{name: module, parameters: [], result: String, body: "app/src/Braid/Frontier.lex.tex"}
+
+definition{name: app, parameters: [], result: String, body: "app/src/App.lex.tex"}
+
+definition{name: lock, parameters: [], result: String, body: "app/lexlean.lock"}
+
+definition{name: output, parameters: [], result: String, body: ".engine-output.env"}
+
+definition{name: status, parameters: [], result: String, body: ".engine-status.md"}
+
+definition{name: genesis, parameters: [], result: Nat, body: 4999954838376833385}
+
+definition{name: kept, parameters: [], result: String, body: ".prism-proof"}
+
+definition{
+  name: evidence,
+  parameters: [],
+  result: (List String),
+  body: (prim append (cons "manifest.json" (nil String)) (cons "lexlean-attestation.json" (cons "application-acceptance.json" (nil String))) : (List String))
+}
+
+definition{
+  name: inputPaths,
+  parameters: [],
+  result: String,
+  body: "app :(exclude)app/specs prismpm.lock Justfile rust-toolchain.toml"
+}
+
+definition{
+  name: levels,
+  parameters: [],
+  result: (List String),
+  body: (prim append (cons "some-true" (nil String)) (cons "build" (cons "open" (nil String))) : (List String))
+}
+
+definition{
+  name: language,
+  parameters: [path : String],
+  result: (Option Comments),
+  body: (let name : String := (languagePart1 path); (match (languagePart2 name)
+    | Option.none => (ctor Option.none [Comments])
+    | Option.some tried2 => (let pair1 : TupleStringString := tried2; (let item1 : String := (project pair1 item0); (let extension : String := (project pair1 item1); (match (languageFind1 (languages) extension)
+      | Option.none => (ctor Option.none [Comments])
+      | Option.some pair3 => (let item3 : String := (project pair3 item0); (let c : Comments := (project pair3 item1); (ctor Option.some [Comments] c))))))))),
+  axioms: [Classical.choice, Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

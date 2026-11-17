@@ -1,0 +1,140 @@
+{
+  "name": "EchoBraid",
+  "shortName": "EchoBraid",
+  "live": "https://casey-allard.github.io/EchoBraid/",
+  "purpose": "A neurodivergent-affirming learning companion that keeps your pace. A soft writing loop, guided breathing, a memory game, prime-numbered reflection prompts and a formal-logic workbench, where every decision is made by a guest whose rules are proved in Lean.",
+  "tagline": "Your pace is law here. Every rule is proved.",
+  "hint": "Write, breathe or play. Nothing turns on without your choice.",
+  "inputLabel": "Request",
+  "placeholder": "hex: 44 32 50",
+  "submitLabel": "Send",
+  "outputLabel": "Reply",
+  "answers": {
+    "positive": [
+      "stable*",
+      "holds*",
+      "correct",
+      "level",
+      "victory",
+      "erase",
+      "keep"
+    ],
+    "negative": [
+      "violated*",
+      "wrong"
+    ],
+    "refusal": "invalid request"
+  },
+  "promise": {
+    "headline": "It never pushes, never turns a sensor on by itself, and offers a pause before anything else when things run high.",
+    "detail": "Drift stays between 0 and 100, a pause is offered only when it is divergent, every breath countdown stays in its phase, no consent turns on without its own grant, and every rhythm the engine adds is proved safe first."
+  },
+  "claim": "EB-01 to EB-13: drift is bounded, a pause comes first when drift is divergent, every breath countdown is in range, no consent turns on silently, the memory game is fair, quorums intersect, retention is honoured, and every engine-discovered rhythm is proved safe.",
+  "proposition": {
+    "name": "pauseComesFirst",
+    "text": "offersPause drift = true -> guideIndex drift variant = 0\n\noffersPause drift := 80 < drift\nguideIndex drift variant :=\n  if offersPause drift then 0\n  else 1 + coherenceRank drift * 3 + variant % 3",
+    "plain": "Whenever drift runs past 80, the guide's only answer is the offer of a pause."
+  },
+  "theorems": [
+    {
+      "name": "driftStepBounded",
+      "statement": "driftStep drift length ≤ 100, for every drift and message length",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Resonance.lex.tex"
+    },
+    {
+      "name": "pauseComesFirst",
+      "statement": "offersPause drift = true → guideIndex drift variant = 0",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Reflection.lex.tex"
+    },
+    {
+      "name": "countPositive",
+      "statement": "position < cycleLength rhythm → 1 ≤ countAt rhythm position, for every rhythm",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Breath.lex.tex"
+    },
+    {
+      "name": "noSilentGrant",
+      "statement": "action ≠ grant → current = 0 → nextFlag current grant revoke action = 0",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Consent.lex.tex"
+    },
+    {
+      "name": "victoryOnlyAtFinalLevel",
+      "statement": "level ≠ 7 → verdictCode level index expected chosen ≤ 2",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Memory.lex.tex"
+    },
+    {
+      "name": "quorumIntersection",
+      "statement": "n + f + 1 ≤ |Q1| + |Q2| → |Q1 ∪ Q2| ≤ n → f + 1 ≤ |Q1 ∩ Q2|",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Logic.lex.tex"
+    },
+    {
+      "name": "dayPolicyErases",
+      "statement": "24 ≤ age → shouldErase 1 age = true",
+      "how": "Linear arithmetic, checked by the Lean kernel in prismpm verify",
+      "where": "app/src/Braid/Retention.lex.tex"
+    },
+    {
+      "name": "frontierSafe",
+      "statement": "allSafe frontierRhythms = true: every rhythm the engine wrote is safe",
+      "how": "Decided by the Lean kernel over the frontier the engine wrote, on every engine tick",
+      "where": "app/src/Braid/Frontier.lex.tex"
+    }
+  ],
+  "pinned": [
+    {
+      "name": "echobraid_eb_01 to echobraid_eb_10",
+      "what": "Each theorem's exact statement, that it rests only on Lean's standard axioms, and that dispatch decides through the proved definitions. String-matching tests, not theorems: a planted defect fails them.",
+      "where": "crates/conformance/tests/echobraid.rs"
+    },
+    {
+      "name": "engine_eb_11 to engine_eb_13",
+      "what": "Rule 30, Hessian sorting and the Hebbian weights of the self-improvement engine, and that its safety filter is the model's rhythmSafe.",
+      "where": "crates/conformance/tests/engine.rs"
+    }
+  ],
+  "trusted": [
+    {
+      "name": "SDK image",
+      "value": "the digest prismpm.lock pins; see the bootstrap workflow's log"
+    },
+    {
+      "name": "Lean toolchain",
+      "value": "leanprover/lean4:v4.32.1"
+    },
+    {
+      "name": "LexLean compiler semantics",
+      "value": "1427f8b629013648a480454d67202788f2303f5396f1d7c70a7c350ddab6f694"
+    },
+    {
+      "name": "Your browser",
+      "value": "runs the WebAssembly guest and this page"
+    }
+  ],
+  "attestations": {
+    "proof": {
+      "id": "printed by lexlean verify and prismpm verify in every engine and pages run",
+      "url": "https://github.com/Casey-allard/EchoBraid/actions/workflows/engine.yml"
+    },
+    "build": {
+      "id": "printed by prismpm verify in every pages run",
+      "url": "https://github.com/Casey-allard/EchoBraid/actions/workflows/pages.yml"
+    }
+  },
+  "links": [
+    {
+      "label": "Engine frontier",
+      "href": "https://github.com/Casey-allard/EchoBraid/blob/main/frontier.toml"
+    },
+    {
+      "label": "Conformance",
+      "href": "https://github.com/Casey-allard/EchoBraid/blob/main/CONFORMANCE.md"
+    }
+  ],
+  "repository": "https://github.com/Casey-allard/EchoBraid",
+  "report": "https://github.com/Casey-allard/EchoBraid/blob/main/VERIFICATION-ECHOBRAID.md"
+}

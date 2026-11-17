@@ -1,0 +1,51 @@
+/* EchoBraid's surface. Every colour is a brand token; nothing here is a literal. */
+.eb { display: grid; grid-template-rows: auto 1fr; gap: 16px; block-size: 100%; min-block-size: 0; }
+.eb-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+.eb-go, .eb button, .eb select, .eb input, .eb textarea { font: inherit; color: var(--foreground); }
+.eb-go { border: var(--border-width) solid var(--border); background: transparent; border-radius: var(--radius); padding: 8px 14px; min-block-size: 40px; cursor: pointer; }
+.eb-go[aria-current="page"] { background: var(--accent); color: var(--accent-foreground); border-color: var(--accent); }
+.eb-place { overflow: auto; min-block-size: 0; display: flex; flex-direction: column; gap: 12px; }
+.eb-place[hidden] { display: none; }
+.eb h2 { font-family: var(--font-display); font-size: 1.4rem; margin: 0; }
+.eb h3 { font-size: 1rem; margin: 8px 0 0; }
+.eb-quiet { color: var(--muted-foreground); margin: 0; line-height: 1.5; }
+.eb-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.eb button:not(.eb-go):not(.eb-tile) { border: var(--border-width) solid var(--primary); background: var(--primary); color: var(--primary-foreground); border-radius: var(--radius); padding: 8px 16px; min-block-size: 40px; cursor: pointer; }
+.eb button.eb-soft:not(.eb-go):not(.eb-tile) { background: transparent; color: var(--foreground); border-color: var(--border); }
+.eb textarea, .eb input, .eb select { background: var(--input); border: var(--border-width) solid var(--border); border-radius: var(--radius); padding: 8px; }
+.eb textarea { inline-size: 100%; box-sizing: border-box; resize: vertical; line-height: 1.5; }
+.eb textarea:disabled { opacity: 0.6; }
+.eb :focus-visible { outline: var(--ring-width) solid var(--ring); outline-offset: var(--ring-offset); }
+.eb-sr { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+.eb-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-block-size: 40vh; overflow: auto; }
+.eb-log li { padding: 8px 12px; border-radius: var(--radius); max-inline-size: 85%; line-height: 1.5; }
+.eb-log .eb-you { align-self: flex-end; background: var(--secondary); color: var(--secondary-foreground); }
+.eb-log .eb-guide { align-self: flex-start; background: var(--muted); color: var(--foreground); font-style: italic; }
+.eb-meter { block-size: 6px; border-radius: 3px; background: var(--muted); overflow: hidden; }
+.eb-meter span { display: block; block-size: 100%; inline-size: 10%; background: var(--chart-2); transition: inline-size var(--duration) var(--ease); }
+.eb-field { display: grid; gap: 4px; color: var(--muted-foreground); }
+.eb-orb { align-self: center; inline-size: 180px; block-size: 180px; border-radius: 50%; display: grid; place-items: center; background: var(--secondary); color: var(--foreground); border: var(--border-width) solid var(--border); font-size: 2.4rem; font-family: var(--font-display); transform: scale(0.6); transition: transform var(--eb-phase-s, 4s) linear; }
+.eb-orb[data-phase="inhale"] { transform: scale(1); }
+.eb-orb[data-phase="inhale"] { background: var(--info-subtle); }
+.eb-orb[data-phase="hold"] { transform: scale(1); background: var(--info-subtle); }
+.eb-orb[data-phase="exhale"] { transform: scale(0.6); background: var(--secondary); }
+.eb-orb[data-phase="rest"] { transform: scale(0.6); background: var(--muted); }
+.eb-phase { text-align: center; font-size: 1.2rem; margin: 0; }
+.eb-prompt { font-family: var(--font-display); font-size: 1.1rem; margin: 0; }
+.eb-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-inline-size: 320px; align-self: center; inline-size: 100%; }
+.eb-tile { aspect-ratio: 1; border-radius: var(--radius); border: var(--border-width) solid var(--border); cursor: pointer; opacity: 0.45; transition: opacity 120ms var(--ease), transform 120ms var(--ease); }
+.eb-tile[data-tile="0"] { background: var(--chart-1); }
+.eb-tile[data-tile="1"] { background: var(--chart-2); }
+.eb-tile[data-tile="2"] { background: var(--chart-3); }
+.eb-tile[data-tile="3"] { background: var(--chart-4); }
+.eb-tile span { font-size: 2.2rem; color: var(--foreground); }
+.eb-tile.lit { opacity: 1; transform: scale(1.04); }
+.eb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; }
+.eb-toggles { display: grid; gap: 8px; }
+.eb-toggle { display: flex; gap: 8px; align-items: center; min-block-size: 40px; }
+.eb-history { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.eb-history li { display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; }
+.eb-history .k { color: var(--muted-foreground); }
+.eb-history .v { font-family: var(--font-mono); text-align: end; overflow-wrap: anywhere; }
+html.eb-dyslexic .eb { letter-spacing: 0.06em; word-spacing: 0.16em; line-height: 1.7; }
+@media (prefers-reduced-motion: reduce) { .eb-orb, .eb-tile, .eb-meter span { transition: none; } }

@@ -1,0 +1,717 @@
+\begin{lexlean}{Security}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{prism.sec@1.0.0}
+\importmodule{Foundation.Sec}
+\importmodule{Production.ThreatModel}
+\title{security threat}
+\begin{semanticmodule}
+definition{
+  name: assetBinXtaskEnv,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 0, componentIndex := 0})
+}
+
+definition{
+  name: assetBinXtaskFs,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 1, componentIndex := 0})
+}
+
+definition{
+  name: assetBinXtaskMemory,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 2, componentIndex := 0})
+}
+
+definition{
+  name: assetBinXtaskProcess,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 3, componentIndex := 0})
+}
+
+definition{
+  name: assetLibEchobraidEngineMemory,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 4, componentIndex := 5})
+}
+
+definition{
+  name: assetLibRepoConformanceFs,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 5, componentIndex := 6})
+}
+
+definition{
+  name: assetLibRepoConformanceMemory,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 6, componentIndex := 6})
+}
+
+definition{
+  name: assetLibRepoModelFs,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 7, componentIndex := 7})
+}
+
+definition{
+  name: assetLibRepoModelMemory,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 8, componentIndex := 7})
+}
+
+definition{
+  name: assetLockedDependencies,
+  parameters: [],
+  result: Foundation.Sec::Asset,
+  body: (record Foundation.Sec::Asset {index := 9, componentIndex := 0})
+}
+
+definition{
+  name: threatBinXtaskEnv,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 0})
+}
+
+definition{
+  name: threatBinXtaskFs,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 1})
+}
+
+definition{
+  name: threatBinXtaskMemory,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 2})
+}
+
+definition{
+  name: threatBinXtaskProcess,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 3})
+}
+
+definition{
+  name: threatDependencySubstitution,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 4})
+}
+
+definition{
+  name: threatLibEchobraidEngineMemory,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 5})
+}
+
+definition{
+  name: threatLibRepoConformanceFs,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 6})
+}
+
+definition{
+  name: threatLibRepoConformanceMemory,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 7})
+}
+
+definition{
+  name: threatLibRepoModelFs,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 8})
+}
+
+definition{
+  name: threatLibRepoModelMemory,
+  parameters: [],
+  result: Foundation.Sec::Threat,
+  body: (record Foundation.Sec::Threat {index := 9})
+}
+
+definition{
+  name: riskBinXtaskEnv,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 0, assetIndex := 0, threatIndex := 0, likelihood := (ctor Foundation.Sec::Likelihood.low), impact := (ctor Foundation.Sec::Impact.major)})
+}
+
+definition{
+  name: riskBinXtaskFs,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 1, assetIndex := 1, threatIndex := 1, likelihood := (ctor Foundation.Sec::Likelihood.medium), impact := (ctor Foundation.Sec::Impact.major)})
+}
+
+definition{
+  name: riskBinXtaskMemory,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 2, assetIndex := 2, threatIndex := 2, likelihood := (ctor Foundation.Sec::Likelihood.low), impact := (ctor Foundation.Sec::Impact.critical)})
+}
+
+definition{
+  name: riskBinXtaskProcess,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 3, assetIndex := 3, threatIndex := 3, likelihood := (ctor Foundation.Sec::Likelihood.medium), impact := (ctor Foundation.Sec::Impact.critical)})
+}
+
+definition{
+  name: riskDependencySubstitution,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 4, assetIndex := 9, threatIndex := 4, likelihood := (ctor Foundation.Sec::Likelihood.low), impact := (ctor Foundation.Sec::Impact.critical)})
+}
+
+definition{
+  name: riskLibEchobraidEngineMemory,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 5, assetIndex := 4, threatIndex := 5, likelihood := (ctor Foundation.Sec::Likelihood.low), impact := (ctor Foundation.Sec::Impact.critical)})
+}
+
+definition{
+  name: riskLibRepoConformanceFs,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 6, assetIndex := 5, threatIndex := 6, likelihood := (ctor Foundation.Sec::Likelihood.medium), impact := (ctor Foundation.Sec::Impact.major)})
+}
+
+definition{
+  name: riskLibRepoConformanceMemory,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 7, assetIndex := 6, threatIndex := 7, likelihood := (ctor Foundation.Sec::Likelihood.low), impact := (ctor Foundation.Sec::Impact.critical)})
+}
+
+definition{
+  name: riskLibRepoModelFs,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 8, assetIndex := 7, threatIndex := 8, likelihood := (ctor Foundation.Sec::Likelihood.medium), impact := (ctor Foundation.Sec::Impact.major)})
+}
+
+definition{
+  name: riskLibRepoModelMemory,
+  parameters: [],
+  result: Foundation.Sec::Risk,
+  body: (record Foundation.Sec::Risk {index := 9, assetIndex := 8, threatIndex := 9, likelihood := (ctor Foundation.Sec::Likelihood.low), impact := (ctor Foundation.Sec::Impact.critical)})
+}
+
+definition{
+  name: controlBinXtaskEnv,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 0, riskIndex := 0})
+}
+
+definition{
+  name: controlBinXtaskFs,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 1, riskIndex := 1})
+}
+
+definition{
+  name: controlBinXtaskMemory,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 2, riskIndex := 2})
+}
+
+definition{
+  name: controlBinXtaskProcess,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 3, riskIndex := 3})
+}
+
+definition{
+  name: controlDependencySubstitution,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 4, riskIndex := 4})
+}
+
+definition{
+  name: controlLibEchobraidEngineMemory,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 5, riskIndex := 5})
+}
+
+definition{
+  name: controlLibRepoConformanceFs,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 6, riskIndex := 6})
+}
+
+definition{
+  name: controlLibRepoConformanceMemory,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 7, riskIndex := 7})
+}
+
+definition{
+  name: controlLibRepoModelFs,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 8, riskIndex := 8})
+}
+
+definition{
+  name: controlLibRepoModelMemory,
+  parameters: [],
+  result: Foundation.Sec::ApplicationSecurityControl,
+  body: (record Foundation.Sec::ApplicationSecurityControl {index := 9, riskIndex := 9})
+}
+
+definition{
+  name: activityBinXtaskEnv,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 0, controlIndex := 0})
+}
+
+definition{
+  name: activityBinXtaskFs,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 1, controlIndex := 1})
+}
+
+definition{
+  name: activityBinXtaskMemory,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 2, controlIndex := 2})
+}
+
+definition{
+  name: activityBinXtaskProcess,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 3, controlIndex := 3})
+}
+
+definition{
+  name: activityDependencySubstitution,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 4, controlIndex := 4})
+}
+
+definition{
+  name: activityLibEchobraidEngineMemory,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 5, controlIndex := 5})
+}
+
+definition{
+  name: activityLibRepoConformanceFs,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 6, controlIndex := 6})
+}
+
+definition{
+  name: activityLibRepoConformanceMemory,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 7, controlIndex := 7})
+}
+
+definition{
+  name: activityLibRepoModelFs,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 8, controlIndex := 8})
+}
+
+definition{
+  name: activityLibRepoModelMemory,
+  parameters: [],
+  result: Foundation.Sec::SecurityActivity,
+  body: (record Foundation.Sec::SecurityActivity {index := 9, controlIndex := 9})
+}
+
+definition{
+  name: measurementBinXtaskEnv,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 0, controlIndex := 0, passed := false})
+}
+
+definition{
+  name: measurementBinXtaskFs,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 1, controlIndex := 1, passed := false})
+}
+
+definition{
+  name: measurementBinXtaskMemory,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 2, controlIndex := 2, passed := false})
+}
+
+definition{
+  name: measurementBinXtaskProcess,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 3, controlIndex := 3, passed := false})
+}
+
+definition{
+  name: measurementDependencySubstitution,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 4, controlIndex := 4, passed := true})
+}
+
+definition{
+  name: measurementLibEchobraidEngineMemory,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 5, controlIndex := 5, passed := false})
+}
+
+definition{
+  name: measurementLibRepoConformanceFs,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 6, controlIndex := 6, passed := false})
+}
+
+definition{
+  name: measurementLibRepoConformanceMemory,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 7, controlIndex := 7, passed := false})
+}
+
+definition{
+  name: measurementLibRepoModelFs,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 8, controlIndex := 8, passed := false})
+}
+
+definition{
+  name: measurementLibRepoModelMemory,
+  parameters: [],
+  result: Foundation.Sec::VerificationMeasurement,
+  body: (record Foundation.Sec::VerificationMeasurement {index := 9, controlIndex := 9, passed := false})
+}
+
+definition{
+  name: controlSet,
+  parameters: [],
+  result: Production.ThreatModel::ControlSet,
+  body: (record Production.ThreatModel::ControlSet {title := "EchoBraidRust security controls", text := "Controls uorust derived from the EchoBraidRust workspace: memory safety, capability sites and the locked dependency graph.", version := "0.1.0", lastModified := "2026-11-17T00:00:00Z"})
+}
+
+definition{
+  name: modeledAssetBinXtaskEnv,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetBinXtaskEnv", name := "xtask: environment and arguments it reads", text := "Environment and arguments it reads in xtask, at 8 site(s)."})
+}
+
+definition{
+  name: modeledAssetBinXtaskFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetBinXtaskFs", name := "xtask: files it reads and writes", text := "Files it reads and writes in xtask, at 38 site(s)."})
+}
+
+definition{
+  name: modeledAssetBinXtaskMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetBinXtaskMemory", name := "xtask memory", text := "The memory of xtask while it runs."})
+}
+
+definition{
+  name: modeledAssetBinXtaskProcess,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetBinXtaskProcess", name := "xtask: processes it starts", text := "Processes it starts in xtask, at 9 site(s)."})
+}
+
+definition{
+  name: modeledAssetLibEchobraidEngineMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetLibEchobraidEngineMemory", name := "echobraid_engine memory", text := "The memory of echobraid_engine while it runs."})
+}
+
+definition{
+  name: modeledAssetLibRepoConformanceFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetLibRepoConformanceFs", name := "repo_conformance: files it reads and writes", text := "Files it reads and writes in repo_conformance, at 6 site(s)."})
+}
+
+definition{
+  name: modeledAssetLibRepoConformanceMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetLibRepoConformanceMemory", name := "repo_conformance memory", text := "The memory of repo_conformance while it runs."})
+}
+
+definition{
+  name: modeledAssetLibRepoModelFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetLibRepoModelFs", name := "repo_model: files it reads and writes", text := "Files it reads and writes in repo_model, at 6 site(s)."})
+}
+
+definition{
+  name: modeledAssetLibRepoModelMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetLibRepoModelMemory", name := "repo_model memory", text := "The memory of repo_model while it runs."})
+}
+
+definition{
+  name: modeledAssetLockedDependencies,
+  parameters: [],
+  result: Production.ThreatModel::ModeledAsset,
+  body: (record Production.ThreatModel::ModeledAsset {asset := "Security::assetLockedDependencies", name := "Locked dependency graph", text := "The 34 packages Cargo.lock pins."})
+}
+
+definition{
+  name: modeledThreatBinXtaskEnv,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatBinXtaskEnv", name := "Env misuse in xtask", text := "A variable or argument an attacker sets impersonates the configuration the operator meant.", category := (ctor Production.ThreatModel::Stride.spoofing)})
+}
+
+definition{
+  name: modeledThreatBinXtaskFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatBinXtaskFs", name := "Fs misuse in xtask", text := "A path or file content an attacker controls alters what is read or overwritten.", category := (ctor Production.ThreatModel::Stride.tampering)})
+}
+
+definition{
+  name: modeledThreatBinXtaskMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatBinXtaskMemory", name := "Memory corruption in xtask", text := "Unsafe code breaks an invariant the borrow checker would have kept.", category := (ctor Production.ThreatModel::Stride.elevationOfPrivilege)})
+}
+
+definition{
+  name: modeledThreatBinXtaskProcess,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatBinXtaskProcess", name := "Process misuse in xtask", text := "A started process runs with arguments or a program an attacker chose.", category := (ctor Production.ThreatModel::Stride.elevationOfPrivilege)})
+}
+
+definition{
+  name: modeledThreatDependencySubstitution,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatDependencySubstitution", name := "Dependency substitution", text := "A dependency is replaced by a package with the same name and different code.", category := (ctor Production.ThreatModel::Stride.tampering)})
+}
+
+definition{
+  name: modeledThreatLibEchobraidEngineMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatLibEchobraidEngineMemory", name := "Memory corruption in echobraid_engine", text := "Unsafe code breaks an invariant the borrow checker would have kept.", category := (ctor Production.ThreatModel::Stride.elevationOfPrivilege)})
+}
+
+definition{
+  name: modeledThreatLibRepoConformanceFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatLibRepoConformanceFs", name := "Fs misuse in repo_conformance", text := "A path or file content an attacker controls alters what is read or overwritten.", category := (ctor Production.ThreatModel::Stride.tampering)})
+}
+
+definition{
+  name: modeledThreatLibRepoConformanceMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatLibRepoConformanceMemory", name := "Memory corruption in repo_conformance", text := "Unsafe code breaks an invariant the borrow checker would have kept.", category := (ctor Production.ThreatModel::Stride.elevationOfPrivilege)})
+}
+
+definition{
+  name: modeledThreatLibRepoModelFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatLibRepoModelFs", name := "Fs misuse in repo_model", text := "A path or file content an attacker controls alters what is read or overwritten.", category := (ctor Production.ThreatModel::Stride.tampering)})
+}
+
+definition{
+  name: modeledThreatLibRepoModelMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledThreat,
+  body: (record Production.ThreatModel::ModeledThreat {threat := "Security::threatLibRepoModelMemory", name := "Memory corruption in repo_model", text := "Unsafe code breaks an invariant the borrow checker would have kept.", category := (ctor Production.ThreatModel::Stride.elevationOfPrivilege)})
+}
+
+definition{
+  name: modeledControlBinXtaskEnv,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlBinXtaskEnv", name := "Reviewed env sites", text := "Each env site of xtask is listed with its span for review.", evidence := (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:385 std::env::var_os"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:388 std::env::consts::ARCH"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:20 std::env::args"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:23 std::env::args"}) (nil Production.ThreatModel::Evidence))))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:35 std::env::args"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:37 std::env::args"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:49 std::env::args"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:283 std::env::consts::ARCH"}) (nil Production.ThreatModel::Evidence))))) : (List Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlBinXtaskFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlBinXtaskFs", name := "Reviewed fs sites", text := "Each fs site of xtask is listed with its span for review.", evidence := (prim append (prim append (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:30 std::fs::read_dir"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:33 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:65 std::fs::read_dir"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:70 std::fs::read_to_string"}) (nil Production.ThreatModel::Evidence))))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:278 std::fs::read_dir"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:286 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:341 std::fs::read_dir"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:884 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:901 std::fs::read"}) (nil Production.ThreatModel::Evidence)))))) : (List Production.ThreatModel::Evidence)) (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:20 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:294 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:366 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:387 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:514 std::fs::read_dir"}) (nil Production.ThreatModel::Evidence)))))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:612 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:623 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/bootstrap.rs:703 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/engine.rs:87 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/engine.rs:91 std::fs::write"}) (nil Production.ThreatModel::Evidence)))))) : (List Production.ThreatModel::Evidence)) : (List Production.ThreatModel::Evidence)) (prim append (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:100 std::fs::write"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:105 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:246 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:269 std::fs::read"}) (nil Production.ThreatModel::Evidence))))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:290 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:337 std::fs::remove_dir_all"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:339 std::fs::create_dir_all"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:341 std::fs::copy"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:344 std::fs::write"}) (nil Production.ThreatModel::Evidence)))))) : (List Production.ThreatModel::Evidence)) (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:348 std::fs::write"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:173 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:174 std::fs::write"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:178 std::fs::write"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:183 std::fs::read_to_string"}) (nil Production.ThreatModel::Evidence)))))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:186 std::fs::write"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:188 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:196 std::fs::create_dir_all"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:198 std::fs::write"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/scaffold.rs:200 std::fs::write"}) (nil Production.ThreatModel::Evidence)))))) : (List Production.ThreatModel::Evidence)) : (List Production.ThreatModel::Evidence)) : (List Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlBinXtaskMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlBinXtaskMemory", name := "Safe Rust only", text := "xtask is checked by the borrow checker throughout; no unsafe code is admitted.", evidence := (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "uorust found no unsafe block, unsafe fn or unsafe impl in xtask"}) (nil Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlBinXtaskProcess,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlBinXtaskProcess", name := "Reviewed process sites", text := "Each process site of xtask is listed with its span for review.", evidence := (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:665 std::process::Command"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:665 std::process::Stdio"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:870 Command::new"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/audit.rs:931 Command::new"}) (nil Production.ThreatModel::Evidence))))) (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/engine.rs:14 std::process::Command"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/engine.rs:158 Command::new"}) (nil Production.ThreatModel::Evidence))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/main.rs:9 std::process::ExitCode"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:9 std::process::Command"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "xtask/src/proof.rs:215 Command::new"}) (nil Production.ThreatModel::Evidence)))) : (List Production.ThreatModel::Evidence)) : (List Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlDependencySubstitution,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlDependencySubstitution", name := "Locked and checked dependencies", text := "Every dependency is pinned with its checksum and checked against advisories and licences.", evidence := (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.gate), reference := "Cargo.lock pins 34 packages, 30 with a registry checksum"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.gate), reference := "cargo deny check: deny.toml"}) (nil Production.ThreatModel::Evidence)))})
+}
+
+definition{
+  name: modeledControlLibEchobraidEngineMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlLibEchobraidEngineMemory", name := "Safe Rust only", text := "echobraid_engine is checked by the borrow checker throughout; no unsafe code is admitted.", evidence := (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "uorust found no unsafe block, unsafe fn or unsafe impl in echobraid_engine"}) (nil Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlLibRepoConformanceFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlLibRepoConformanceFs", name := "Reviewed fs sites", text := "Each fs site of repo_conformance is listed with its span for review.", evidence := (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/conformance/src/meta.rs:178 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/conformance/src/meta.rs:203 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/conformance/src/runner.rs:38 std::fs::read_dir"}) (nil Production.ThreatModel::Evidence)))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/conformance/src/runner.rs:52 std::fs::read_to_string"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/conformance/src/runner.rs:115 std::fs::read_dir"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/conformance/src/runner.rs:126 std::fs::read_to_string"}) (nil Production.ThreatModel::Evidence)))) : (List Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlLibRepoConformanceMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlLibRepoConformanceMemory", name := "Safe Rust only", text := "repo_conformance is checked by the borrow checker throughout; no unsafe code is admitted.", evidence := (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "uorust found no unsafe block, unsafe fn or unsafe impl in repo_conformance"}) (nil Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlLibRepoModelFs,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlLibRepoModelFs", name := "Reviewed fs sites", text := "Each fs site of repo_model is listed with its span for review.", evidence := (prim append (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/model/src/artifact.rs:52 std::fs::read_dir"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/model/src/artifact.rs:54 std::fs::symlink_metadata"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/model/src/artifact.rs:87 std::fs::symlink_metadata"}) (nil Production.ThreatModel::Evidence)))) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/model/src/artifact.rs:98 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/model/src/artifact.rs:117 std::fs::read"}) (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "crates/model/src/lib.rs:197 std::fs::read_to_string"}) (nil Production.ThreatModel::Evidence)))) : (List Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: modeledControlLibRepoModelMemory,
+  parameters: [],
+  result: Production.ThreatModel::ModeledControl,
+  body: (record Production.ThreatModel::ModeledControl {control := "Security::controlLibRepoModelMemory", name := "Safe Rust only", text := "repo_model is checked by the borrow checker throughout; no unsafe code is admitted.", evidence := (cons (record Production.ThreatModel::Evidence {kind := (ctor Production.ThreatModel::EvidenceKind.review), reference := "uorust found no unsafe block, unsafe fn or unsafe impl in repo_model"}) (nil Production.ThreatModel::Evidence))})
+}
+
+definition{
+  name: mappingThreatBinXtaskEnv,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatBinXtaskEnv", controls := (cons "Security::controlBinXtaskEnv" (nil String))})
+}
+
+definition{
+  name: mappingThreatBinXtaskFs,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatBinXtaskFs", controls := (cons "Security::controlBinXtaskFs" (nil String))})
+}
+
+definition{
+  name: mappingThreatBinXtaskMemory,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatBinXtaskMemory", controls := (cons "Security::controlBinXtaskMemory" (nil String))})
+}
+
+definition{
+  name: mappingThreatBinXtaskProcess,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatBinXtaskProcess", controls := (cons "Security::controlBinXtaskProcess" (nil String))})
+}
+
+definition{
+  name: mappingThreatDependencySubstitution,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatDependencySubstitution", controls := (cons "Security::controlDependencySubstitution" (nil String))})
+}
+
+definition{
+  name: mappingThreatLibEchobraidEngineMemory,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatLibEchobraidEngineMemory", controls := (cons "Security::controlLibEchobraidEngineMemory" (nil String))})
+}
+
+definition{
+  name: mappingThreatLibRepoConformanceFs,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatLibRepoConformanceFs", controls := (cons "Security::controlLibRepoConformanceFs" (nil String))})
+}
+
+definition{
+  name: mappingThreatLibRepoConformanceMemory,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatLibRepoConformanceMemory", controls := (cons "Security::controlLibRepoConformanceMemory" (nil String))})
+}
+
+definition{
+  name: mappingThreatLibRepoModelFs,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatLibRepoModelFs", controls := (cons "Security::controlLibRepoModelFs" (nil String))})
+}
+
+definition{
+  name: mappingThreatLibRepoModelMemory,
+  parameters: [],
+  result: Production.ThreatModel::ThreatMapping,
+  body: (record Production.ThreatModel::ThreatMapping {threat := "Security::threatLibRepoModelMemory", controls := (cons "Security::controlLibRepoModelMemory" (nil String))})
+}
+\end{semanticmodule}
+\end{lexlean}

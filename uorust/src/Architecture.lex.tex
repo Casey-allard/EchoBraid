@@ -1,0 +1,344 @@
+\begin{lexlean}{Architecture}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\importmodule{Foundation.Arch}
+\title{architectural component}
+\begin{semanticmodule}
+definition{
+  name: componentBinXtask,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 0, kind := (ctor Foundation.Arch::ComponentKind.releaseBinary), name := "xtask", text := "Repository gates."})
+}
+
+definition{
+  name: componentExtSerde,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 1, kind := (ctor Foundation.Arch::ComponentKind.externalSystem), name := "serde", text := "Third-party crate serde 1.0.229, locked in Cargo.lock."})
+}
+
+definition{
+  name: componentExtSerdeJson,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 2, kind := (ctor Foundation.Arch::ComponentKind.externalSystem), name := "serde_json", text := "Third-party crate serde_json 1.0.154, locked in Cargo.lock."})
+}
+
+definition{
+  name: componentExtSha2,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 3, kind := (ctor Foundation.Arch::ComponentKind.externalSystem), name := "sha2", text := "Third-party crate sha2 0.11.1, locked in Cargo.lock."})
+}
+
+definition{
+  name: componentExtToml,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 4, kind := (ctor Foundation.Arch::ComponentKind.externalSystem), name := "toml", text := "Third-party crate toml 1.2.1+spec-1.1.0, locked in Cargo.lock."})
+}
+
+definition{
+  name: componentLibEchobraidEngine,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 5, kind := (ctor Foundation.Arch::ComponentKind.service), name := "echobraid_engine", text := "The EchoBraid self-improvement engine."})
+}
+
+definition{
+  name: componentLibRepoConformance,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 6, kind := (ctor Foundation.Arch::ComponentKind.service), name := "repo_conformance", text := "The BDD runner and the honesty meta-gate (R2, R3, CM-02, CM-03)."})
+}
+
+definition{
+  name: componentLibRepoModel,
+  parameters: [],
+  result: Foundation.Arch::Component,
+  body: (record Foundation.Arch::Component {index := 7, kind := (ctor Foundation.Arch::ComponentKind.service), name := "repo_model", text := "Typed registries parsed from model/*.toml."})
+}
+
+definition{
+  name: edgeBinXtaskToExtSerde,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 0, fromIndex := 0, toIndex := 1, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeBinXtaskToExtSerdeJson,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 1, fromIndex := 0, toIndex := 2, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeBinXtaskToExtSha2,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 2, fromIndex := 0, toIndex := 3, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeBinXtaskToExtToml,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 3, fromIndex := 0, toIndex := 4, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeBinXtaskToLibEchobraidEngine,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 4, fromIndex := 0, toIndex := 5, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeBinXtaskToLibRepoConformance,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 5, fromIndex := 0, toIndex := 6, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeBinXtaskToLibRepoModel,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 6, fromIndex := 0, toIndex := 7, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeLibRepoConformanceToLibRepoModel,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 7, fromIndex := 6, toIndex := 7, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeLibRepoModelToExtSerde,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 8, fromIndex := 7, toIndex := 1, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeLibRepoModelToExtSha2,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 9, fromIndex := 7, toIndex := 3, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: edgeLibRepoModelToExtToml,
+  parameters: [],
+  result: Foundation.Arch::Edge,
+  body: (record Foundation.Arch::Edge {index := 10, fromIndex := 7, toIndex := 4, kind := (ctor Foundation.Arch::EdgeKind.controlFlow)})
+}
+
+definition{
+  name: stakeholderAuthorUorFoundation,
+  parameters: [],
+  result: Foundation.Arch::Stakeholder,
+  body: (record Foundation.Arch::Stakeholder {index := 0, name := "UOR Foundation", text := "Listed as an author of the EchoBraid workspace."})
+}
+
+definition{
+  name: stakeholderCliUsers,
+  parameters: [],
+  result: Foundation.Arch::Stakeholder,
+  body: (record Foundation.Arch::Stakeholder {index := 1, name := "Command-line users", text := "Run the workspace's binaries."})
+}
+
+definition{
+  name: stakeholderLibraryUsers,
+  parameters: [],
+  result: Foundation.Arch::Stakeholder,
+  body: (record Foundation.Arch::Stakeholder {index := 2, name := "Library users", text := "Call the public interface of the workspace's libraries."})
+}
+
+definition{
+  name: stakeholderMaintainers,
+  parameters: [],
+  result: Foundation.Arch::Stakeholder,
+  body: (record Foundation.Arch::Stakeholder {index := 3, name := "Maintainers", text := "Maintain the EchoBraid workspace: UOR Foundation."})
+}
+
+definition{
+  name: stakeholderQualityReviewers,
+  parameters: [],
+  result: Foundation.Arch::Stakeholder,
+  body: (record Foundation.Arch::Stakeholder {index := 4, name := "Quality reviewers", text := "Judge documentation, tests, lints and compatibility."})
+}
+
+definition{
+  name: stakeholderSecurityReviewers,
+  parameters: [],
+  result: Foundation.Arch::Stakeholder,
+  body: (record Foundation.Arch::Stakeholder {index := 5, name := "Security reviewers", text := "Judge what the code can reach beyond computation and what the build trusts."})
+}
+
+definition{
+  name: concernCrateBinXtask,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 0, name := "xtask", text := "Repository gates."})
+}
+
+definition{
+  name: concernCrateLibEchobraidEngine,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 1, name := "echobraid_engine", text := "The EchoBraid self-improvement engine."})
+}
+
+definition{
+  name: concernCrateLibRepoConformance,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 2, name := "repo_conformance", text := "The BDD runner and the honesty meta-gate (R2, R3, CM-02, CM-03)."})
+}
+
+definition{
+  name: concernCrateLibRepoModel,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 3, name := "repo_model", text := "Typed registries parsed from model/*.toml."})
+}
+
+definition{
+  name: concernFunctionality,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 4, name := "Functionality", text := "EchoBraid's self-improvement engine: Rule 30 abduction, Hessian sorting and Hebbian strategy weights over breathing rhythms. Dev and CI only. The BDD runner and the honesty meta-gate. Dev and CI only; never a dependency of a shipped crate. Typed registries parsed from model/*.toml: this repository's single source of every claim (R1). Repository gates (check-model, audit-limits, audit-deferral, audit-bootstrap, validate), the new-capability scaffold and the EchoBraid engine tick."})
+}
+
+definition{
+  name: concernQuality,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 5, name := "Quality", text := "Documentation coverage, tests, lint levels and the minimum supported Rust."})
+}
+
+definition{
+  name: concernSecurity,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 6, name := "Security", text := "Files, network, processes, environment and unsafe code the targets reach."})
+}
+
+definition{
+  name: concernSupplyChain,
+  parameters: [],
+  result: Foundation.Arch::Concern,
+  body: (record Foundation.Arch::Concern {index := 7, name := "Supply chain", text := "The 34 packages Cargo.lock pins and their sources."})
+}
+
+definition{
+  name: viewpointMaintenance,
+  parameters: [],
+  result: Foundation.Arch::Viewpoint,
+  body: (record Foundation.Arch::Viewpoint {index := 0, stakeholderIndex := 3, concernIndex := 4, modelKindIndex := 0})
+}
+
+definition{
+  name: viewpointQuality,
+  parameters: [],
+  result: Foundation.Arch::Viewpoint,
+  body: (record Foundation.Arch::Viewpoint {index := 1, stakeholderIndex := 4, concernIndex := 5, modelKindIndex := 1})
+}
+
+definition{
+  name: viewpointSecurity,
+  parameters: [],
+  result: Foundation.Arch::Viewpoint,
+  body: (record Foundation.Arch::Viewpoint {index := 2, stakeholderIndex := 5, concernIndex := 6, modelKindIndex := 2})
+}
+
+definition{
+  name: viewpointSupplyChain,
+  parameters: [],
+  result: Foundation.Arch::Viewpoint,
+  body: (record Foundation.Arch::Viewpoint {index := 3, stakeholderIndex := 5, concernIndex := 7, modelKindIndex := 2})
+}
+
+definition{
+  name: viewpointUsage,
+  parameters: [],
+  result: Foundation.Arch::Viewpoint,
+  body: (record Foundation.Arch::Viewpoint {index := 4, stakeholderIndex := 1, concernIndex := 4, modelKindIndex := 0})
+}
+
+definition{
+  name: viewMaintenance,
+  parameters: [],
+  result: Foundation.Arch::View,
+  body: (record Foundation.Arch::View {index := 0, viewpointIndex := 0, modelKindIndex := 0})
+}
+
+definition{
+  name: viewQuality,
+  parameters: [],
+  result: Foundation.Arch::View,
+  body: (record Foundation.Arch::View {index := 1, viewpointIndex := 1, modelKindIndex := 1})
+}
+
+definition{
+  name: viewSecurity,
+  parameters: [],
+  result: Foundation.Arch::View,
+  body: (record Foundation.Arch::View {index := 2, viewpointIndex := 2, modelKindIndex := 2})
+}
+
+definition{
+  name: viewSupplyChain,
+  parameters: [],
+  result: Foundation.Arch::View,
+  body: (record Foundation.Arch::View {index := 3, viewpointIndex := 3, modelKindIndex := 2})
+}
+
+definition{
+  name: viewUsage,
+  parameters: [],
+  result: Foundation.Arch::View,
+  body: (record Foundation.Arch::View {index := 4, viewpointIndex := 4, modelKindIndex := 0})
+}
+
+definition{
+  name: standardQuality,
+  parameters: [],
+  result: Foundation.Arch::StandardReference,
+  body: (record Foundation.Arch::StandardReference {standardIndex := 0, editionIndex := 0, standardId := "ISO-25010-2023", edition := "2023"})
+}
+
+definition{
+  name: standardRiskManagement,
+  parameters: [],
+  result: Foundation.Arch::StandardReference,
+  body: (record Foundation.Arch::StandardReference {standardIndex := 1, editionIndex := 0, standardId := "ISO-27005-2022", edition := "2022"})
+}
+
+definition{
+  name: standardApplicationSecurity,
+  parameters: [],
+  result: Foundation.Arch::StandardReference,
+  body: (record Foundation.Arch::StandardReference {standardIndex := 2, editionIndex := 0, standardId := "ISO-27034-1-2011", edition := "2011"})
+}
+
+definition{
+  name: standardSecurityControls,
+  parameters: [],
+  result: Foundation.Arch::StandardReference,
+  body: (record Foundation.Arch::StandardReference {standardIndex := 3, editionIndex := 0, standardId := "ISO-27034-5-2017", edition := "2017"})
+}
+
+definition{
+  name: standardArchitectureDescription,
+  parameters: [],
+  result: Foundation.Arch::StandardReference,
+  body: (record Foundation.Arch::StandardReference {standardIndex := 4, editionIndex := 0, standardId := "ISO-42010-2022", edition := "2022"})
+}
+\end{semanticmodule}
+\end{lexlean}

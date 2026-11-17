@@ -1,0 +1,17 @@
+spec = "lexlean/entry/1"
+id = "echobraid-companion-model"
+category = "label-word"
+surface_arity = 0
+frame = "atom"
+
+[denotation]
+kind = "document"
+module = "App"
+component = "dispatch"
+
+[[form]]
+id = "echobraid-companion-model"
+channel = "text"
+surface = "EchoBraid learning companion model"
+canonical_source = true
+features = ["sentence-case", "singular"]

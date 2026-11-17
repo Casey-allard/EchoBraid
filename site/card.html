@@ -1,0 +1,116 @@
+<div class="eb" data-slot="surface">
+  <nav class="eb-nav" aria-label="Places">
+    <button type="button" class="eb-go" data-place="loop" aria-current="page">Loop</button>
+    <button type="button" class="eb-go" data-place="breathe">Breathe</button>
+    <button type="button" class="eb-go" data-place="memory">Memory</button>
+    <button type="button" class="eb-go" data-place="reflect">Reflect</button>
+    <button type="button" class="eb-go" data-place="logic">Logic</button>
+    <button type="button" class="eb-go" data-place="care">Care</button>
+  </nav>
+
+  <section class="eb-place" data-place="loop" aria-labelledby="eb-loop-h">
+    <h2 id="eb-loop-h">Soft loop</h2>
+    <p class="eb-quiet" id="eb-welcome">We can just sit. Your pace is law here.</p>
+    <ol class="eb-log" id="eb-log" aria-live="polite"></ol>
+    <form class="eb-say" id="eb-say">
+      <label class="eb-sr" for="eb-text">Write when ready</label>
+      <textarea id="eb-text" rows="3" placeholder="Breathe or write when ready..." autocomplete="off"></textarea>
+      <div class="eb-row">
+        <button type="submit">Send</button>
+        <button type="button" id="eb-pause" class="eb-soft">Pause</button>
+        <button type="button" id="eb-dictate" class="eb-soft" hidden>Listen</button>
+      </div>
+    </form>
+    <div class="eb-meter" aria-label="Semantic drift"><span id="eb-drift-bar"></span></div>
+    <p class="eb-quiet" id="eb-drift">Drift 10, stable</p>
+  </section>
+
+  <section class="eb-place" data-place="breathe" aria-labelledby="eb-breathe-h" hidden>
+    <h2 id="eb-breathe-h">Breathe</h2>
+    <label class="eb-field">Rhythm <select id="eb-rhythm"><option value="0">relax 4-7-8</option></select></label>
+    <div class="eb-orb" id="eb-orb" aria-hidden="true"><span id="eb-count">4</span></div>
+    <p class="eb-phase" id="eb-phase" aria-live="polite">Ready</p>
+    <div class="eb-row">
+      <button type="button" id="eb-breathe-go">Begin</button>
+      <button type="button" id="eb-breathe-stop" class="eb-soft">Return to loop</button>
+    </div>
+    <p class="eb-quiet">Rhythms after 4-7-8 were discovered by the engine and proved safe by the Lean kernel.</p>
+  </section>
+
+  <section class="eb-place" data-place="memory" aria-labelledby="eb-memory-h" hidden>
+    <h2 id="eb-memory-h">Memory</h2>
+    <p class="eb-quiet">Watch the tiles, then repeat them. Each level is a prime length, drawn by Rule 30.</p>
+    <div class="eb-tiles" id="eb-tiles">
+      <button type="button" class="eb-tile" data-tile="0" aria-label="Circle tile"><span aria-hidden="true">●</span></button>
+      <button type="button" class="eb-tile" data-tile="1" aria-label="Triangle tile"><span aria-hidden="true">▲</span></button>
+      <button type="button" class="eb-tile" data-tile="2" aria-label="Square tile"><span aria-hidden="true">■</span></button>
+      <button type="button" class="eb-tile" data-tile="3" aria-label="Diamond tile"><span aria-hidden="true">◆</span></button>
+    </div>
+    <p class="eb-phase" id="eb-memory-state" aria-live="polite">Level 1 of 7</p>
+    <div class="eb-row"><button type="button" id="eb-memory-go">Start</button></div>
+  </section>
+
+  <section class="eb-place" data-place="reflect" aria-labelledby="eb-reflect-h" hidden>
+    <h2 id="eb-reflect-h">Reflect</h2>
+    <p class="eb-quiet">Linearity is optional. Start anywhere.</p>
+    <div class="eb-row" id="eb-prompts">
+      <button type="button" class="eb-soft" data-prompt="0">2</button>
+      <button type="button" class="eb-soft" data-prompt="1">3</button>
+      <button type="button" class="eb-soft" data-prompt="2">5</button>
+      <button type="button" class="eb-soft" data-prompt="3">7</button>
+    </div>
+    <p class="eb-prompt" id="eb-prompt">Choose a prime to begin.</p>
+    <label class="eb-sr" for="eb-journal">Reflection</label>
+    <textarea id="eb-journal" rows="6" disabled></textarea>
+    <div class="eb-row">
+      <button type="button" id="eb-seal" class="eb-soft">Seal with Prism ID</button>
+      <button type="button" id="eb-burn" class="eb-soft">Clear</button>
+    </div>
+    <p class="eb-quiet" id="eb-sealed"></p>
+  </section>
+
+  <section class="eb-place" data-place="logic" aria-labelledby="eb-logic-h" hidden>
+    <h2 id="eb-logic-h">Logic</h2>
+    <p class="eb-quiet">Two quorums of a group share at least f + 1 members when their sizes sum past n + f. Try the classic claim n ≥ 3f + 1 with quorums of 2f + 1, and find where it breaks.</p>
+    <div class="eb-grid">
+      <label class="eb-field">n <input id="eb-n" type="number" min="1" max="255" value="10"></label>
+      <label class="eb-field">f <input id="eb-f" type="number" min="0" max="255" value="1"></label>
+      <label class="eb-field">Q1 <input id="eb-q1" type="number" min="0" max="255" value="3"></label>
+      <label class="eb-field">Q2 <input id="eb-q2" type="number" min="0" max="255" value="3"></label>
+      <label class="eb-field">Q1 ∪ Q2 <input id="eb-u" type="number" min="0" max="255" value="6"></label>
+    </div>
+    <p class="eb-phase" id="eb-quorum" aria-live="polite"></p>
+    <h3>Ring buffer</h3>
+    <p class="eb-quiet" id="eb-ring">Capacity 8, read 0, write 0</p>
+    <div class="eb-row"><button type="button" id="eb-enqueue">Enqueue up to 4</button><button type="button" id="eb-dequeue" class="eb-soft">Read one</button></div>
+  </section>
+
+  <section class="eb-place" data-place="care" aria-labelledby="eb-care-h" hidden>
+    <h2 id="eb-care-h">Care</h2>
+    <p class="eb-quiet" id="eb-consent-copy">Every sensor starts off. Nothing turns on without your choice.</p>
+    <div class="eb-toggles">
+      <label class="eb-toggle"><input type="checkbox" id="eb-mic"> Listen to my voice</label>
+      <label class="eb-toggle"><input type="checkbox" id="eb-voice"> Read replies aloud</label>
+      <label class="eb-toggle"><input type="checkbox" id="eb-notify"> Gentle reminders</label>
+    </div>
+    <div class="eb-row"><button type="button" id="eb-revoke" class="eb-soft">Turn everything off</button></div>
+    <label class="eb-field">Keep my reflections
+      <select id="eb-retention">
+        <option value="1">for 24 hours</option>
+        <option value="0">not at all</option>
+        <option value="2">for 7 days</option>
+        <option value="3">until I clear them</option>
+      </select>
+    </label>
+    <label class="eb-toggle"><input type="checkbox" id="eb-dyslexic"> Easier-to-read letters</label>
+    <p class="eb-quiet" id="eb-retention-copy">This session will vanish in 24 hours.</p>
+  </section>
+</div>
+
+<div id="eb-result" data-slot="result" class="result" aria-live="polite"><output id="eb-out" class="idle">Loading the verified guest</output></div>
+
+<div data-slot="actions" data-label="Guide" class="eb-actions">
+  <p class="eb-quiet" id="eb-guide">The guide answers from ten fixed reflections. It never directs, and when drift runs high it offers a pause first.</p>
+</div>
+
+<ol id="eb-history" data-slot="history" data-label="Decisions" class="eb-history"></ol>

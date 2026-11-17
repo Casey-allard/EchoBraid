@@ -1,0 +1,6 @@
+name = "EchoBraid"
+version = "0.1.0"
+defaultTargets = ["EchoBraid"]
+
+[[lean_lib]]
+name = "EchoBraid"

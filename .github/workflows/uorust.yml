@@ -1,0 +1,39 @@
+# UORust: this repository's Rust (the self-improvement engine, the gates and
+# the conformance suite) projected into a Prism project by afflom/UORust,
+# relocked against the SDK's LexLean and verified by the Lean kernel. The
+# committed projection in uorust/ must equal a fresh one.
+name: uorust
+
+on:
+  push:
+    branches: [main]
+    paths: ["crates/**", "xtask/**", "Cargo.toml", "Cargo.lock", "uorust/**", "scripts/uorust.sh"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  project:
+    name: project the workspace and verify it
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out the exact event revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Project, relock and verify in the locked SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          image=$(sed -n 's/.*"sdk_image":"\([^"]*\)".*/\1/p' prismpm.lock)
+          if [[ ! $image =~ ^[a-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9./_-]+@sha256:[0-9a-f]{64}$ ]]; then
+            printf '%s\n' 'prismpm.lock does not select an immutable SDK image' >&2
+            exit 64
+          fi
+          scratch=$(mktemp -d)
+          trap 'rm -rf "$scratch"' EXIT
+          docker run --rm --user "$(id -u):$(id -g)" --volume "$scratch:/tmp" --volume "$PWD:$PWD" \
+            --workdir "$PWD" --env HOME=/tmp --env CARGO_HOME=/tmp/cargo "$image" scripts/uorust.sh --check

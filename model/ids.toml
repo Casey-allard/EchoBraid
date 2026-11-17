@@ -1,0 +1,141 @@
+# model/ids.toml --- the conformance ID register.
+#
+# Every ID this repository claims, in one place, so that nothing is referenced
+# without being defined. `CONFORMANCE.md` is generated from this file. A test
+# whose name ends in an ID not listed here fails `check-model`, and an ID listed
+# here with no scenario and no test fails it too (CM-02).
+#
+# `level` is the honesty level (R2):
+#   some-true  a fact reproduced from an authority; not established here
+#   build      constructed here and validated against its oracle
+#   open       measured and reported, never asserted
+#
+# Every row here has a scenario in `features/suites/` and a test whose name ends
+# in the ID, lowercased with underscores (R3, CM-02). There is no "pending"
+# state: a capability that is not built does not get a row, and every row in this
+# file is built.
+#
+# A row that specifies a public failure declares its error type (R5):
+#
+#   failure   the error type, as written in `Result<_, E>`
+#   negative  the ID of the `build` row whose test provokes the refusal and
+#             observes it; this row's own ID when the row is that claim
+#
+# `cargo xtask audit-limits` lets a shipped crate name an error type in a
+# `Result` only when a row here declares it and the negative test exists. A type
+# is declared once. Nothing else sanctions a type: there is no list in the gate.
+#
+# The EB rows are EchoBraid's own Prism application in `app/`; the FR rows are the
+# template's frame, which this app inherits unchanged.
+# A capability starts with a row here; `just new-capability` writes the row,
+# its scenario and its failing test in the order `AGENTS.md` sets out.
+
+spec = "template/1"
+
+[[id]]
+id = "EB-01"
+level = "build"
+suite = "echobraid"
+statement = "Semantic drift stays within 0 to 100 under every message and every rest, and a rest never raises it"
+
+[[id]]
+id = "EB-02"
+level = "build"
+suite = "echobraid"
+statement = "A pause is offered only when drift is divergent, and when it is offered the guide answers with the pause and nothing else"
+
+[[id]]
+id = "EB-03"
+level = "build"
+suite = "echobraid"
+statement = "Coherence rises monotonically with drift and is divergent exactly when drift is at least 70"
+
+[[id]]
+id = "EB-04"
+level = "build"
+suite = "echobraid"
+statement = "Every breath countdown is at least one and within its cycle, and the 4-7-8 rhythm is safe with a 19-tick cycle"
+
+[[id]]
+id = "EB-05"
+level = "build"
+suite = "echobraid"
+statement = "No sensor consent turns on without its own grant, revoke-all clears every flag, and a flag is always 0 or 1"
+
+[[id]]
+id = "EB-06"
+level = "build"
+suite = "echobraid"
+statement = "The memory game's Rule 30 tiles are always one of four, its prime-length levels never exceed 23, a wrong tile ends the round and victory comes only at level 7"
+
+[[id]]
+id = "EB-07"
+level = "build"
+suite = "echobraid"
+statement = "Every reflection prompt is indexed by one of the primes 2, 3, 5 and 7, and every guide reply is one of ten fixed, non-directive texts"
+
+[[id]]
+id = "EB-08"
+level = "build"
+suite = "echobraid"
+statement = "Two quorums whose sizes sum past the membership plus the fault bound share at least one more member than the fault bound, and the ring buffer never overflows or reorders"
+
+[[id]]
+id = "EB-09"
+level = "build"
+suite = "echobraid"
+statement = "Data kept under the 24-hour policy is erased once it is 24 hours old, immediate data is always erased and kept data never is"
+
+[[id]]
+id = "EB-10"
+level = "build"
+suite = "echobraid"
+statement = "Every breathing rhythm the engine has written into the frontier is proved safe by the Lean kernel"
+
+[[id]]
+id = "EB-11"
+level = "build"
+suite = "engine"
+statement = "The engine's Rule 30 automaton never reaches the all-zero state and is the 64-cell rule 30 step"
+
+[[id]]
+id = "EB-12"
+level = "build"
+suite = "engine"
+statement = "Hessian sorting ranks every candidate rhythm by its calm score minus the curvature of the score around it, most robust first"
+
+[[id]]
+id = "EB-13"
+level = "build"
+suite = "engine"
+statement = "An engine tick admits at most one new rhythm, only a safe and novel one, and its Hebbian strategy weights stay within 1 to 16"
+
+[[id]]
+id = "FR-01"
+level = "build"
+suite = "frame"
+statement = "With a working worker, the page loads and verifies the archive only in that worker before using its identities or guest"
+
+[[id]]
+id = "FR-02"
+level = "build"
+suite = "frame"
+statement = "A returning browser whose worker kept an earlier deploy serves this deploy from the navigation that brings its page"
+
+[[id]]
+id = "FR-03"
+level = "build"
+suite = "frame"
+statement = "A first visit's bytes are counted once the page has started, the frame's and the app's each within its own budget"
+
+[[id]]
+id = "FR-04"
+level = "build"
+suite = "frame"
+statement = "An app's workspace key opens only on a device of the Prism ID that made it, follows the ID when it joins or is recovered, and stays locked on a removed device"
+
+[[id]]
+id = "FR-05"
+level = "build"
+suite = "frame"
+statement = "An app's pages on every device of one Prism ID meet on a relay topic only those devices derive, per app, with every message sealed to the ID, and a removed device is left behind"

@@ -1,0 +1,133 @@
+# The EchoBraid engine: one autonomous self-improvement tick per run.
+#
+# Modeled on Casey-allard/lexlean-r4's engine. Each tick runs inside the SDK
+# image prismpm.lock pins: a Rule 30 automaton proposes breathing rhythms,
+# Hessian sorting ranks them, the best safe and novel one is written into
+# app/src/Braid/Frontier.lex.tex (live code the guest serves), the acceptance
+# vectors are regenerated, and the Lean kernel must verify the whole model
+# (`lexlean verify`, which decides `frontierSafe` over the new frontier) before
+# anything is kept. A refused candidate is rolled back and remembered. A
+# proved tick is committed to main, tagged and released as v0.2.<tick>, and
+# pages.yml rebuilds, re-verifies and redeploys the holo, so the new mechanism
+# is live on the next page load. The run then chains the next tick; the cron
+# is the backstop. `vars.ECHOBRAID_ENGINE = off` stops it.
+name: engine
+
+on:
+  schedule:
+    - cron: "23,53 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: echobraid-engine
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  tick:
+    name: one tick of the engine
+    if: github.repository == 'Casey-allard/EchoBraid' && vars.ECHOBRAID_ENGINE != 'off'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Check out main with full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Run one tick through the locked SDK
+        id: tick
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL || true
+          image=$(sed -n 's/.*"sdk_image":"\([^"]*\)".*/\1/p' prismpm.lock)
+          if [[ ! $image =~ ^[a-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9./_-]+@sha256:[0-9a-f]{64}$ ]]; then
+            printf '%s\n' 'prismpm.lock does not select an immutable SDK image' >&2
+            exit 64
+          fi
+          scratch=$(mktemp -d)
+          mkdir -p "$scratch/prismpm-home/.docker"
+          printf '{}\n' >"$scratch/prismpm-home/.docker/config.json"
+          trap 'rm -rf "$scratch"' EXIT
+          rm -f .engine-output.env .engine-status.md
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            --volume "$scratch:/tmp" \
+            --volume "$PWD:$PWD" \
+            --workdir "$PWD" \
+            --env HOME=/tmp/prismpm-home \
+            --env CARGO_TARGET_DIR=/tmp/target \
+            --env CARGO_INCREMENTAL=0 \
+            "$image" bash -c '
+              set -euo pipefail
+              cargo run -q --locked -p xtask -- engine tick --write --prove
+              cargo run -q --locked -p xtask -- engine status
+              cargo test -q --locked -p repo-conformance --test echobraid --test engine
+            '
+          if [ -f .engine-output.env ]; then
+            cat .engine-output.env >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Land a proved tick on main, tag and release it
+        id: land
+        if: steps.tick.outputs.outcome == 'proved'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: ${{ steps.tick.outputs.title }}
+          TICK: ${{ steps.tick.outputs.tick }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "echobraid-engine[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontier.toml model/engine.toml app/src/Braid/Frontier.lex.tex app/src/App.lex.tex app/lexlean.lock
+          git commit -m "$TITLE" -m "$(cat .engine-status.md)"
+          auth="http.https://github.com/.extraheader=AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
+          pushed=false
+          for attempt in 1 2 3 4; do
+            if git -c "$auth" push origin HEAD:refs/heads/main; then
+              pushed=true
+              break
+            fi
+            sleep $((attempt * 5))
+            git -c "$auth" fetch origin main
+            git rebase origin/main
+          done
+          if [ "$pushed" != true ]; then
+            printf 'main moved under the tick four times; the next tick starts from the new tip\n' >&2
+            exit 0
+          fi
+          git -c "$auth" tag "v0.2.$TICK"
+          git -c "$auth" push origin "v0.2.$TICK"
+          GH_TOKEN="$GITHUB_TOKEN" gh release create "v0.2.$TICK" --title "$TITLE" --notes-file .engine-status.md
+          printf 'pushed=true\n' >> "$GITHUB_OUTPUT"
+
+      - name: Summarise the tick
+        if: always()
+        shell: bash
+        run: |
+          {
+            printf 'outcome: %s\n\n' "${{ steps.tick.outputs.outcome }}"
+            if [ -f .engine-status.md ]; then cat .engine-status.md; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Redeploy the page and chain the next tick
+        if: steps.land.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          active=$(gh run list --workflow=pages.yml --limit 5 --json status --jq '[.[] | select(.status != "completed")] | length' || echo 0)
+          if [ "${active:-0}" = "0" ]; then
+            gh workflow run pages.yml --ref main
+          fi
+          gh workflow run engine.yml --ref main

@@ -1,0 +1,32 @@
+\begin{lexlean}{Braid.Frontier}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Breath}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+definition{
+  name: frontierRhythms,
+  parameters: [],
+  result: (List Braid.Breath::Rhythm),
+  body: (cons (record Braid.Breath::Rhythm {inhale := 4, hold := 1, exhale := 8, rest := 1}) (nil Braid.Breath::Rhythm))
+}
+
+definition{
+  name: frontierNames,
+  parameters: [],
+  result: (List String),
+  body: (cons "F1 4-1-8-1" (nil String))
+}
+
+definition{name: frontierCount, parameters: [], result: Nat, body: 1}
+
+theorem{
+  name: frontierSafe,
+  parameters: [],
+  statement: ((Braid.Breath::allSafe (frontierRhythms)) = true),
+  proof: decide{}
+}
+\end{semanticmodule}
+\end{lexlean}

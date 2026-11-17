@@ -1,0 +1,15 @@
+# frontier.toml: every rhythm the engine has proved and shipped. Written by `cargo xtask engine tick`; never edit by hand.
+spec = "echobraid/frontier/1"
+
+[[claim]]
+id = "EB-F01"
+status = "proved"
+family = "breath"
+kappa = "eb:v1:breath:4-1-8-1"
+rhythm = [4, 1, 8, 1]
+strategy = "rule30-direct"
+tick = 1
+score = -0.7375
+curvature = 0.869697
+robust = -0.954924
+lean = "EchoBraid.Braid.Frontier.frontierSafe"

@@ -1,0 +1,151 @@
+\begin{lexlean}{Braid.Memory}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\useglossary{echobraid.domain@1.0.0}
+\importmodule{Braid.Text}
+\title{EchoBraid learning companion model}
+\begin{semanticmodule}
+definition{
+  name: levelLength,
+  parameters: [level : Nat],
+  result: Nat,
+  body: (if (level =? 1) then 3 else (if (level =? 2) then 5 else (if (level =? 3) then 7 else (if (level =? 4) then 11 else (if (level =? 5) then 13 else (if (level =? 6) then 17 else (if (level =? 7) then 23 else 0)))))))
+}
+
+definition{
+  name: powerOfTwo,
+  parameters: [exponent : Nat],
+  result: Nat,
+  body: (match exponent | Nat.zero => 1 | Nat.succ rest => ((powerOfTwo rest) + (powerOfTwo rest))),
+  recursive_argument: exponent
+}
+
+definition{
+  name: cell,
+  parameters: [state : Nat, index : Nat],
+  result: Nat,
+  body: (prim remainder (prim quotient state (powerOfTwo (prim remainder index 16 0 : Nat)) 0 : Nat) 2 0 : Nat)
+}
+
+definition{
+  name: rule30,
+  parameters: [left : Nat, centre : Nat, right : Nat],
+  result: Nat,
+  body: (if ((centre + right) =? 0) then left else (if (left =? 0) then 1 else 0))
+}
+
+definition{
+  name: stepFrom,
+  parameters: [state : Nat, index : Nat, remaining : Nat, accumulated : Nat],
+  result: Nat,
+  body: (match remaining
+    | Nat.zero => accumulated
+    | Nat.succ rest => (stepFrom state (index + 1) rest (accumulated + (prim multiply (rule30 (cell state (index + 15)) (cell state index) (cell state (index + 1))) (powerOfTwo index) : Nat)))),
+  recursive_argument: remaining
+}
+
+definition{name: step, parameters: [state : Nat], result: Nat, body: (stepFrom state 0 16 0)}
+
+definition{
+  name: seedState,
+  parameters: [seed : Nat],
+  result: Nat,
+  body: ((prim multiply (prim remainder seed 255 0 : Nat) 257 : Nat) + 1)
+}
+
+definition{
+  name: tileOf,
+  parameters: [state : Nat],
+  result: Nat,
+  body: (prim remainder (prim quotient state 64 0 : Nat) 4 0 : Nat)
+}
+
+definition{
+  name: stateAfter,
+  parameters: [state : Nat, steps : Nat],
+  result: Nat,
+  body: (match steps | Nat.zero => state | Nat.succ rest => (stateAfter (step state) rest)),
+  recursive_argument: steps
+}
+
+definition{
+  name: tileAt,
+  parameters: [seed : Nat, index : Nat],
+  result: Nat,
+  body: (tileOf (stateAfter (seedState seed) (index + 1)))
+}
+
+definition{
+  name: tilesFrom,
+  parameters: [state : Nat, remaining : Nat],
+  result: (List String),
+  body: (match remaining
+    | Nat.zero => (nil String)
+    | Nat.succ rest => (cons (Braid.Text::digit (tileOf (step state))) (tilesFrom (step state) rest))),
+  recursive_argument: remaining
+}
+
+definition{
+  name: sequenceText,
+  parameters: [seed : Nat, level : Nat],
+  result: String,
+  body: (prim join (tilesFrom (seedState seed) (levelLength level)) "" : String),
+  axioms: [propext]
+}
+
+definition{
+  name: verdictCode,
+  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
+  result: Nat,
+  body: (if (chosen =? expected) then (if ((index + 1) =? (levelLength level)) then (if (level =? 7) then 3 else 2) else 1) else 0)
+}
+
+definition{
+  name: verdictName,
+  parameters: [code : Nat],
+  result: String,
+  body: (if (code =? 0) then "wrong" else (if (code =? 1) then "correct" else (if (code =? 2) then "level" else "victory")))
+}
+
+theorem{
+  name: tileBounded,
+  parameters: [state : Nat],
+  statement: ((tileOf state) < 4),
+  proof: linear_arithmetic{definitions: [tileOf]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: levelLengthBounded,
+  parameters: [level : Nat],
+  statement: ((levelLength level) <= 23),
+  proof: linear_arithmetic{definitions: [levelLength]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: victoryOnlyAtFinalLevel,
+  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
+  statement: (((level =? 7) = false) -> ((verdictCode level index expected chosen) <= 2)),
+  proof: linear_arithmetic{definitions: [verdictCode]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: wrongTileEndsRound,
+  parameters: [level : Nat, index : Nat, expected : Nat, chosen : Nat],
+  statement: (((chosen =? expected) = false) -> ((verdictCode level index expected chosen) = 0)),
+  proof: linear_arithmetic{definitions: [verdictCode]},
+  axioms: [Quot.sound, propext]
+}
+
+theorem{
+  name: seedNeverDegenerate,
+  parameters: [seed : Nat],
+  statement: (1 <= (seedState seed)),
+  proof: linear_arithmetic{definitions: [seedState]},
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}
