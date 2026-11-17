@@ -38,3 +38,7 @@ screens/
 # Engine run outputs (engine.yml reads them; never committed).
 /.engine-output.env
 /.engine-status.md
+
+# The docs wiki linter is vendored per checkout: as Python it would be a new
+# non-Prism file, which the audit-prism ratchet refuses.
+/.claude/scripts/

@@ -1,3 +1,17 @@
+---
+title: EchoBraid design
+type: decision
+created: 2026-11-17
+updated: 2026-11-17
+sources:
+  - code: app/src/App.lex.tex
+  - code: crates/engine/src/lib.rs
+  - code: identity/stitch.lock
+  - code: bootstrap/register.mjs
+  - code: scripts/uorust.sh
+verified_at: 921760a
+---
+
 # EchoBraid design
 
 How the uploaded EchoBraid concept (an AI Studio React app, its inner `app/`
@@ -24,7 +38,7 @@ proved property or a structural choice:
 
 | Concept source | Mechanism | Model | Change from the concept |
 | --- | --- | --- | --- |
-| `app/services/resonanceEngine.ts` `calculateDrift` | Semantic drift, ±0.1 by message length | `Braid.Resonance.driftStep` (percent, ±10) | The random ±0.05 noise is gone: a proved guest is deterministic |
+| concept: app/services/resonanceEngine.ts, calculateDrift | Semantic drift, ±0.1 by message length | `Braid.Resonance.driftStep` (percent, ±10) | The random ±0.05 noise is gone: a proved guest is deterministic |
 | `getCoherenceState` (never used by the concept) | Stable / drifting / divergent at 0.3 / 0.7 | `coherenceRank` | Now drives the reply and the meter; proved monotone (`EB-03`) |
 | SoftLoop pause at drift > 0.8 | Pause offer | `offersPause` | The concept's 0.8 pause and 0.7 divergence disagreed; the model proves pause ⇒ divergent |
 | Closing the breath overlay, drift − 0.3 | Rest | `restStep` | Proved never to raise drift |
@@ -46,7 +60,7 @@ proved property or a structural choice:
    is tab-separated UTF-8. A text application (`prismpm/text-application/1`)
    carries it, its acceptance vectors and its proofs. The page's own surface
    (`site/card.*`) only encodes requests and shows replies.
-2. **Hand-written LexLean, not a spec.json.** The guided `prism/spec.json`
+2. **Hand-written LexLean, not a spec.json.** The guided prism/spec.json
    path covers apps that decide one answer from one line of fields. EchoBraid
    has thirteen mechanisms, so it is modelled directly in LexLean, as the
    template, afflom/me and lexlean-r4 are.
@@ -64,13 +78,13 @@ proved property or a structural choice:
    the Prism ID's device linking and sync.
 5. **Discoverable from afflom/me without editing it.** Every Prism app's
    address bar, afflom/me's included, lists the apps in the Prism index at
-   registry.uor.foundation. `pages.yml` registers EchoBraid there on each
+   registry.uor.foundation. `.github/workflows/pages.yml` registers EchoBraid there on each
    deploy (`bootstrap/register.mjs`, GitHub's OIDC token, no secret), and the
    index lists it as `holo://echobraid` once its live holo verifies and its
    examples replay.
 6. **UORust for the Rust.** The engine, the gates and the conformance suite
    are Rust. `scripts/uorust.sh` projects the workspace with afflom/UORust
-   into `uorust/`, a Prism project the Lean kernel verifies; `uorust.yml`
+   into `uorust/`, a Prism project the Lean kernel verifies; `.github/workflows/uorust.yml`
    keeps it current.
 7. **Arithmetic proofs beside the holo, not in it.** PrismPM compiles a text
    application's Lean natively within a fixed time limit, and `linear_arithmetic`
