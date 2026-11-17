@@ -91,6 +91,8 @@ export default async function start({ app, reason, $ }) {
     drift = +r[0];
     $("eb-drift-bar").style.inlineSize = `${drift}%`;
     $("eb-drift").textContent = `Drift ${r[0]}, ${r[1]}`;
+    $("eb-meter").setAttribute("aria-valuenow", r[0]);
+    $("eb-meter").setAttribute("aria-valuetext", `Drift ${r[0]}, ${r[1]}`);
   }
   const speak = (text) => { if (flags.voice && "speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(text)); };
   $("eb-say").addEventListener("submit", async (event) => {
