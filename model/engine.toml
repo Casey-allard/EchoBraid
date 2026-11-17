@@ -1,8 +1,8 @@
 # model/engine.toml: the EchoBraid engine's state. Written by `cargo xtask engine tick`; never edit by hand.
 spec = "echobraid/engine/1"
-rule30_state = "0x3cbe1910b4068b47"
-rule30_generation = 192
-tick = 16
+rule30_state = "0x77df6edaa1adfe89"
+rule30_generation = 204
+tick = 17
 
 [[weight]]
 strategy = "rule30-direct"
@@ -125,5 +125,12 @@ outcome = "proved"
 tick = 16
 kappa = "eb:v1:breath:5-1-7-0"
 rhythm = [5, 1, 7, 0]
+strategy = "mutate-best"
+outcome = "proved"
+
+[[attempt]]
+tick = 17
+kappa = "eb:v1:breath:3-2-6-0"
+rhythm = [3, 2, 6, 0]
 strategy = "mutate-best"
 outcome = "proved"
