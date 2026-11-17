@@ -17,7 +17,8 @@ export default async function start({ app, reason, $ }) {
   const out = $("eb-out");
   const history = $("eb-history");
   if (!app) {
-    out.textContent = `The guest did not load (${reason || "unknown"}); nothing here decides without it.`;
+    out.textContent = "Not verified";
+    $("eb-guide").textContent = `The guest did not load (${reason || "unknown"}); nothing here decides without it.`;
     out.className = "refuse";
     return;
   }
@@ -26,8 +27,10 @@ export default async function start({ app, reason, $ }) {
     const reply = decoder.decode(await app.dispatch(Uint8Array.from([op(letter), ...args.map(byte)])));
     return reply === "invalid request" ? null : reply.split("\t");
   }
+  // The result slot is display type, sized for a short answer: it shows the
+  // decision in a word or two, and the history keeps the guest's full reply.
   function note(what, reply) {
-    out.textContent = reply;
+    out.textContent = `${what} ${reply.split(/[\s,]+/)[0]}`.slice(0, 20);
     out.className = "good";
     const row = el("li", "");
     row.append(el("span", what, "k"), el("span", reply, "v"));
@@ -255,6 +258,6 @@ export default async function start({ app, reason, $ }) {
   drawRing();
 
   $("eb-welcome").textContent = (await ask("W", 0))[0];
-  out.textContent = "Ready. Every answer here comes from the verified guest.";
+  out.textContent = "Ready";
   out.className = "good";
 }

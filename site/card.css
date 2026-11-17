@@ -1,16 +1,16 @@
 /* EchoBraid's surface. Every colour is a brand token; nothing here is a literal. */
-.eb { display: grid; grid-template-rows: auto 1fr; gap: 16px; block-size: 100%; min-block-size: 0; }
-.eb-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+.eb { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 12px; block-size: 100%; min-block-size: 0; overflow: hidden; }
+.eb-nav { display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; scrollbar-width: none; min-inline-size: 0; }
 .eb-go, .eb button, .eb select, .eb input, .eb textarea { font: inherit; color: var(--foreground); }
-.eb-go { border: var(--border-width) solid var(--border); background: transparent; border-radius: var(--radius); padding: 8px 14px; min-block-size: 40px; cursor: pointer; }
+.eb-go { border: var(--border-width) solid var(--border); background: transparent; border-radius: var(--radius); padding: 8px 14px; min-block-size: 48px; min-inline-size: 48px; flex: none; cursor: pointer; }
 .eb-go[aria-current="page"] { background: var(--accent); color: var(--accent-foreground); border-color: var(--accent); }
-.eb-place { overflow: auto; min-block-size: 0; display: flex; flex-direction: column; gap: 12px; }
+.eb-place { overflow: auto; min-block-size: 0; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 12px; }
 .eb-place[hidden] { display: none; }
 .eb h2 { font-family: var(--font-display); font-size: 1.4rem; margin: 0; }
 .eb h3 { font-size: 1rem; margin: 8px 0 0; }
 .eb-quiet { color: var(--muted-foreground); margin: 0; line-height: 1.5; }
 .eb-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.eb button:not(.eb-go):not(.eb-tile) { border: var(--border-width) solid var(--primary); background: var(--primary); color: var(--primary-foreground); border-radius: var(--radius); padding: 8px 16px; min-block-size: 40px; cursor: pointer; }
+.eb button:not(.eb-go):not(.eb-tile) { border: var(--border-width) solid var(--primary); background: var(--primary); color: var(--primary-foreground); border-radius: var(--radius); padding: 8px 16px; min-block-size: 48px; min-inline-size: 48px; cursor: pointer; }
 .eb button.eb-soft:not(.eb-go):not(.eb-tile) { background: transparent; color: var(--foreground); border-color: var(--border); }
 .eb textarea, .eb input, .eb select { background: var(--input); border: var(--border-width) solid var(--border); border-radius: var(--radius); padding: 8px; }
 .eb textarea { inline-size: 100%; box-sizing: border-box; resize: vertical; line-height: 1.5; }
@@ -24,7 +24,7 @@
 .eb-meter { block-size: 6px; border-radius: 3px; background: var(--muted); overflow: hidden; }
 .eb-meter span { display: block; block-size: 100%; inline-size: 10%; background: var(--chart-2); transition: inline-size var(--duration) var(--ease); }
 .eb-field { display: grid; gap: 4px; color: var(--muted-foreground); }
-.eb-orb { align-self: center; inline-size: 180px; block-size: 180px; border-radius: 50%; display: grid; place-items: center; background: var(--secondary); color: var(--foreground); border: var(--border-width) solid var(--border); font-size: 2.4rem; font-family: var(--font-display); transform: scale(0.6); transition: transform var(--eb-phase-s, 4s) linear; }
+.eb-orb { align-self: center; inline-size: min(180px, 40vmin); block-size: min(180px, 40vmin); flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--secondary); color: var(--foreground); border: var(--border-width) solid var(--border); font-size: 2.4rem; font-family: var(--font-display); transform: scale(0.6); transition: transform var(--eb-phase-s, 4s) linear; }
 .eb-orb[data-phase="inhale"] { transform: scale(1); }
 .eb-orb[data-phase="inhale"] { background: var(--info-subtle); }
 .eb-orb[data-phase="hold"] { transform: scale(1); background: var(--info-subtle); }
@@ -42,7 +42,7 @@
 .eb-tile.lit { opacity: 1; transform: scale(1.04); }
 .eb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; }
 .eb-toggles { display: grid; gap: 8px; }
-.eb-toggle { display: flex; gap: 8px; align-items: center; min-block-size: 40px; }
+.eb-toggle { display: flex; gap: 8px; align-items: center; min-block-size: 48px; }
 .eb-history { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .eb-history li { display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; }
 .eb-history .k { color: var(--muted-foreground); }
