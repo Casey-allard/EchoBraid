@@ -106,9 +106,10 @@ jobs:
             printf 'main moved under the tick four times; the next tick starts from the new tip\n' >&2
             exit 0
           fi
-          git -c "$auth" tag "v0.2.$TICK"
-          git -c "$auth" push origin "v0.2.$TICK"
-          GH_TOKEN="$GITHUB_TOKEN" gh release create "v0.2.$TICK" --title "$TITLE" --notes-file .engine-status.md
+          # The release creates its tag on GitHub's side, at the commit just
+          # landed; a tag pushed in the same breath as its commit can be
+          # refused ("missing necessary objects") before the commit settles.
+          GH_TOKEN="$GITHUB_TOKEN" gh release create "v0.2.$TICK" --target "$(git rev-parse HEAD)" --title "$TITLE" --notes-file .engine-status.md
           printf 'pushed=true\n' >> "$GITHUB_OUTPUT"
 
       - name: Summarise the tick
