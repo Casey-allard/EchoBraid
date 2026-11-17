@@ -94,8 +94,7 @@ export default async function start({ app, reason, $ }) {
     drift = +r[0];
     $("eb-drift-bar").style.inlineSize = `${drift}%`;
     $("eb-drift").textContent = `Drift ${r[0]}, ${r[1]}`;
-    $("eb-meter").setAttribute("aria-valuenow", r[0]);
-    $("eb-meter").setAttribute("aria-valuetext", `Drift ${r[0]}, ${r[1]}`);
+    Object.entries({ "aria-valuenow": r[0], "aria-valuetext": `Drift ${r[0]}, ${r[1]}` }).forEach(([k, v]) => $("eb-meter").setAttribute(k, v));
   }
   const speak = (text) => { if (flags.voice && "speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(text)); };
   $("eb-say").addEventListener("submit", async (event) => {
@@ -109,13 +108,9 @@ export default async function start({ app, reason, $ }) {
     meter(r);
     note("drift", r.join(" "));
     const [, reply] = await ask("G", drift, turns++);
-    if (r[2] === "pause") {
-      say("guide", reply);
-      setTimeout(() => { show("breathe"); breath.begin(); }, 1500);
-    } else {
-      say("guide", reply);
-      speak(reply);
-    }
+    say("guide", reply);
+    if (r[2] === "pause") setTimeout(() => { show("breathe"); breath.begin(); }, 1500);
+    else speak(reply);
   });
   $("eb-pause").addEventListener("click", () => { show("breathe"); breath.begin(); });
   meter(["10", "stable"]);
