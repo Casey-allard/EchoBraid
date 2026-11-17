@@ -128,8 +128,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          active=$(gh run list --workflow=pages.yml --limit 5 --json status --jq '[.[] | select(.status != "completed")] | length' || echo 0)
-          if [ "${active:-0}" = "0" ]; then
-            gh workflow run pages.yml --ref main
-          fi
+          # Always dispatch: the pages concurrency group queues behind a run
+          # already in flight, so the page catches up to this tick's commit
+          # instead of staying on whatever that run checked out.
+          gh workflow run pages.yml --ref main
           gh workflow run engine.yml --ref main
