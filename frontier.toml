@@ -234,3 +234,16 @@ score = -0.142361
 curvature = 0.976234
 robust = -0.38642
 lean = "EchoBraid.Braid.Frontier.frontierSafe"
+
+[[claim]]
+id = "EB-F19"
+status = "proved"
+family = "breath"
+kappa = "eb:v1:breath:3-3-6-0"
+rhythm = [3, 3, 6, 0]
+strategy = "mutate-best"
+tick = 19
+score = -0.09375
+curvature = 1.490449
+robust = -0.466362
+lean = "EchoBraid.Braid.Frontier.frontierSafe"
